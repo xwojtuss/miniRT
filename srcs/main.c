@@ -59,5 +59,6 @@ int	main(int argc, char **argv)
 	mlx_hook(scene->win, 2, 1L << 0, key_hook, scene);
 	render_scene(scene);
 	mlx_loop(scene->mlx);
+	free_scene(scene);
 	return (0);
 }
