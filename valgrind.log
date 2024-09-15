@@ -1,112 +1,137 @@
-==59580== Memcheck, a memory error detector
-==59580== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==59580== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==59580== Command: ./miniRT test.rt
-==59580== Parent PID: 53904
-==59580== 
-==59580== 
-==59580== HEAP SUMMARY:
-==59580==     in use at exit: 296 bytes in 10 blocks
-==59580==   total heap usage: 437 allocs, 427 frees, 156,087 bytes allocated
-==59580== 
-==59580== 16 bytes in 1 blocks are still reachable in loss record 1 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4037E4: parse_ambient_light (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4039BF: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 16 bytes in 1 blocks are still reachable in loss record 2 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4035DF: parse_light (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403A29: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 24 bytes in 1 blocks are still reachable in loss record 3 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403E32: add_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x404036: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403A9A: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 24 bytes in 1 blocks are still reachable in loss record 4 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403E32: add_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x404036: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403A60: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 24 bytes in 1 blocks are still reachable in loss record 5 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403E32: add_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x404036: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403AD4: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 28 bytes in 1 blocks are still reachable in loss record 6 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403494: parse_camera (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4039F4: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 28 bytes in 1 blocks are still reachable in loss record 7 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403198: new_sphere (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40405D: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403A60: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 36 bytes in 1 blocks are still reachable in loss record 8 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x402F98: new_plane (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40408F: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403A9A: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 44 bytes in 1 blocks are still reachable in loss record 9 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x402C78: new_cylinder (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4040C1: parse_new_object (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x403AD4: check_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40422F: parse_line (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40240D: read_scene (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x4024CC: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== 56 bytes in 1 blocks are still reachable in loss record 10 of 10
-==59580==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==59580==    by 0x4046F9: ft_calloc (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580==    by 0x40249D: main (in /nfs/homes/wkornato/Documents/Common-Core/miniRT/miniRT)
-==59580== 
-==59580== LEAK SUMMARY:
-==59580==    definitely lost: 0 bytes in 0 blocks
-==59580==    indirectly lost: 0 bytes in 0 blocks
-==59580==      possibly lost: 0 bytes in 0 blocks
-==59580==    still reachable: 296 bytes in 10 blocks
-==59580==         suppressed: 0 bytes in 0 blocks
-==59580== 
-==59580== For lists of detected and suppressed errors, rerun with: -s
-==59580== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==5406== Memcheck, a memory error detector
+==5406== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==5406== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==5406== Command: ./miniRT test.rt
+==5406== Parent PID: 2914
+==5406== 
+==5406== Conditional jump or move depends on uninitialised value(s)
+==5406==    at 0x10A885: get_last_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C1D6: add_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C3CB: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BE16: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==  Uninitialised value was created by a stack allocation
+==5406==    at 0x10A70B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==5406==    at 0x4BD1864: writev (writev.c:26)
+==5406==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==5406==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==5406==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==5406==    by 0x49980B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==5406==    by 0x499D148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==5406==    by 0x499D52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==5406==    by 0x10E2D5: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10E015: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A7BB: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==  Address 0x4d2d3cc is 28 bytes inside a block of size 16,384 alloc'd
+==5406==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x498742D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==5406==    by 0x10DDC6: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A771: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==  Uninitialised value was created by a stack allocation
+==5406==    at 0x10E1E0: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 
+==5406== HEAP SUMMARY:
+==5406==     in use at exit: 240 bytes in 9 blocks
+==5406==   total heap usage: 263 allocs, 254 frees, 106,175 bytes allocated
+==5406== 
+==5406== 16 bytes in 1 blocks are still reachable in loss record 1 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BB30: parse_ambient_light (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BD2E: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 16 bytes in 1 blocks are still reachable in loss record 2 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10B90A: parse_light (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BDA0: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 24 bytes in 1 blocks are still reachable in loss record 3 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C1E9: add_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C3CB: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BE16: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 24 bytes in 1 blocks are still reachable in loss record 4 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C1E9: add_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C3CB: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BDDB: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 24 bytes in 1 blocks are still reachable in loss record 5 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C1E9: add_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C3CB: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BE4E: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 28 bytes in 1 blocks are still reachable in loss record 6 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10B7A7: parse_camera (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BD67: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 28 bytes in 1 blocks are still reachable in loss record 7 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10B4A2: new_sphere (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C3F2: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BDDB: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 36 bytes in 1 blocks are still reachable in loss record 8 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10B2A6: new_plane (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C41F: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BE16: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== 44 bytes in 1 blocks are still reachable in loss record 9 of 9
+==5406==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==5406==    by 0x10CFAF: ft_calloc (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10AF74: new_cylinder (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C44C: parse_new_object (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10BE4E: check_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10C5CA: parse_line (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A6C2: read_scene (in /home/wkornato/Documents/miniRT/miniRT)
+==5406==    by 0x10A75B: main (in /home/wkornato/Documents/miniRT/miniRT)
+==5406== 
+==5406== LEAK SUMMARY:
+==5406==    definitely lost: 0 bytes in 0 blocks
+==5406==    indirectly lost: 0 bytes in 0 blocks
+==5406==      possibly lost: 0 bytes in 0 blocks
+==5406==    still reachable: 240 bytes in 9 blocks
+==5406==         suppressed: 0 bytes in 0 blocks
+==5406== 
+==5406== For lists of detected and suppressed errors, rerun with: -s
+==5406== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
