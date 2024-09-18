@@ -16,6 +16,7 @@
 # define WIN_WIDTH_DEFAULT 640
 
 # include "libft.h"
+# include <X11/Xlib.h>
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
@@ -190,6 +191,7 @@ void					free_scene(t_scene *scene);
 void					free_objects(t_objects *objects);
 
 int						close_win(void *context, int exit_code);
+int						close_win_handler(void *context);
 
 void					render_scene(t_scene *scene);
 void					print_array(char **array);
@@ -202,6 +204,8 @@ void					print_vector(t_vector vector);
 
 float					rad_to_deg(float rad);
 
-void					print_objects_parameters(t_objects *object);
+void					print_objects_parameters(t_scene *scene);
+
+void					init_scene(t_scene *scene);
 
 #endif

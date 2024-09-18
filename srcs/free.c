@@ -36,7 +36,6 @@ void	free_scene(t_scene *scene)
 	if (scene->camera)
 		free(scene->camera);
 	close_win(scene, NOT_SET);
-	free(scene);
 }
 
 void	free_array(char **array)

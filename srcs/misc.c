@@ -24,6 +24,16 @@ t_objects	*get_last_object(t_objects *objects)
 	return (last);
 }
 
+int	close_win_handler(void *context)
+{
+	t_scene	*scene;
+
+	scene = (t_scene *)context;
+	free_scene(scene);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
 int	close_win(void *context, int exit_code)
 {
 	t_scene	*scene;
