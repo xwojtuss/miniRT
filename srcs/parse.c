@@ -42,11 +42,11 @@ void	split_and_assign_vector(t_objects *object, char *line,
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
 	if (object->type == SPHERE)
-		assign_sphere_values(object, temp, type);
+		assign_sphere_values(object->object, temp, type);
 	else if (object->type == PLANE)
-		assign_plane_values(object, temp, type);
+		assign_plane_values(object->object, temp, type);
 	else if (object->type == CYLINDER)
-		assign_cylinder_values(object, temp, type);
+		assign_cylinder_values(object->object, temp, type);
 	free_array(temp);
 }
 
@@ -73,13 +73,13 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 		new->object = new_plane(scene, new, line, argc);
 	else if (new->type == CYLINDER)
 		new->object = new_cylinder(scene, new, line, argc);
-	split_and_assign_vector(new->object, line[1], POSITION, scene);
+	split_and_assign_vector(new, line[1], POSITION, scene);
 	if (new->type == CYLINDER)
-		split_and_assign_vector(new->object, line[5], COLOR, scene);
+		split_and_assign_vector(new, line[5], COLOR, scene);
 	else
-		split_and_assign_vector(new->object, line[3], COLOR, scene);
+		split_and_assign_vector(new, line[3], COLOR, scene);
 	if (new->type == PLANE || new->type == CYLINDER)
-		split_and_assign_vector(new->object, line[2], ORIENTATION, scene);
+		split_and_assign_vector(new, line[2], ORIENTATION, scene);
 	check_values(new->object, new->type, scene, line);
 }
 

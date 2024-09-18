@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft
 LIBFT = libs/libft/libft.a
@@ -16,7 +16,7 @@ SRCS = main.c misc.c math/vectors.c objects/cylinder.c \
 	objects/plane.c objects/sphere.c objects/camera.c \
 	objects/light.c objects/ambient.c check_scene.c \
 	errors.c free.c parse.c render.c debug.c math/angles.c \
-	debug2.c
+	debug2.c initialize.c
 
 SRCS_FILES = $(addprefix srcs/, ${SRCS})
 

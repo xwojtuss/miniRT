@@ -25,7 +25,7 @@ void	render_scene(t_scene *scene)
 	printf("theta: %f, theta in deg: %f, length one: %f, length two: %f, dot: %f\n",
 		get_angle_between(one, two), rad_to_deg(get_angle_between(one, two)), vector_length(one), vector_length(two),
 		dot_product(one, two));
-	print_objects_parameters(scene->objects);
+	print_objects_parameters(scene);
 	//get the rays from the camera
 	//find a way to differenciate between the directions of the ray
 	//check if the rays intersects with any objects
