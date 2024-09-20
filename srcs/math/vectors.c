@@ -6,26 +6,50 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:52 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/23 11:14:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:28:12 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	add_v(t_vector one, t_vector two, t_vector *dest)
+t_vector	multiply_v(t_vector vector, float multiplier)
 {
-	float temp_one;
-	float temp_two;
+	t_vector	result;
 
-	temp_one = one.x;
-	temp_two = two.x;
-	dest->x = temp_one + temp_two;
-	temp_one = one.y;
-	temp_two = two.y;
-	dest->y = temp_one + temp_two;
-	temp_one = one.z;
-	temp_two = two.z;
-	dest->z = temp_one + temp_two;
+	result.x = vector.x * multiplier;
+	result.y = vector.y * multiplier;
+	result.z = vector.z * multiplier;
+	return (result);
+}
+
+t_vector	divide_v(t_vector vector, float divider)
+{
+	t_vector	result;
+
+	result.x = vector.x / divider;
+	result.y = vector.y / divider;
+	result.z = vector.z / divider;
+	return (result);
+}
+
+t_vector	subtract_v(t_vector one, t_vector two)
+{
+	t_vector	result;
+
+	result.x = one.x - two.x;
+	result.y = one.y - two.y;
+	result.z = one.z - two.z;
+	return (result);
+}
+
+t_vector	add_v(t_vector one, t_vector two)
+{
+	t_vector	result;
+
+	result.x = one.x + two.x;
+	result.y = one.y + two.y;
+	result.z = one.z + two.z;
+	return (result);
 }
 
 float	dot_product(t_vector one, t_vector two)

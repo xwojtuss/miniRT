@@ -115,12 +115,22 @@ typedef struct s_cylinder
 	t_color				color;
 }						t_cylinder;
 
+typedef struct s_image
+{
+	void				*img;
+	char				*addr;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+}						t_image;
+
 typedef struct s_scene
 {
 	int					win_height;
 	int					win_width;
 	void				*mlx;
 	void				*win;
+	t_image				img;
 	t_objects			*objects;
 	t_light				*light;
 	t_ambient			*ambient;
@@ -131,41 +141,34 @@ void					assign_vector(t_vector *vector, float x, float y,
 							float z);
 void					assign_color(t_color *color, int r, int g, int b);
 
-void	check_sphere_values(t_sphere *sphere,
-							t_scene *scene,
+void					check_sphere_values(t_sphere *sphere, t_scene *scene,
 							char **line);
 void					assign_sphere_values(void *object, char **temp,
 							t_object_param type);
 t_sphere				*new_sphere(t_scene *scene, t_objects *new, char **line,
 							size_t argc);
 
-void	check_plane_values(t_plane *plane,
-						t_scene *scene,
-						char **line);
+void					check_plane_values(t_plane *plane, t_scene *scene,
+							char **line);
 void					assign_plane_values(void *object, char **temp,
 							t_object_param type);
 t_plane					*new_plane(t_scene *scene, t_objects *new, char **line,
 							size_t argc);
 
-void	check_cylinder_values(t_cylinder *cylinder,
-							t_scene *scene,
-							char **line);
-void	assign_cylinder_values(void *object,
-							char **temp,
+void					check_cylinder_values(t_cylinder *cylinder,
+							t_scene *scene, char **line);
+void					assign_cylinder_values(void *object, char **temp,
 							t_object_param type);
 t_cylinder				*new_cylinder(t_scene *scene, t_objects *new,
 							char **line, size_t argc);
 
 void					check_scene(t_scene *scene);
-void	parse_ambient_light(t_scene *scene,
-							char **instructions,
+void					parse_ambient_light(t_scene *scene, char **instructions,
 							size_t argc);
 void					check_line(char **instructions, t_scene *scene, int fd);
 
-void	split_and_assign_vector(t_objects *object,
-								char *line,
-								t_object_param type,
-								t_scene *scene);
+void					split_and_assign_vector(t_objects *object, char *line,
+							t_object_param type, t_scene *scene);
 void					check_values(void *object, t_object_type type,
 							t_scene *scene, char **line);
 void					parse_new_object(t_scene *scene, char **line,
@@ -175,9 +178,8 @@ int						parse_line(t_scene *scene, int fd);
 void					parse_camera(t_scene *scene, char **line, size_t argc);
 void					parse_light(t_scene *scene, char **instructions,
 							size_t argc);
-void	parse_ambient(t_scene *scene,
-					char **instructions,
-					size_t argc);
+void					parse_ambient(t_scene *scene, char **instructions,
+							size_t argc);
 
 t_objects				*get_last_object(t_objects *objects);
 
@@ -203,9 +205,23 @@ void					normalize_vector(t_vector *vector);
 void					print_vector(t_vector vector);
 
 float					rad_to_deg(float rad);
+float					deg_to_rad(float deg);
 
 void					print_objects_parameters(t_scene *scene);
 
 void					init_scene(t_scene *scene);
+void					initialize_mlx(t_scene *scene);
+int						key_hook(int keycode, t_scene *scene);
+void					my_mlx_pixel_put(t_image *data, int x, int y,
+							int color);
+
+t_vector				subtract_v(t_vector one, t_vector two);
+t_vector				divide_v(t_vector vector, float divider);
+t_vector				multiply_v(t_vector vector, float multiplier);
+t_vector				add_v(t_vector one, t_vector two);
+
+int						rgb_to_int(int r, int g, int b);
+int						color_to_int(t_color color);
+int						vector_to_int(t_vector vector);
 
 #endif
