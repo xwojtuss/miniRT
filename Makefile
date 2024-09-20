@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -O3
 
 INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft
 LIBFT = libs/libft/libft.a
