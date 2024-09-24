@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 18:57:29 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:18:02 by ukireyeu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int	is_intersect(t_ray ray, t_objects *object)
 {
 	if (object->type == SPHERE)
 		return (is_intersect_ray_sphere(ray, object->object));
-	/* else if (object->type == PLANE)
-		return (is_intersect_ray_plane(ray, object));
-	else if (object->type == CYLINDER)
-		return (is_intersect_ray_cylinder(ray, object)); */
 	return (NOT_SET);
 }
 
@@ -46,7 +42,6 @@ int	trace_ray(t_ray ray, t_scene *scene)
 {
 	t_objects	*curr;
 	int			color;
-	// float		test;
 	t_vector	color_vector;
 
 	(void)scene;
@@ -60,9 +55,6 @@ int	trace_ray(t_ray ray, t_scene *scene)
 	}
 	if (color == NOT_SET)
 		return (0x000000);
-	// test = 0.5 * (ray.direction.y - 1);
-	// color_vector = add_v(multiply_v((t_vector){1.0, 1.0, 1.0}, test),
-	// 		multiply_v((t_vector){0.5, 0.7, 1.0}, 1.0 - test)); does not work with larger fov
 	return (rgb_to_int(color_vector.x * 255, color_vector.y * 255,
 			color_vector.z * 255));
 }
