@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 20:09:09 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:17:46 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	split_and_assign_vector_camera(t_camera *camera, char *line,
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
+	if (type == ORIENTATION && ft_atof(temp[0]) + ft_atof(temp[1])
+		+ ft_atof(temp[2]) != 1)
+		err_free_array("Orientation vector has to have a length of 1", scene, temp);
 	if (type == POSITION)
 		assign_vector(&camera->position, ft_atof(temp[0]), ft_atof(temp[1]),
 			ft_atof(temp[2]));
