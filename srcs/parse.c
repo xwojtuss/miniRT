@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 19:54:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:15:46 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	split_and_assign_vector(t_objects *object, char *line,
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
+	if (type == ORIENTATION && ft_atof(temp[0]) + ft_atof(temp[1])
+		+ ft_atof(temp[2]) != 1)
+		err_free_array("Orientation vector has to have a length of 1", scene, temp);
 	if (object->type == SPHERE)
 		assign_sphere_values(object->object, temp, type);
 	else if (object->type == PLANE)
