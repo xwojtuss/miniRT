@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "xlib.h": "c"
+        "xlib.h": "c",
+        "mini_rt.h": "c"
     }
 }
