@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/20 18:14:39 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:08:09 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
 	read_scene(&scene, argv[1]);
 	check_scene(&scene);
 	initialize_mlx(&scene);
+	initialize_viewport(&scene);
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	free_scene(&scene);

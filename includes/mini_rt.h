@@ -128,6 +128,14 @@ typedef struct s_scene
 {
 	int					win_height;
 	int					win_width;
+	double				viewport_width;
+	double				viewport_height;
+	int					image_width;
+	int					image_height;
+	t_vector			viewport_grid_vector_x;
+	t_vector			viewport_grid_vector_y;
+	t_vector			viewport_top_left;
+
 	void				*mlx;
 	void				*win;
 	t_image				img;
@@ -223,5 +231,6 @@ t_vector				add_v(t_vector one, t_vector two);
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
 int						vector_to_int(t_vector vector);
+void					initialize_viewport(t_scene *scene);
 
 #endif
