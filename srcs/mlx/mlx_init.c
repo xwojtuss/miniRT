@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 15:40:27 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:19:35 by ukireyeu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "mini_rt.h"
 
@@ -22,10 +21,12 @@ void	initialize_mlx(t_scene *scene)
 			"miniRT");
 	if (!scene->win)
 		err_free("Could not create window", scene);
-	scene->img.img = mlx_new_image(scene->mlx, scene->win_width, scene->win_height);
+	scene->img.img
+		= mlx_new_image(scene->mlx, scene->win_width, scene->win_height);
 	if (!scene->img.img)
 		err_free("Could not create image", scene);
-	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bits_per_pixel,
+	scene->img.addr
+		= mlx_get_data_addr(scene->img.img, &scene->img.bits_per_pixel,
 			&scene->img.line_length, &scene->img.endian);
 	if (!scene->img.addr)
 		err_free("Could not get image address", scene);
