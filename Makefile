@@ -67,4 +67,9 @@ fclean:
 
 re: fclean all
 
+remove_objects:
+	rm -f ${OBJS} ${OBJSB}
+
+again: remove_objects all
+
 .PHONY: all bonus clean fclean re
