@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_rt.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
+/*   Updated: 2024/09/25 22:06:33 by ukireyeu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
@@ -234,14 +246,14 @@ int						vector_to_int(t_vector vector);
 void					initialize_viewport(t_scene *scene);
 
 // debug2.c
-void	print_sphere_parameters(t_sphere *sphere);
-void	print_plane_parameters(t_plane *plane);
-void	print_light_parameters(t_light *light);
-void	print_cylinder_parameters(t_cylinder *cylinder);
-void	print_camera_parameters(t_camera *camera);
+void					print_sphere_parameters(t_sphere *sphere);
+void					print_plane_parameters(t_plane *plane);
+void					print_light_parameters(t_light *light);
+void					print_cylinder_parameters(t_cylinder *cylinder);
+void					print_camera_parameters(t_camera *camera);
 
 // debug3.c
-void	print_ambient_parameters(t_ambient *ambient);
-void	print_objects_parameters(t_scene *scene);
+void					print_ambient_parameters(t_ambient *ambient);
+void					print_objects_parameters(t_scene *scene);
 
 #endif
