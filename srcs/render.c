@@ -18,8 +18,30 @@ float	retrieve_t_sphere(float a, float b, float disc)
 
 	if (disc < 0)
 		return (0);
-	t = (-b + disc) / (2 * a);
+	t = (-b + sqrt(disc)) / (2 * a);
 	return (t);
+}
+
+int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
+{
+	t_vector	new_start;
+
+	new_start = subtract_v(ray.origin, cylinder->position);
+	t_vector	perpendicular_comp_start;
+	t_vector	perpendicular_comp_dist;
+
+	perpendicular_comp_start = subtract_v(new_start, multiply_v(cylinder->orientation, dot_product(new_start, cylinder->orientation)));
+	perpendicular_comp_dist = subtract_v(ray.direction, multiply_v(cylinder->orientation, dot_product(ray.direction, cylinder->orientation)));
+	
+	(void)perpendicular_comp_start;
+	float discriminant;
+
+	discriminant = dot_product(perpendicular_comp_dist, perpendicular_comp_dist) * 4 * pow(cylinder->diam / 2, 2);
+	float t = -2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start) + sqrt(discriminant) / 2 * dot_product(ray.direction, ray.direction);
+	(void)t;
+	if (discriminant < 0)
+		return (NOT_SET);
+	return (color_to_int(cylinder->color));
 }
 
 // TODO: return the x of the closest intersection
@@ -41,7 +63,8 @@ int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 	if (discriminant < 0)
 		return (NOT_SET);
 	t = retrieve_t_sphere(a, b, discriminant);
-	printf("The value of t: %f\n", t);
+	(void)t;
+	// printf("The value of t: %f\n", t);
 	return (color_to_int(sphere->color));
 }
 
@@ -49,6 +72,8 @@ int	is_intersect(t_ray ray, t_objects *object)
 {
 	if (object->type == SPHERE)
 		return (is_intersect_ray_sphere(ray, object->object));
+	else if (object->type == CYLINDER)
+		return (is_intersect_ray_cylinder(ray, object->object));
 	return (NOT_SET);
 }
 
