@@ -6,12 +6,23 @@
 /*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 19:18:02 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:06:41 by ukireyeu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
+float	retrieve_t_sphere(float a, float b, float disc)
+{
+	float	t;
+
+	if (disc < 0)
+		return (0);
+	t = (-b + disc) / (2 * a);
+	return (t);
+}
+
+// TODO: return the x of the closest intersection
 int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 {
 	t_vector	origin_to_center;
@@ -19,6 +30,7 @@ int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 	float		b;
 	float		c;
 	float		discriminant;
+	float		t;
 
 	origin_to_center = add_v(multiply_v(ray.origin, -1), sphere->position);
 	a = dot_product(ray.direction, ray.direction);
@@ -28,6 +40,8 @@ int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (NOT_SET);
+	t = retrieve_t_sphere(a, b, discriminant);
+	printf("The value of t: %f\n", t);
 	return (color_to_int(sphere->color));
 }
 
