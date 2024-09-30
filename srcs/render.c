@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/30 16:55:58 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:14:55 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,5 @@ void	render_scene(t_scene *scene)
 		}
 		y++;
 	}
-	print_objects_parameters(scene);
-	printf("the length of vector: %f\n", vector_length((t_vector){0.1, 0.577, 0.0}));
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 }
