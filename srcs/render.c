@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/25 22:06:41 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:55:58 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
 	float t = -2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start) + sqrt(discriminant) / 2 * dot_product(ray.direction, ray.direction);
 	(void)t;
 	if (discriminant < 0)
+		return (NOT_SET);
+	t_vector p_of_axis = add_v(subtract_v(perpendicular_comp_start, cylinder->position), multiply_v(subtract_v(perpendicular_comp_dist, cylinder->orientation), t));
+	if (vector_length(p_of_axis) >= cylinder->height  || vector_length(p_of_axis) <= 0)
 		return (NOT_SET);
 	return (color_to_int(cylinder->color));
 }
@@ -122,5 +125,7 @@ void	render_scene(t_scene *scene)
 		}
 		y++;
 	}
+	print_objects_parameters(scene);
+	printf("the length of vector: %f\n", vector_length((t_vector){0.1, 0.577, 0.0}));
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img.img, 0, 0);
 }
