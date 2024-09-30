@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/09/25 22:06:33 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:37:01 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # include "libft.h"
 # include <X11/Xlib.h>
+# include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
@@ -232,6 +233,7 @@ void					print_objects_parameters(t_scene *scene);
 void					init_scene(t_scene *scene);
 void					initialize_mlx(t_scene *scene);
 int						key_hook(int keycode, t_scene *scene);
+int						mouse_hook(int x, int y, t_scene *scene);
 void					my_mlx_pixel_put(t_image *data, int x, int y,
 							int color);
 
@@ -255,5 +257,6 @@ void					print_camera_parameters(t_camera *camera);
 // debug3.c
 void					print_ambient_parameters(t_ambient *ambient);
 void					print_objects_parameters(t_scene *scene);
+void					show_depth(t_scene scene);
 
 #endif
