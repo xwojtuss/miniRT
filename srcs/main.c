@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/01 15:40:28 by wkornato         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/26 17:43:03 by ukireyeu         ###   ########.fr       */
+>>>>>>> 7b3b2ab (fix elements)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +42,15 @@ int	main(int argc, char **argv)
 	check_scene(&scene);
 	initialize_mlx(&scene);
 	initialize_viewport(&scene);
+<<<<<<< HEAD
 	
 	show_depth(scene);
 
 	// render_scene(&scene);
+=======
+	// print_objects_parameters(&scene);
+	render_scene(&scene);
+>>>>>>> 7b3b2ab (fix elements)
 	mlx_loop(scene.mlx);
 	free_scene(&scene);
 	return (0);

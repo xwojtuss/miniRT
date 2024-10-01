@@ -6,12 +6,17 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/30 17:14:55 by wkornato         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/26 17:53:43 by ukireyeu         ###   ########.fr       */
+>>>>>>> 7b3b2ab (fix elements)
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
+<<<<<<< HEAD
 float	retrieve_t_sphere(float a, float b, float disc)
 {
 	float	t;
@@ -47,14 +52,16 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
 	return (color_to_int(cylinder->color));
 }
 
+=======
+>>>>>>> 7b3b2ab (fix elements)
 // TODO: return the x of the closest intersection
-int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
+int	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
 	float		b;
 	float		c;
-	float		discriminant;
+	float		disc;
 	float		t;
 
 	origin_to_center = add_v(multiply_v(ray.origin, -1), sphere->position);
@@ -62,6 +69,7 @@ int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 	b = -2 * dot_product(origin_to_center, ray.direction);
 	c = dot_product(origin_to_center, origin_to_center) - pow(sphere->diam / 2,
 			2);
+<<<<<<< HEAD
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (NOT_SET);
@@ -69,36 +77,49 @@ int	is_intersect_ray_sphere(t_ray ray, t_sphere *sphere)
 	(void)t;
 	// printf("The value of t: %f\n", t);
 	return (color_to_int(sphere->color));
+=======
+	disc = b * b - 4 * a * c;
+	if (disc < 0)
+		return (0);
+	t = (-b + sqrt(disc)) / (2 * a);
+	if (*prev_t > t)
+		return (*prev_t = t, 1);
+	return (0);
+>>>>>>> 7b3b2ab (fix elements)
 }
 
-int	is_intersect(t_ray ray, t_objects *object)
+void	render_object(t_ray ray, t_objects *object, float *t, int *color)
 {
 	if (object->type == SPHERE)
+<<<<<<< HEAD
 		return (is_intersect_ray_sphere(ray, object->object));
 	else if (object->type == CYLINDER)
 		return (is_intersect_ray_cylinder(ray, object->object));
 	return (NOT_SET);
+=======
+		if (render_sphere(ray, object->object, t))
+		{
+			*color = color_to_int(((t_sphere *)object->object)->color);
+		}
+>>>>>>> 7b3b2ab (fix elements)
 }
 
 int	trace_ray(t_ray ray, t_scene *scene)
 {
 	t_objects	*curr;
 	int			color;
-	t_vector	color_vector;
+	float		t;
 
 	(void)scene;
 	curr = scene->objects;
+	t = FLT_MAX;
+	color = 0x000000;
 	while (curr)
 	{
-		color = is_intersect(ray, curr);
-		if (color != NOT_SET)
-			return (color);
+		render_object(ray, curr, &t, &color);
 		curr = curr->next;
 	}
-	if (color == NOT_SET)
-		return (0x000000);
-	return (rgb_to_int(color_vector.x * 255, color_vector.y * 255,
-			color_vector.z * 255));
+	return (color);
 }
 
 void	render_scene(t_scene *scene)
