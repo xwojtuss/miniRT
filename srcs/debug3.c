@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:17:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/09/30 17:48:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:41:22 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	show_depth(t_scene scene)
 	float		amount;
 	int			x;
 
-	delay = 20000;
+	delay = 10000;
 	x = 1;
-	amount = 0.1;
+	amount = 0.02;
 	while (true)
 	{
 		if (x == 1 || x == 4 || x == 5 || x == 8)
