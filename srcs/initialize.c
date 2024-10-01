@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 19:15:34 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:32:01 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	initialize_viewport(t_scene *scene)
 			-(scene->viewport_height), 0}, (double)(scene->image_height));
 	scene->viewport_top_left
 		= subtract_v(subtract_v(subtract_v(scene->camera->position,
-					(t_vector){0, 0, 1}),
+					scene->camera->orientation),
 				divide_v((t_vector){scene->viewport_width, 0, 0}, 2.0)),
 			divide_v((t_vector){0, -(scene->viewport_height), 0}, 2.0));
 }
