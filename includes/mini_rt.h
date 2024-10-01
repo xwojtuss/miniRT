@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/30 18:37:01 by wkornato         ###   ########.fr       */
-=======
-/*   Updated: 2024/09/26 17:10:32 by ukireyeu         ###   ########.fr       */
->>>>>>> 7b3b2ab (fix elements)
+/*   Updated: 2024/10/01 15:51:43 by ukireyeu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
