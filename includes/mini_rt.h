@@ -6,7 +6,11 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/30 18:37:01 by wkornato         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/26 17:10:32 by ukireyeu         ###   ########.fr       */
+>>>>>>> 7b3b2ab (fix elements)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +41,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <float.h>
 
 typedef enum e_object_param
 {
