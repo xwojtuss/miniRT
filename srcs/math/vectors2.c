@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:21:22 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/09/24 19:22:36 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:18:24 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ float	vector_length(t_vector vector)
 			* vector.z));
 }
 
-void	normalize_vector(t_vector *vector)
+t_vector	normalize_vector(t_vector vector)
 {
-	float	length;
-
-	length = vector_length(*vector);
-	vector->x /= length;
-	vector->y /= length;
-	vector->z /= length;
+	t_vector	normalized;
+	float		length;
+	
+	length = vector_length(vector);
+	normalized.x = vector.x / length;
+	normalized.y = vector.y / length;
+	normalized.z = vector.z / length;
+	return (normalized);
 }
 
 //the angle is in radians
