@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/01 15:51:43 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:18:42 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ void					print_array(char **array);
 float					vector_length(t_vector vector);
 float					dot_product(t_vector one, t_vector two);
 float					get_angle_between(t_vector one, t_vector two);
-void					normalize_vector(t_vector *vector);
+t_vector				normalize_vector(t_vector vector);
 void					print_vector(t_vector vector);
 
 float					rad_to_deg(float rad);
