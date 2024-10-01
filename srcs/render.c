@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/01 15:51:01 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:48:40 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,56 @@
 
 float	retrieve_t_sphere(float a, float b, float disc)
 {
-	float	t;
+	float	t1;
+	float	t2;
 
 	if (disc < 0)
 		return (0);
-	t = (-b + sqrt(disc)) / (2 * a);
-	return (t);
+	t1 = (-b + sqrt(disc)) / (2 * a);
+	t2 = (-b - sqrt(disc)) / (2 * a);
+	if (t1 < t2)//is this correct?
+		return (t1);
+	return (t2);
 }
 
 int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
 {
 	t_vector	new_start;
-
-	new_start = subtract_v(ray.origin, cylinder->position);
 	t_vector	perpendicular_comp_start;
 	t_vector	perpendicular_comp_dist;
+	t_vector p_of_axis;
+	float discriminant;
+	float t;
 
+	new_start = subtract_v(ray.origin, cylinder->position);
 	perpendicular_comp_start = subtract_v(new_start, multiply_v(cylinder->orientation, dot_product(new_start, cylinder->orientation)));
 	perpendicular_comp_dist = subtract_v(ray.direction, multiply_v(cylinder->orientation, dot_product(ray.direction, cylinder->orientation)));
 
 	(void)perpendicular_comp_start;
-	float discriminant;
 
 	discriminant = dot_product(perpendicular_comp_dist, perpendicular_comp_dist) * 4 * pow(cylinder->diam / 2, 2);
-	float t = -2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start) + sqrt(discriminant) / 2 * dot_product(ray.direction, ray.direction);
+	t = -2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start) + sqrt(discriminant) / 2 * dot_product(ray.direction, ray.direction);
 	(void)t;
 	if (discriminant < 0)
 		return (NOT_SET);
-	t_vector p_of_axis = add_v(subtract_v(perpendicular_comp_start, cylinder->position), multiply_v(subtract_v(perpendicular_comp_dist, cylinder->orientation), t));
+	p_of_axis = add_v(subtract_v(perpendicular_comp_start, cylinder->position), multiply_v(subtract_v(perpendicular_comp_dist, cylinder->orientation), t));
 	if (vector_length(p_of_axis) >= cylinder->height  || vector_length(p_of_axis) <= 0)
 		return (NOT_SET);
 	return (color_to_int(cylinder->color));
 }
 
+t_vector	get_intersection_point(t_ray ray, float t)
+{
+	return (add_v(ray.origin, multiply_v(ray.direction, t)));
+}
+
+t_vector	get_normal_vector_sphere(t_ray ray, t_vector center)
+{
+	return (normalize_vector(subtract_v(ray.origin, center)));
+}
+
 // TODO: return the x of the closest intersection
-int	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
+float	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
@@ -65,8 +80,8 @@ int	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 	disc = b * b - 4 * a * c;
 	if (disc < 0)
 		return (0);
-	t = (-b + sqrt(disc)) / (2 * a);
-	if (*prev_t > t)
+	t = retrieve_t_sphere(a, b, disc);
+	if (*prev_t > t && t > 0)
 		return (*prev_t = t, 1);
 	return (0);
 }
@@ -74,10 +89,13 @@ int	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 void	render_object(t_ray ray, t_objects *object, float *t, int *color)
 {
 	if (object->type == SPHERE)
-		if (render_sphere(ray, object->object, t))
-		{
-			*color = color_to_int(((t_sphere *)object->object)->color);
-		}
+	{
+		if (render_sphere(ray, object->object, t) == 0)
+			return ;
+		t_vector colorvec = multiply_v(add_v(subtract_v(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), (t_vector){1, 1, 1}), 128);
+		*color = (int)colorvec.x << 16 | (int)colorvec.y << 8 | (int)colorvec.z;
+	}
+		// *color = color_to_int(((t_sphere *)object->object)->color);
 }
 
 int	trace_ray(t_ray ray, t_scene *scene)
