@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/30 16:56:27 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:39:45 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	split_and_assign_vector(t_objects *object, char *line,
 			temp);
 	orientation_multitude = vector_length((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
-	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1 - orientation_multitude > 0.001))
+	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1 - orientation_multitude > 0.001 || 1 - orientation_multitude < -0.001))
 		err_free_array("Orientation vector has to have a length of 1", scene,
 			temp);
 	if (object->type == SPHERE)

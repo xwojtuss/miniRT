@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 20:34:31 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:40:04 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ void	split_and_assign_vector_camera(t_camera *camera, char *line,
 		t_object_param type, t_scene *scene)
 {
 	char	**temp;
+	float	orientation_multitude;
 
 	temp = ft_split(line, ',');
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
-	if (type == ORIENTATION && ft_atof(temp[0]) + ft_atof(temp[1])
-		+ ft_atof(temp[2]) != 1)
+	orientation_multitude = vector_length((t_vector){ft_atof(temp[0]),
+			ft_atof(temp[1]), ft_atof(temp[2])});
+	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
+			- orientation_multitude > 0.001 || 1 - orientation_multitude <
+			-0.001))
 		err_free_array("Orientation vector has to have a length of 1", scene,
 			temp);
 	if (type == POSITION)
