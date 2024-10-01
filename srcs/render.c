@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/01 16:48:40 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:49:41 by ukireyeu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-float	retrieve_t_sphere(float a, float b, float disc)
-{
-	float	t1;
-	float	t2;
-
-	if (disc < 0)
-		return (0);
-	t1 = (-b + sqrt(disc)) / (2 * a);
-	t2 = (-b - sqrt(disc)) / (2 * a);
-	if (t1 < t2)//is this correct?
-		return (t1);
-	return (t2);
-}
 
 int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
 {
@@ -62,8 +48,7 @@ t_vector	get_normal_vector_sphere(t_ray ray, t_vector center)
 	return (normalize_vector(subtract_v(ray.origin, center)));
 }
 
-// TODO: return the x of the closest intersection
-float	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
+static int	intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
@@ -86,16 +71,44 @@ float	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 	return (0);
 }
 
+static int	intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
+{
+	float	ND;
+	float	t;
+
+	ND = dot_product(plane->orientation, ray.direction);
+	if (ND <= 0)
+		return (0);
+	t = dot_product(multiply_v(plane->orientation, -1), subtract_v(ray.origin,
+				plane->position)) / ND;
+	if (t > 0 && *prev_t > t)
+		return (*prev_t = t, 1);
+	return (0);
+}
+
+static int	intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
+{
+	float	ND;
+	float	t;
+
+	ND = dot_product(plane->orientation, ray.direction);
+	if (ND <= 0)
+		return (0);
+	t = dot_product(multiply_v(plane->orientation, -1), subtract_v(ray.origin,
+				plane->position)) / ND;
+	if (t > 0 && *prev_t > t)
+		return (*prev_t = t, 1);
+	return (0);
+}
+
 void	render_object(t_ray ray, t_objects *object, float *t, int *color)
 {
 	if (object->type == SPHERE)
-	{
-		if (render_sphere(ray, object->object, t) == 0)
-			return ;
-		t_vector colorvec = multiply_v(add_v(subtract_v(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), (t_vector){1, 1, 1}), 128);
-		*color = (int)colorvec.x << 16 | (int)colorvec.y << 8 | (int)colorvec.z;
-	}
-		// *color = color_to_int(((t_sphere *)object->object)->color);
+		if (intersect_sphere(ray, object->object, t))
+			*color = color_to_int(((t_sphere *)object->object)->color);
+	if (object->type == PLANE)
+		if (intersect_plane(ray, object->object, t))
+			*color = color_to_int(((t_plane *)object->object)->color);
 }
 
 int	trace_ray(t_ray ray, t_scene *scene)
