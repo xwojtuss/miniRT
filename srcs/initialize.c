@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/01 15:32:01 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:33:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	initialize_viewport(t_scene *scene)
 {
 	double	aspect_ratio;
 
+	// the camera orientation is not working here, the initialization does not
+	// take into account the camera orientation i think
 	aspect_ratio = (double)(scene->win_width) / (double)(scene->win_height);
 	scene->image_width = scene->win_width;
 	scene->image_height = (int)(scene->image_width / aspect_ratio);
