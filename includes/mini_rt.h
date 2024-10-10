@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/01 16:18:42 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:59:45 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 // settings to the renderer
 # define BOUCES_PER_RAY 5
 # define RAYS_PER_PIXEL 10
+
+# define ROTATE_DEGREE 15
+# define FOV_OFFSET 5
+# define MOVE_STEP 0.5
 
 # define PI 3.14159265358979323846
 
@@ -31,13 +35,13 @@
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
+# include <float.h>
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <float.h>
 
 typedef enum e_object_param
 {
@@ -103,6 +107,8 @@ typedef struct s_camera
 {
 	t_vector			position;
 	t_vector			orientation;
+	t_vector			right;
+	t_vector			up;
 	float				fov;
 }						t_camera;
 
@@ -242,6 +248,7 @@ t_vector				subtract_v(t_vector one, t_vector two);
 t_vector				divide_v(t_vector vector, float divider);
 t_vector				multiply_v(t_vector vector, float multiplier);
 t_vector				add_v(t_vector one, t_vector two);
+t_vector				cross_product(t_vector one, t_vector two);
 
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
