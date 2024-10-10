@@ -17,7 +17,7 @@ SRCS = main.c misc.c math/vectors.c math/vectors2.c objects/cylinder.c \
 	objects/light.c objects/ambient.c check_scene.c \
 	errors.c free.c parse.c render.c debug.c math/angles.c \
 	debug2.c debug3.c initialize.c mlx/mlx_misc.c mlx/mlx_hooks.c \
-	mlx/mlx_init.c
+	mlx/mlx_init.c math/vectors3.c
 
 SRCS_FILES = $(addprefix srcs/, ${SRCS})
 
