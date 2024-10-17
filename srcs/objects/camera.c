@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/01 15:40:04 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:08:32 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	parse_camera(t_scene *scene, char **line, size_t argc)
 	if (!camera)
 		err_free_array("Could not allocate memory for camera", scene, line);
 	scene->camera = camera;
+	camera->right = (t_vector){-1, 0, 0};
+	camera->up = (t_vector){0, 1, 0};
 	split_and_assign_vector_camera(camera, line[1], POSITION, scene);
 	split_and_assign_vector_camera(camera, line[2], ORIENTATION, scene);
 	camera->fov = ft_atoi(line[3]);
