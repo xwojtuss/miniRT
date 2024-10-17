@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/10 18:59:45 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:13:15 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define BOUCES_PER_RAY 5
 # define RAYS_PER_PIXEL 10
 
-# define ROTATE_DEGREE 15
+# define ROTATE_DEGREE 5
 # define FOV_OFFSET 5
 # define MOVE_STEP 0.5
 
@@ -249,6 +249,11 @@ t_vector				divide_v(t_vector vector, float divider);
 t_vector				multiply_v(t_vector vector, float multiplier);
 t_vector				add_v(t_vector one, t_vector two);
 t_vector				cross_product(t_vector one, t_vector two);
+
+t_vector				rotate_on_x(t_vector vector);
+t_vector				rotate_on_y(t_vector vector);
+t_vector				rotate_on_z(t_vector vector);
+t_vector				rotate_vector(float m[3][3], t_vector v);
 
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
