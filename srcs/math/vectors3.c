@@ -46,3 +46,14 @@ t_vector	rotate_vector(float m[3][3], t_vector v)
 		.y = m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z, .z = m[2][0] * v.x
 		+ m[2][1] * v.y + m[2][2] * v.z});
 }
+
+bool	did_switch_signs_v(t_vector v1, t_vector v2)
+{
+	if ((v1.x < 0 && v2.x > 0) || (v1.x > 0 && v2.x < 0))
+		return (true);
+	if ((v1.y < 0 && v2.y > 0) || (v1.y > 0 && v2.y < 0))
+		return (true);
+	if ((v1.z < 0 && v2.z > 0) || (v1.z > 0 && v2.z < 0))
+		return (true);
+	return (false);
+}

@@ -6,20 +6,17 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/17 13:13:15 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:26:51 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
-// settings to the renderer
-# define BOUCES_PER_RAY 5
-# define RAYS_PER_PIXEL 10
-
 # define ROTATE_DEGREE 5
 # define FOV_OFFSET 5
 # define MOVE_STEP 0.5
+# define MOUSE_SENSITIVITY 0.5
 
 # define PI 3.14159265358979323846
 
@@ -29,7 +26,9 @@
 # define KEY_ESC 65307
 
 # define WIN_HEIGHT_DEFAULT 480
-# define WIN_WIDTH_DEFAULT 640
+# define WIN_WIDTH_DEFAULT 480
+
+# define FLOAT_PITCH_LIMIT 0.98
 
 # include "libft.h"
 # include <X11/Xlib.h>
@@ -254,6 +253,8 @@ t_vector				rotate_on_x(t_vector vector);
 t_vector				rotate_on_y(t_vector vector);
 t_vector				rotate_on_z(t_vector vector);
 t_vector				rotate_vector(float m[3][3], t_vector v);
+
+bool					did_switch_signs_v(t_vector v1, t_vector v2);
 
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
