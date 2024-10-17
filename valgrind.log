@@ -1,18 +1,18 @@
-==34608== Memcheck, a memory error detector
-==34608== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==34608== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==34608== Command: ./miniRT test.rt
-==34608== Parent PID: 16861
-==34608== 
-==34608== 
-==34608== HEAP SUMMARY:
-==34608==     in use at exit: 0 bytes in 0 blocks
-==34608==   total heap usage: 470 allocs, 470 frees, 135,992 bytes allocated
-==34608== 
-==34608== All heap blocks were freed -- no leaks are possible
-==34608== 
-==34608== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 1)
---34608-- 
---34608-- used_suppression:      2 X on SUSE11 writev uninit padding /usr/libexec/valgrind/default.supp:377
-==34608== 
-==34608== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 1)
+==110500== Memcheck, a memory error detector
+==110500== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==110500== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==110500== Command: ./miniRT test.rt
+==110500== Parent PID: 78601
+==110500== 
+==110500== 
+==110500== HEAP SUMMARY:
+==110500==     in use at exit: 0 bytes in 0 blocks
+==110500==   total heap usage: 3,203 allocs, 3,203 frees, 231,412 bytes allocated
+==110500== 
+==110500== All heap blocks were freed -- no leaks are possible
+==110500== 
+==110500== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--110500-- 
+--110500-- used_suppression:      1 X on SUSE11 writev uninit padding /usr/libexec/valgrind/default.supp:377
+==110500== 
+==110500== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
