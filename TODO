@@ -1,5 +1,6 @@
-make the camera orientation work
-make the mouse orient the camera (optional but would be soooooo cool)
-make the program not display the things behind the camera
-make cylinders display properly
-implement raytracing
+implement raytracing:
+need to rewrite the functions for displaying, the color will be calculated based on: ray direction, intersect point, normal vector. This is difficult to do with norminette,
+right now the cylinder is not taking distance into account
+also we will have to take into consideration the color of the object, the color of the ambient light, the color of the diffuse light (not in mandatory part) (read Phong reflection model)
+the first struggle is to make sure that all of those parameters are passed into a function that will mix all of those values that will be norminette friendly, readable and without unnecessary repetitions of consideration
+then just mix them using the full Phong reflection model
