@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/17 12:24:48 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:50:38 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
-{
-	t_vector	new_start;
-	t_vector	perpendicular_comp_start;
-	t_vector	perpendicular_comp_dist;
-	t_vector p_of_axis;
-	float discriminant;
-	float t;
-
-	new_start = subtract_v(ray.origin, cylinder->position);
-	perpendicular_comp_start = subtract_v(new_start, multiply_v(cylinder->orientation, dot_product(new_start, cylinder->orientation)));
-	perpendicular_comp_dist = subtract_v(ray.direction, multiply_v(cylinder->orientation, dot_product(ray.direction, cylinder->orientation)));
-
-	discriminant = dot_product(perpendicular_comp_dist, perpendicular_comp_dist) * 4 * pow(cylinder->diam / 2, 2);
-	t = -2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start) + sqrt(discriminant) / 2 * dot_product(ray.direction, ray.direction);
-	(void)t;
-	if (discriminant < 0)
-		return (NOT_SET);
-	p_of_axis = add_v(subtract_v(perpendicular_comp_start, cylinder->position), multiply_v(subtract_v(perpendicular_comp_dist, cylinder->orientation), t));
-	if (vector_length(p_of_axis) >= cylinder->height  || vector_length(p_of_axis) <= 0)
-		return (NOT_SET);
-	return (color_to_int(cylinder->color));
-}
 
 t_vector	get_intersection_point(t_ray ray, float t)
 {
@@ -46,7 +22,7 @@ t_vector	get_normal_vector_sphere(t_ray ray, t_vector center)
 	return (normalize_vector(subtract_v(ray.origin, center)));
 }
 
-float	retrieve_t_sphere(float a, float b, float disc)
+float	retrieve_t(float a, float b, float disc)
 {
 	float	t1;
 	float	t2;
@@ -55,41 +31,79 @@ float	retrieve_t_sphere(float a, float b, float disc)
 		return (0);
 	t1 = (-b + sqrt(disc)) / (2 * a);
 	t2 = (-b - sqrt(disc)) / (2 * a);
-	if (t1 < t2)//is this correct?
+	if (t1 < t2)// does this need to be here?
 		return (t1);
 	return (t2);
 }
 
-// static int	intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
-// {
-// 	t_vector	origin_to_center;
-// 	float		a;
-// 	float		b;
-// 	float		c;
-// 	float		disc;
-// 	float		t;
+int	is_intersect_cylinder_caps(t_ray ray, t_cylinder cylinder)
+{
+	float t1;
+	float t2;
+	t_vector ctop;
+	t_vector cbottom;
 
-// 	origin_to_center = add_v(multiply_v(ray.origin, -1), sphere->position);
-// 	a = dot_product(ray.direction, ray.direction);
-// 	b = -2 * dot_product(origin_to_center, ray.direction);
-// 	c = dot_product(origin_to_center, origin_to_center) - pow(sphere->diam / 2,
-// 			2);
-// 	disc = b * b - 4 * a * c;
-// 	if (disc < 0)
-// 		return (0);
-// 	t = retrieve_t_sphere(a, b, disc);
-// 	if (*prev_t > t && t > 0)
-// 		return (*prev_t = t, 1);
-// 	return (0);
-// }
+	if (dot_product(ray.direction, cylinder.orientation) == 0)
+		return (0);
+	ctop = add_v(cylinder.position, multiply_v(cylinder.orientation, cylinder.height));
+	cbottom = cylinder.position;
+	t1 = (dot_product(subtract_v(cbottom, ray.origin), cylinder.orientation) / dot_product(ray.direction, cylinder.orientation));
+	t2 = (dot_product(subtract_v(ctop, ray.origin), cylinder.orientation) / dot_product(ray.direction, cylinder.orientation));
+	if (t1 < 0 && t2 > 0)
+		return (0);
+	if (t1 > 0 && t2 < 0)
+		return (0);
+	if (t1 < t2)
+	{
+		if (vector_length(subtract_v(get_intersection_point(ray, t1), cbottom)) <= cylinder.diam / 2)
+			return (t1);
+	}
+	else
+		if (vector_length(subtract_v(get_intersection_point(ray, t2), ctop)) <= cylinder.diam / 2)
+			return (t2);
+	return (0);
+}
 
-static int	intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
+int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder)
+{
+	t_vector	new_start;
+	t_vector	perpendicular_comp_start;
+	t_vector	perpendicular_comp_dist;
+	float discriminant;
+	float t;
+	float a;
+	float b;
+	float c;
+	float height_pos;
+	t_vector intersection_point;
+
+	if (is_intersect_cylinder_caps(ray, *cylinder))
+		return (1);
+	new_start = subtract_v(ray.origin, cylinder->position);
+	perpendicular_comp_start = subtract_v(new_start, multiply_v(cylinder->orientation, dot_product(new_start, cylinder->orientation)));
+	perpendicular_comp_dist = subtract_v(ray.direction, multiply_v(cylinder->orientation, dot_product(ray.direction, cylinder->orientation)));
+
+	a = dot_product(perpendicular_comp_dist, perpendicular_comp_dist);
+	b = 2 * dot_product(perpendicular_comp_dist, perpendicular_comp_start);
+	c = dot_product(perpendicular_comp_start, perpendicular_comp_start) - pow(cylinder->diam / 2, 2);
+	discriminant = b * b - 4 * a * c;
+	t = retrieve_t(a, b, discriminant);
+	if (t <= 0)
+		return (0);
+	intersection_point = get_intersection_point(ray, t);
+	height_pos = dot_product(cylinder->orientation, subtract_v(intersection_point, cylinder->position));
+	if (height_pos < 0 || height_pos > cylinder->height)
+		return (0);
+	return (1);
+}
+
+static int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
 {
 	float	ND;
 	float	t;
 
 	ND = dot_product(plane->orientation, ray.direction);
-	if (ND <= 0)
+	if (ND == 0)
 		return (0);
 	t = dot_product(multiply_v(plane->orientation, -1), subtract_v(ray.origin,
 				plane->position)) / ND;
@@ -98,7 +112,7 @@ static int	intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
 	return (0);
 }
 
-float	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
+float	is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
@@ -113,33 +127,37 @@ float	render_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 	c = dot_product(origin_to_center, origin_to_center) - pow(sphere->diam / 2,
 			2);
 	disc = b * b - 4 * a * c;
-	if (disc < 0)
-		return (0);
-	t = retrieve_t_sphere(a, b, disc);
-	if (*prev_t > t && t > 0)
+	t = retrieve_t(a, b, disc);
+	if (t > 0 && *prev_t > t)
 		return (*prev_t = t, 1);
 	return (0);
 }
 
 void	render_object(t_ray ray, t_objects *object, float *t, int *color)
 {
-	// maybe somewhere here the orientation of the camera is not being taken into account
 	if (object->type == SPHERE)
 	{
-		if (render_sphere(ray, object->object, t) == 0)
+		if (is_intersect_sphere(ray, object->object, t) == 0)
 			return ;
 		t_vector colorvec = multiply_v(add_v(subtract_v(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), (t_vector){1, 1, 1}), 128);
 		*color = (int)colorvec.x << 16 | (int)colorvec.y << 8 | (int)colorvec.z;
 	}
 	else if (object->type == PLANE)
 	{
-		if (intersect_plane(ray, object->object, t))
-			*color = color_to_int(((t_plane *)object->object)->color);
-		t_vector colorvec = multiply_v(add_v(subtract_v(get_intersection_point(ray, *t), ((t_plane *)object->object)->position), (t_vector){1, 1, 1}), 128);
+		if (is_intersect_plane(ray, object->object, t) == 0)
+			return ;
+		*color = color_to_int(((t_plane *)object->object)->color);
+		t_vector colorvec = multiply_v(add_v(((t_plane *)object->object)->orientation, (t_vector){1, 1, 1}), 128);
 		*color = (int)colorvec.x << 16 | (int)colorvec.y << 8 | (int)colorvec.z;
 	}
-	else
-		return ;
+	else if (object->type == CYLINDER)
+	{
+		if (is_intersect_ray_cylinder(ray, object->object) == 0)
+			return ;
+		*color = color_to_int(((t_cylinder *)object->object)->color);
+		/* t_vector colorvec = multiply_v(add_v(((t_cylinder *)object->object)->orientation, (t_vector){1, 1, 1}), 128);
+		*color = (int)colorvec.x << 16 | (int)colorvec.y << 8 | (int)colorvec.z; */
+	}
 }
 
 int	trace_ray(t_ray ray, t_scene *scene)

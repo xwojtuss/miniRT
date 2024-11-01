@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/17 13:08:32 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:19:16 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	split_and_assign_vector_camera(t_camera *camera, char *line,
 		t_object_param type, t_scene *scene)
 {
 	char	**temp;
-	float	orientation_multitude;
+	double	orientation_multitude;
 
 	temp = ft_split(line, ',');
 	if (!temp || ft_arrlen(temp) != 3)
