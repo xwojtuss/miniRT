@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   vectors2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:21:22 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/01 16:18:24 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:59:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-float	vector_length(t_vector vector)
+double	vector_length(t_vector vector)
 {
 	return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z
 			* vector.z));

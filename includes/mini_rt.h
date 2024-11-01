@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/17 16:26:51 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:01:28 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ int						close_win_handler(void *context);
 void					render_scene(t_scene *scene);
 void					print_array(char **array);
 
-float					vector_length(t_vector vector);
+double					vector_length(t_vector vector);
 float					dot_product(t_vector one, t_vector two);
 float					get_angle_between(t_vector one, t_vector two);
 t_vector				normalize_vector(t_vector vector);

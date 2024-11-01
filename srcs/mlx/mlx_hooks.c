@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:25 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/17 16:26:19 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/01 11:51:27 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ int	key_hook(int keycode, t_scene *scene)
 		rotate_camera(scene->camera, (t_vector){0, -1, 0}, scene->camera->up, deg_to_rad(ROTATE_DEGREE));
 	else if (keycode == XK_Right)
 		rotate_camera(scene->camera, (t_vector){0, 1, 0}, multiply_v(scene->camera->up, -1.0), deg_to_rad(ROTATE_DEGREE));
+	else if (keycode == XK_p)
+		print_objects_parameters(scene);
 	else
 		return (EXIT_SUCCESS);
-	print_camera_parameters(scene->camera);
-	// print_objects_parameters(scene);
 	initialize_viewport(scene);
 	render_scene(scene);
 	return (EXIT_SUCCESS);
