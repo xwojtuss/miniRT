@@ -1,6 +1,6 @@
 implement raytracing:
 need to rewrite the functions for displaying, the color will be calculated based on: ray direction, intersect point, normal vector. This is difficult to do with norminette,
-right now the cylinder is not taking distance into account
+the displaying of the cylinder caps are not working all the time
 also we will have to take into consideration the color of the object, the color of the ambient light, the color of the diffuse light (not in mandatory part) (read Phong reflection model)
 the first struggle is to make sure that all of those parameters are passed into a function that will mix all of those values that will be norminette friendly, readable and without unnecessary repetitions of consideration
 then just mix them using the full Phong reflection model

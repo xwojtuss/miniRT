@@ -1,0 +1,9 @@
+#ifndef PHONG_REFLECTION_H
+# define PHONG_REFLECTION_H
+
+# define SPECULAR_CONST
+# define DIFFUSE_CONST
+# define AMBIENT_CONST
+# define SHININESS_CONST
+
+#endif
