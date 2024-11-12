@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/01 12:01:28 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:22:57 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define KEY_CLOSE_WINDOW 17
 # define KEY_ESC 65307
 
-# define WIN_HEIGHT_DEFAULT 480
+# define WIN_HEIGHT_DEFAULT 300
 # define WIN_WIDTH_DEFAULT 480
 
 # define FLOAT_PITCH_LIMIT 0.98
@@ -164,6 +164,8 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
+float					get_min_float(float *t, int size);
+float					get_max_float(float *t, int size);
 void					assign_vector(t_vector *vector, float x, float y,
 							float z);
 void					assign_color(t_color *color, int r, int g, int b);
