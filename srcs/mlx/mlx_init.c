@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/10/17 16:27:35 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/12 21:48:46 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	initialize_mlx(t_scene *scene)
 			&scene->img.line_length, &scene->img.endian);
 	if (!scene->img.addr)
 		err_free("Could not get image address", scene);
-	mlx_mouse_hide(scene->mlx, scene->win);
 	mlx_hook(scene->win, DestroyNotify, NoEventMask, close_win_handler, scene);
 	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hook, scene);
 	mlx_hook(scene->win, MotionNotify, PointerMotionMask, mouse_hook, scene);
