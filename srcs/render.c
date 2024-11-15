@@ -34,19 +34,42 @@ void	retrieve_t(float a, float b, float disc, float *t1, float *t2)
 	*t2 = (-b - sqrt(disc)) / (2 * a);
 }
 
-int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
+float	is_intersect_cylinder_caps(t_ray ray, t_vector caps_info[2], t_cylinder *cylinder, float *prev_t)
 {
-	float	t;
-	float	height_pos;
-
-	float a, b, c, discriminant, t1, t2;
-	t_vector d, oc;
 	float t_cap_top, t_cap_bottom;
-	t_vector cap_top, cap_bottom, p;
+	t_vector	p;
 
-	cap_bottom = cylinder->position;
-	cap_top = add_v(cylinder->position, multiply_v(cylinder->orientation,
-				cylinder->height));
+	t_cap_bottom = dot_product(subtract_v(caps_info[0], ray.origin),
+			cylinder->orientation) / dot_product(ray.direction,
+			cylinder->orientation);
+	if (t_cap_bottom > FLT_EPSILON)
+	{
+		p = get_intersection_point(ray, t_cap_bottom);
+		if (vector_length(subtract_v(p, caps_info[0])) <= cylinder->diam / 2
+			&& t_cap_bottom < *prev_t)
+			return (*prev_t = t_cap_bottom, 1);
+	}
+	t_cap_top = dot_product(subtract_v(caps_info[1], ray.origin),
+			cylinder->orientation) / dot_product(ray.direction,
+			cylinder->orientation);
+	if (t_cap_top > FLT_EPSILON)
+	{
+		p = get_intersection_point(ray, t_cap_top);
+		if (vector_length(subtract_v(p, caps_info[1])) <= cylinder->diam / 2
+			&& t_cap_top < *prev_t)
+			return (*prev_t = t_cap_top, 1);
+	}
+	return (0);
+}
+
+void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, float *t1, float *t2)
+{
+	t_vector	oc;
+	t_vector	d;
+	float	a;
+	float	b;
+	float	discriminant;
+
 	oc = subtract_v(ray.origin, cylinder->position);
 	d = subtract_v(ray.direction, multiply_v(cylinder->orientation,
 				dot_product(ray.direction, cylinder->orientation)));
@@ -54,13 +77,27 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
 					cylinder->orientation)));
 	a = dot_product(d, d);
 	b = 2 * dot_product(d, oc);
-	c = dot_product(oc, oc) - pow(cylinder->diam / 2, 2);
-	discriminant = b * b - 4 * a * c;
+	discriminant = b * b - 4 * a * dot_product(oc, oc) - pow(cylinder->diam / 2, 2);
+	*t1 = FLT_MIN;
+	*t2 = FLT_MIN;
 	if (discriminant < 0)
+		return ;
+	retrieve_t(a, b, discriminant, t1, t2);
+}
+
+int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
+{
+	float	t;
+	float	height_pos;
+	float	t1, t2;
+	t_vector cap_top, cap_bottom, p;
+
+	cap_bottom = cylinder->position;
+	cap_top = add_v(cylinder->position, multiply_v(cylinder->orientation,
+				cylinder->height));
+	get_t_cylinder(cylinder, ray, &t1, &t2);
+	if (t1 == FLT_MIN && t2 == FLT_MIN)
 		return (0);
-	t1 = 0;
-	t2 = 0;
-	retrieve_t(a, b, discriminant, &t1, &t2);
 	for (int i = 0; i < 2; ++i)
 	{
 		t = (i == 0) ? t1 : t2;
@@ -77,33 +114,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
 			}
 		}
 	}
-	t_cap_bottom = dot_product(subtract_v(cap_bottom, ray.origin),
-			cylinder->orientation) / dot_product(ray.direction,
-			cylinder->orientation);
-	if (t_cap_bottom > FLT_EPSILON)
-	{
-		p = get_intersection_point(ray, t_cap_bottom);
-		if (vector_length(subtract_v(p, cap_bottom)) <= cylinder->diam / 2
-			&& t_cap_bottom < *prev_t)
-		{
-			*prev_t = t_cap_bottom;
-			return (1);
-		}
-	}
-	t_cap_top = dot_product(subtract_v(cap_top, ray.origin),
-			cylinder->orientation) / dot_product(ray.direction,
-			cylinder->orientation);
-	if (t_cap_top > FLT_EPSILON)
-	{
-		p = get_intersection_point(ray, t_cap_top);
-		if (vector_length(subtract_v(p, cap_top)) <= cylinder->diam / 2
-			&& t_cap_top < *prev_t)
-		{
-			*prev_t = t_cap_top;
-			return (1);
-		}
-	}
-	return (0);
+	return (is_intersect_cylinder_caps(ray, (t_vector[2]){cap_bottom, cap_top}, cylinder, prev_t));
 }
 
 static int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
