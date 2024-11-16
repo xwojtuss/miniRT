@@ -77,7 +77,7 @@ void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, float *t1, float *t2)
 					cylinder->orientation)));
 	a = dot_product(d, d);
 	b = 2 * dot_product(d, oc);
-	discriminant = b * b - 4 * a * dot_product(oc, oc) - pow(cylinder->diam / 2, 2);
+	discriminant = b * b - 4 * a * (dot_product(oc, oc) - pow(cylinder->diam / 2, 2));
 	*t1 = FLT_MIN;
 	*t2 = FLT_MIN;
 	if (discriminant < 0)
