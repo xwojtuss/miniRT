@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ukireyeu < ukireyeu@student.42warsaw.pl    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 19:17:18 by ukireyeu         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:58:28 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_plane_parameters(t_plane *plane)
 		plane->orientation.y, plane->orientation.z);
 }
 
-void	print_light_parameters(t_light *light)
+void	print_light_parameters(t_lights *light)
 {
 	printf("Light:\n");
 	printf("position:\tX%f, Y%f, Z%f\n", light->position.x, light->position.y,

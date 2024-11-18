@@ -1,59 +1,18 @@
-==41573== Memcheck, a memory error detector
-==41573== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==41573== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==41573== Command: ./miniRT test.rt
-==41573== Parent PID: 40117
-==41573== 
-==41573== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==41573==    at 0x4BD1864: writev (writev.c:26)
-==41573==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x49980B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x499D148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x499D52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x110535: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x110275: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x10ECAF: initialize_mlx (mlx_init.c:20)
-==41573==    by 0x10A99A: main (main.c:39)
-==41573==  Address 0x4d2c49c is 28 bytes inside a block of size 16,384 alloc'd
-==41573==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==41573==    by 0x498742D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x110026: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x10EC8E: initialize_mlx (mlx_init.c:17)
-==41573==    by 0x10A99A: main (main.c:39)
-==41573==  Uninitialised value was created by a stack allocation
-==41573==    at 0x110440: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
-==41573== 
-==41573== 
-==41573== HEAP SUMMARY:
-==41573==     in use at exit: 0 bytes in 0 blocks
-==41573==   total heap usage: 344 allocs, 344 frees, 130,385 bytes allocated
-==41573== 
-==41573== All heap blocks were freed -- no leaks are possible
-==41573== 
-==41573== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-==41573== 
-==41573== 1 errors in context 1 of 1:
-==41573== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==41573==    at 0x4BD1864: writev (writev.c:26)
-==41573==    by 0x4CC8ACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x4CC8C4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x4CC9D7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==41573==    by 0x49980B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x499D148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x499D52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x110535: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x110275: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x10ECAF: initialize_mlx (mlx_init.c:20)
-==41573==    by 0x10A99A: main (main.c:39)
-==41573==  Address 0x4d2c49c is 28 bytes inside a block of size 16,384 alloc'd
-==41573==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==41573==    by 0x498742D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==41573==    by 0x110026: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
-==41573==    by 0x10EC8E: initialize_mlx (mlx_init.c:17)
-==41573==    by 0x10A99A: main (main.c:39)
-==41573==  Uninitialised value was created by a stack allocation
-==41573==    at 0x110440: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
-==41573== 
-==41573== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==47913== Memcheck, a memory error detector
+==47913== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==47913== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==47913== Command: ./miniRT test.rt
+==47913== Parent PID: 7572
+==47913== 
+==47913== 
+==47913== HEAP SUMMARY:
+==47913==     in use at exit: 0 bytes in 0 blocks
+==47913==   total heap usage: 513 allocs, 513 frees, 157,798 bytes allocated
+==47913== 
+==47913== All heap blocks were freed -- no leaks are possible
+==47913== 
+==47913== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--47913-- 
+--47913-- used_suppression:      1 X on SUSE11 writev uninit padding /usr/libexec/valgrind/default.supp:377
+==47913== 
+==47913== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

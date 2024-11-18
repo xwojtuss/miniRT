@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:57 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 20:05:40 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:58:20 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	check_light_values(t_light *light, t_scene *scene, char **line)
+void	check_light_values(t_lights *light, t_scene *scene, char **line)
 {
 	if (light->brightness < 0 || light->brightness > 1)
 		err_free_array("Invalid brightness for light", scene, line);
@@ -25,7 +25,7 @@ void	parse_light(t_scene *scene, char **instructions, size_t argc)
 	if (argc != 3 && argc != 4)
 		err_free_array("Invalid number of arguments for light", scene,
 			instructions);
-	scene->light = (t_light *)ft_calloc(1, sizeof(t_light));
+	scene->light = (t_lights *)ft_calloc(1, sizeof(t_lights));
 	if (!scene->light)
 		err_free_array("Could not allocate memory for light", scene,
 			instructions);

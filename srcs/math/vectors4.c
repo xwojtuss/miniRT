@@ -29,3 +29,8 @@ float	get_min_float(float *t, int size)
 	}
 	return (min_t);
 }
+
+t_vector	get_direction_vector(t_vector from, t_vector to)
+{
+	return (normalize_vector(subtract_v(to, from)));
+}

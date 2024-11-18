@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/12 21:22:57 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:01:43 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,12 @@ typedef struct s_ray
 	t_vector			direction;
 }						t_ray;
 
-typedef struct s_light
+typedef struct s_lights
 {
 	t_vector			position;
 	float				brightness;
-}						t_light;
+	struct s_lights		*next;
+}						t_lights;
 
 typedef struct s_ambient
 {
@@ -145,6 +146,8 @@ typedef struct s_image
 
 typedef struct s_scene
 {
+	void				*mlx;
+	void				*win;
 	int					win_height;
 	int					win_width;
 	double				viewport_width;
@@ -154,16 +157,14 @@ typedef struct s_scene
 	t_vector			viewport_grid_vector_x;
 	t_vector			viewport_grid_vector_y;
 	t_vector			viewport_top_left;
-
-	void				*mlx;
-	void				*win;
 	t_image				img;
 	t_objects			*objects;
-	t_light				*light;
+	t_lights			*light;
 	t_ambient			*ambient;
 	t_camera			*camera;
 }						t_scene;
 
+t_vector	get_direction_vector(t_vector from, t_vector to);
 float					get_min_float(float *t, int size);
 float					get_max_float(float *t, int size);
 void					assign_vector(t_vector *vector, float x, float y,
@@ -266,7 +267,7 @@ void					initialize_viewport(t_scene *scene);
 // debug2.c
 void					print_sphere_parameters(t_sphere *sphere);
 void					print_plane_parameters(t_plane *plane);
-void					print_light_parameters(t_light *light);
+void					print_light_parameters(t_lights *light);
 void					print_cylinder_parameters(t_cylinder *cylinder);
 void					print_camera_parameters(t_camera *camera);
 
