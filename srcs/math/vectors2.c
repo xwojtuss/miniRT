@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:21:22 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/01 11:59:13 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:00:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vector	normalize_vector(t_vector vector)
 {
 	t_vector	normalized;
 	float		length;
-	
+
 	length = vector_length(vector);
 	normalized.x = vector.x / length;
 	normalized.y = vector.y / length;
@@ -30,7 +30,7 @@ t_vector	normalize_vector(t_vector vector)
 	return (normalized);
 }
 
-//the angle is in radians
+// the angle is in radians
 float	get_angle_between(t_vector one, t_vector two)
 {
 	float	len_one;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/12 21:35:07 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:59:47 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int	main(int argc, char **argv)
 	check_scene(&scene);
 	initialize_mlx(&scene);
 	initialize_viewport(&scene);
-
-	// show_depth(scene);
-
 	render_scene(&scene);
 	mlx_loop(scene.mlx);
 	free_scene(&scene);

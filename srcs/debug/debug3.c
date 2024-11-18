@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:17:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/10/01 15:41:22 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:00:30 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	print_objects_parameters(t_scene *scene)
 
 void	show_depth(t_scene scene)
 {
-	int			delay;
-	float		amount;
-	int			x;
+	int		delay;
+	float	amount;
+	int		x;
 
 	delay = 10000;
 	x = 1;
@@ -52,17 +52,17 @@ void	show_depth(t_scene scene)
 	while (true)
 	{
 		if (x == 1 || x == 4 || x == 5 || x == 8)
-			scene.camera->position.z -= amount * 2;//w
+			scene.camera->position.z -= amount * 2;
 		else
-			scene.camera->position.z += amount * 2;//s
+			scene.camera->position.z += amount * 2;
 		if (x == 3 || x == 4 || x == 7 || x == 8)
-			scene.camera->position.y -= amount;//shift
+			scene.camera->position.y -= amount;
 		else
-			scene.camera->position.y += amount;//space
+			scene.camera->position.y += amount;
 		if (x == 3 || x == 4 || x == 5 || x == 6)
-			scene.camera->position.x -= amount;//a
+			scene.camera->position.x -= amount;
 		else
-			scene.camera->position.x += amount;//d
+			scene.camera->position.x += amount;
 		initialize_viewport(&scene);
 		render_scene(&scene);
 		usleep(delay);
