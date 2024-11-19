@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/18 14:59:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:17:51 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,7 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 		if (is_intersect_sphere(ray, object->object, t) == 0)
 			return (0x000000);
 		// return (color_to_int(((t_sphere *)object->object)->color));
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
-					*t), get_normal_vector_sphere(ray,
-					((t_sphere *)object->object)->position), ray.direction,
+		return (phong_reflection((t_raytrace_info){get_intersection_point(ray, *t), get_normal_vector_sphere(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), ray.direction,
 				scene, (t_vector){((t_sphere *)object->object)->color.r,
 				((t_sphere *)object->object)->color.g,
 				((t_sphere *)object->object)->color.b}}));

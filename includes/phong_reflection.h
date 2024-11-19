@@ -15,7 +15,7 @@ int				phong_reflection(t_raytrace_info info);
 t_vector		get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder,
 					float t);
 t_vector		get_normal_vector_plane(t_ray ray, t_plane plane);
-t_vector		get_normal_vector_sphere(t_ray ray, t_vector center);
+t_vector		get_normal_vector_sphere(t_vector intersection_point, t_vector center);
 
 # define SPECULAR_CONST 1
 # define DIFFUSE_CONST 0.6

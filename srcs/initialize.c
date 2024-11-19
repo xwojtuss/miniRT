@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/18 14:59:19 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:09:02 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	initialize_viewport(t_scene *scene)
 	t_vector	width_vector;
 	t_vector	height_vector;
 
-	// Recompute aspect ratio based on window dimensions
 	aspect_ratio = (double)(scene->win_width) / (double)(scene->win_height);
-	// Set image dimensions
 	scene->image_width = scene->win_width;
 	scene->image_height = (int)(scene->image_width / aspect_ratio);
 	if (scene->image_height < 1)

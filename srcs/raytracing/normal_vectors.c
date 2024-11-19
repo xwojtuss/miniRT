@@ -2,9 +2,9 @@
 
 t_vector	get_intersection_point(t_ray ray, float t);
 
-t_vector	get_normal_vector_sphere(t_ray ray, t_vector center)
+t_vector	get_normal_vector_sphere(t_vector intersection_point, t_vector center)
 {
-	return (normalize_vector(subtract_v(ray.origin, center)));
+	return (normalize_vector(subtract_v(intersection_point, center)));
 }
 
 t_vector	get_normal_vector_plane(t_ray ray, t_plane plane)
