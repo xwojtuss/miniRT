@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/18 14:01:43 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:14:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
-t_vector	get_direction_vector(t_vector from, t_vector to);
+t_vector				get_direction_vector(t_vector from, t_vector to);
 float					get_min_float(float *t, int size);
 float					get_max_float(float *t, int size);
 void					assign_vector(t_vector *vector, float x, float y,
