@@ -15,6 +15,51 @@ t_vector	clamp_vector(t_vector vector, int min, int max)
 	return (vector);
 }
 
+int	is_visible(t_raytrace_info *info, t_vector light_dir)
+{
+	t_objects	*curr;
+	float		temp;
+
+	temp = FLT_MAX;
+	
+	if (info->object->type == SPHERE)
+	{
+		if (is_intersect_sphere((t_ray){info->scene.light->position, multiply_v(light_dir, -1)}, info->object->object, &temp) == 1)
+			printf("This is so weird for sphere\n");
+	}
+	else if (info->object->type == PLANE)
+	{
+		if (is_intersect_plane((t_ray){info->scene.light->position, multiply_v(light_dir, -1)}, info->object->object, &temp) == 1)
+			printf("This is so weird for plane\n");
+	}
+	else if (info->object->type == CYLINDER)
+	{
+		if (is_intersect_ray_cylinder((t_ray){info->scene.light->position, multiply_v(light_dir, -1)}, info->object->object, &temp) == 1)
+			printf("This is so weird for cylinder\n");
+	}
+	curr = info->scene.objects;
+	while (curr)
+	{
+		if (curr->type == SPHERE)
+		{
+			if (is_intersect_sphere((t_ray){add_v(info->intersection_point, divide_v(info->normal_vector, 1000)), light_dir}, curr->object, &temp) == 1)
+				return (0);
+		}
+		else if (curr->type == PLANE && info->object != curr)
+		{
+			if (is_intersect_plane((t_ray){add_v(info->intersection_point, divide_v(info->normal_vector, 1000)), light_dir}, curr->object, &temp) == 1)
+				return (0);
+		}
+		else if (curr->type == CYLINDER)
+		{
+			if (is_intersect_ray_cylinder((t_ray){add_v(info->intersection_point, divide_v(info->normal_vector, 1000)), light_dir}, curr->object, &temp) == 1)
+				return (0);
+		}
+		curr = curr->next;
+	}
+	return (1);
+}
+
 int	phong_reflection(t_raytrace_info info)
 {
 	t_vector	total_color;
@@ -26,31 +71,28 @@ int	phong_reflection(t_raytrace_info info)
 	t_vector	view_vector;
 	float		dot_specular;
 	t_vector	specular;
-	t_vector	ambient;
 
 	total_color = (t_vector){0, 0, 0};
 	i = 0;
 	while (i < 1)
 	{
-		light_dir = normalize_vector(get_direction_vector(info.scene.light[i].position,
-					info.intersection_point));
+		light_dir = get_direction_vector(info.scene.light[i].position,
+					info.intersection_point);
 		dot_diffuse = fmax(0, dot_product(light_dir, info.normal_vector));
-		diffuse = multiply_v(info.color, DIFFUSE_CONST * dot_diffuse
-				* info.scene.light[i].brightness);
+		diffuse = multiply_v(multiply_v(info.color, DIFFUSE_CONST * dot_diffuse
+				* info.scene.light[i].brightness), is_visible(&info, light_dir));
 		reflected_ray = reflect_ray(light_dir, info.normal_vector);
 		view_vector = normalize_vector(subtract_v(info.scene.camera->position,
 					info.intersection_point));
 		dot_specular = fmax(0, dot_product(reflected_ray, view_vector));
-		specular = (t_vector){SPECULAR_CONST * pow(dot_specular,
+		specular = multiply_v((t_vector){SPECULAR_CONST * pow(dot_specular,
 				SHININESS_CONST) * info.scene.light[i].brightness,
 			SPECULAR_CONST * pow(dot_specular, SHININESS_CONST)
 			* info.scene.light[i].brightness, SPECULAR_CONST * pow(dot_specular,
-				SHININESS_CONST) * info.scene.light[i].brightness};
+				SHININESS_CONST) * info.scene.light[i].brightness}, is_visible(&info, reflected_ray));
 		total_color = add_v(total_color, add_v(diffuse, specular));
 		i++;
 	}
-	ambient = multiply_v(info.color, AMBIENT_CONST);
-	total_color = add_v(total_color, ambient);
-	total_color = clamp_vector(total_color, 0, 255);
+	total_color = clamp_vector(add_v(total_color, multiply_v(info.color, AMBIENT_CONST)), 0, 255);
 	return (vector_to_int(total_color));
 }
