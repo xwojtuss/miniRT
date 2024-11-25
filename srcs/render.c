@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/19 14:17:51 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:11:52 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
 			cylinder, prev_t));
 }
 
-static int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
+int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
 {
 	float	ND;
 	float	t;
@@ -131,7 +131,7 @@ static int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
 	return (0);
 }
 
-float	is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
+int	is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
@@ -181,7 +181,7 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 		return (phong_reflection((t_raytrace_info){get_intersection_point(ray, *t), get_normal_vector_sphere(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), ray.direction,
 				scene, (t_vector){((t_sphere *)object->object)->color.r,
 				((t_sphere *)object->object)->color.g,
-				((t_sphere *)object->object)->color.b}}));
+				((t_sphere *)object->object)->color.b}, object}));
 	}
 	else if (object->type == PLANE)
 	{
@@ -193,7 +193,7 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 					*(t_plane *)object->object), ray.direction, scene,
 				(t_vector){((t_plane *)object->object)->color.r,
 				((t_plane *)object->object)->color.g,
-				((t_plane *)object->object)->color.b}}));
+				((t_plane *)object->object)->color.b}, object}));
 	}
 	else if (object->type == CYLINDER)
 	{
@@ -205,7 +205,7 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 				ray.direction, scene,
 				(t_vector){((t_cylinder *)object->object)->color.r,
 				((t_cylinder *)object->object)->color.g,
-				((t_cylinder *)object->object)->color.b}}));
+				((t_cylinder *)object->object)->color.b}, object}));
 	}
 	return (0x000000);
 }
