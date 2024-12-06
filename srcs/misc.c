@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   misc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:07 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/20 17:26:47 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:56:16 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,9 @@ int	rgb_to_int(int r, int g, int b)
 int	vector_to_int(t_vector vector)
 {
 	return (rgb_to_int(vector.x, vector.y, vector.z));
+}
+
+t_vector	color_to_vector(t_color color)
+{
+	return ((t_vector){color.r, color.g, color.b});
 }

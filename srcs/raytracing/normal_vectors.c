@@ -16,12 +16,10 @@ t_vector	get_normal_vector_plane(t_ray ray, t_plane plane)
 
 t_vector	get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder, float t)
 {
-	t_vector	oc;
 	t_vector	p;
 	t_vector	normal;
 	float		m;
 
-	oc = subtract_v(ray.origin, cylinder->position);
 	p = get_intersection_point(ray, t);
 	m = dot_product(p, cylinder->orientation);
 	normal = subtract_v(subtract_v(p, cylinder->position),

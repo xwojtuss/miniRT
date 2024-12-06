@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/25 14:11:52 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:48:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #include "phong_reflection.h"
 
-t_vector	get_intersection_point(t_ray ray, float t)
+t_vector get_intersection_point(t_ray ray, float t)
 {
 	return (add_v(ray.origin, multiply_v(ray.direction, t)));
 }
@@ -177,35 +177,26 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 	{
 		if (is_intersect_sphere(ray, object->object, t) == 0)
 			return (0x000000);
-		// return (color_to_int(((t_sphere *)object->object)->color));
 		return (phong_reflection((t_raytrace_info){get_intersection_point(ray, *t), get_normal_vector_sphere(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), ray.direction,
-				scene, (t_vector){((t_sphere *)object->object)->color.r,
-				((t_sphere *)object->object)->color.g,
-				((t_sphere *)object->object)->color.b}, object}));
+				scene, color_to_vector(((t_sphere *)object->object)->color), object}));
 	}
 	else if (object->type == PLANE)
 	{
 		if (is_intersect_plane(ray, object->object, t) == 0)
 			return (0x000000);
-		// return (color_to_int(((t_plane *)object->object)->color));
 		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
 					*t), get_normal_vector_plane(ray,
 					*(t_plane *)object->object), ray.direction, scene,
-				(t_vector){((t_plane *)object->object)->color.r,
-				((t_plane *)object->object)->color.g,
-				((t_plane *)object->object)->color.b}, object}));
+				color_to_vector(((t_plane *)object->object)->color), object}));
 	}
 	else if (object->type == CYLINDER)
 	{
 		if (is_intersect_ray_cylinder(ray, object->object, t) == 0)
 			return (0x000000);
-		// return (color_to_int(((t_cylinder *)object->object)->color));
 		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
 					*t), get_normal_vector_cylinder(ray, object->object, *t),
 				ray.direction, scene,
-				(t_vector){((t_cylinder *)object->object)->color.r,
-				((t_cylinder *)object->object)->color.g,
-				((t_cylinder *)object->object)->color.b}, object}));
+				color_to_vector(((t_cylinder *)object->object)->color), object}));
 	}
 	return (0x000000);
 }
