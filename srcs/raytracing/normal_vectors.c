@@ -1,6 +1,16 @@
 #include "mini_rt.h"
 
-t_vector	get_intersection_point(t_ray ray, float t);
+t_vector	get_intersection_point(t_ray ray, double t);
+
+t_vector	get_normal_sphere_new(t_vector intersection_point, t_vector camera_pos, t_sphere *sphere)
+{
+	t_vector result;
+	
+	result = normalize_vector(subtract_v(intersection_point, sphere->position));
+	if (vector_length(subtract_v(camera_pos, sphere->position)) > sphere->diam / 2)
+		result = multiply_v(result, -1);
+	return (result);
+}
 
 t_vector	get_normal_vector_sphere(t_vector intersection_point, t_vector center)
 {
@@ -14,7 +24,7 @@ t_vector	get_normal_vector_plane(t_ray ray, t_plane plane)
 	return (plane.orientation);
 }
 
-t_vector	get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder, float t)
+t_vector	get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder, double t)
 {
 	t_vector	p;
 	t_vector	normal;

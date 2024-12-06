@@ -1,7 +1,7 @@
 #include "mini_rt.h"
 #include "phong_reflection.h"
 
-t_vector	get_intersection_point(t_ray ray, float t);
+t_vector	get_intersection_point(t_ray ray, double t);
 
 t_vector	reflect_ray(t_vector light_dir, t_vector normal)
 {
@@ -20,11 +20,11 @@ t_vector	clamp_vector(t_vector vector, int min, int max)
 bool	find_closest_intersection(t_scene scene, t_ray ray, t_vector *intersection_point)
 {
 	t_objects	*curr;
-	float		t;
-	float		min_t;
+	double		t;
+	double		min_t;
 
-	min_t = FLT_MAX;
-	t = FLT_MAX;
+	min_t = DBL_MAX;
+	t = DBL_MAX;
 	curr = scene.objects;
 	while (curr)
 	{
@@ -63,7 +63,7 @@ bool	find_closest_intersection(t_scene scene, t_ray ray, t_vector *intersection_
 		}
 		curr = curr->next;
 	}
-	return (min_t < FLT_MAX);
+	return (min_t < DBL_MAX);
 }
 
 int	is_visible(t_scene *scene, t_vector intersection_point, t_vector normal, t_vector light_position)
@@ -72,12 +72,12 @@ int	is_visible(t_scene *scene, t_vector intersection_point, t_vector normal, t_v
 	t_vector shadow_intersection;
 	// float light_distance;
 
-	shadow_ray.origin = add_v(intersection_point, multiply_v(normal, FLT_EPSILON));
+	shadow_ray.origin = add_v(intersection_point, multiply_v(normal, DBL_EPSILON));
 	shadow_ray.direction = normalize_vector(subtract_v(light_position, shadow_ray.origin));
 	// light_distance = vector_length(subtract_v(light_position, shadow_ray.origin));
 	if (find_closest_intersection(*scene, shadow_ray, &shadow_intersection))
 	{
-		shadow_intersection = add_v(shadow_intersection, multiply_v(normal, FLT_EPSILON));
+		shadow_intersection = add_v(shadow_intersection, multiply_v(normal, DBL_EPSILON));
 		// float intersection_distance = vector_length(subtract_v(shadow_intersection, shadow_ray.origin));
 
 		// if (intersection_distance < (light_distance - FLT_EPSILON))
@@ -105,6 +105,8 @@ int	phong_reflection(t_raytrace_info info)
 	// else
 	// 	info.intersection_point = add_v(info.intersection_point,
 	// 			multiply_v(info.normal_vector, FLT_EPSILON));
+	info.intersection_point = subtract_v(info.intersection_point,
+			multiply_v(info.normal_vector, 1e-4));
 	total_color = (t_vector){0, 0, 0};
 	i = 0; 
 	while (i < 1)

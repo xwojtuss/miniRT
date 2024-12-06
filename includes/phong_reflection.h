@@ -14,15 +14,18 @@ typedef struct s_raytrace_info
 int				phong_reflection(t_raytrace_info info);
 
 t_vector		get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder,
-					float t);
+					double t);
 t_vector		get_normal_vector_plane(t_ray ray, t_plane plane);
 t_vector		get_normal_vector_sphere(t_vector intersection_point,
 					t_vector center);
+t_vector		get_normal_sphere_new(t_vector intersection_point,
+					t_vector camera_pos, t_sphere *sphere);
 
-int				is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t);
-int				is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t);
+int				is_intersect_sphere(t_ray ray, t_sphere *sphere,
+					double *prev_t);
+int				is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t);
 int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
-					float *prev_t);
+					double *prev_t);
 
 # define SPECULAR_CONST 1
 # define DIFFUSE_CONST 0.6

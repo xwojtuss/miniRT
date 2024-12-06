@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/06 15:56:47 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:55:45 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,8 @@ typedef struct s_scene
 }						t_scene;
 
 t_vector				get_direction_vector(t_vector from, t_vector to);
-float					get_min_float(float *t, int size);
-float					get_max_float(float *t, int size);
+float					get_min_float(double *t, int size);
+float					get_max_float(double *t, int size);
 void					assign_vector(t_vector *vector, float x, float y,
 							float z);
 void					assign_color(t_color *color, int r, int g, int b);
