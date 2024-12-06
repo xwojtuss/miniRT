@@ -13,7 +13,7 @@ typedef struct s_raytrace_info
 
 int				phong_reflection(t_raytrace_info info);
 
-t_vector get_normal_vector_cylinder(t_vector intersection_point, t_cylinder *cylinder);
+t_vector		get_normal_vector_cylinder(t_vector intersection_point, t_cylinder *cylinder);
 t_vector		get_normal_vector_plane(t_ray ray, t_plane plane);
 t_vector		get_normal_vector_sphere(t_vector intersection_point,
 					t_vector center);
@@ -26,10 +26,11 @@ int				is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t);
 int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 					double *prev_t);
 
-# define SPECULAR_CONST 1
-# define DIFFUSE_CONST 0.6
-# define AMBIENT_CONST 0.1
-# define SHININESS_CONST 32
+
+#define SPECULAR_CONST 0.2
+#define DIFFUSE_CONST 0.6
+#define AMBIENT_CONST 1
+#define SHININESS_CONST 5
 
 # define OFFSET 1e-6
 

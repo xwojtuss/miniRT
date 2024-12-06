@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/18 14:59:47 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:04:14 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		err("Invalid number of arguments");
 	init_scene(&scene);
+	scene.file = argv[1];
 	read_scene(&scene, argv[1]);
 	check_scene(&scene);
 	initialize_mlx(&scene);
