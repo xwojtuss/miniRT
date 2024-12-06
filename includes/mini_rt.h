@@ -6,13 +6,14 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/06 21:13:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:07:51 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
+# define OFFSET_NORMAL 1e-4
 # define ROTATE_DEGREE 5
 # define FOV_OFFSET 5
 # define MOVE_STEP 0.5
@@ -29,6 +30,10 @@
 # define WIN_WIDTH_DEFAULT 400
 
 # define FLOAT_PITCH_LIMIT 0.98
+
+# ifndef DEBUG_TOOLS
+#  define DEBUG_TOOLS 1
+# endif
 
 # include "libft.h"
 # include <X11/Xlib.h>
@@ -87,6 +92,7 @@ typedef struct s_lights
 {
 	t_vector			position;
 	float				brightness;
+	t_color				color;
 	struct s_lights		*next;
 }						t_lights;
 
@@ -154,6 +160,7 @@ typedef struct s_scene
 	double				viewport_height;
 	int					image_width;
 	int					image_height;
+	char				*file;
 	t_vector			viewport_grid_vector_x;
 	t_vector			viewport_grid_vector_y;
 	t_vector			viewport_top_left;
@@ -229,6 +236,7 @@ void					render_scene(t_scene *scene);
 void					print_array(char **array);
 
 double					vector_length(t_vector vector);
+t_vector				multiply_v_color(t_vector v1, t_vector v2);
 float					dot_product(t_vector one, t_vector two);
 float					get_angle_between(t_vector one, t_vector two);
 t_vector				normalize_vector(t_vector vector);
@@ -262,7 +270,7 @@ bool					did_switch_signs_v(t_vector v1, t_vector v2);
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
 int						vector_to_int(t_vector vector);
-t_vector	color_to_vector(t_color color);
+t_vector				color_to_vector(t_color color);
 void					initialize_viewport(t_scene *scene);
 
 // debug2.c

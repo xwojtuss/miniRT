@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -O3
+CFLAGS = -Wall -Wextra -Werror -g -O3 -D DEBUG_TOOLS=1
 
 HEADERS = includes/mini_rt.h includes/phong_reflection.h
 INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:25 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/19 15:20:33 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 23:07:27 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	key_hook(int keycode, t_scene *scene)
 		free_scene(scene);
 		exit(EXIT_SUCCESS);
 	}
+	else if (!DEBUG_TOOLS)
+		return (EXIT_SUCCESS);
 	else if (keycode == XK_w)
 		scene->camera->position = subtract_v(scene->camera->position,
 				multiply_v(scene->camera->orientation, MOVE_STEP));
