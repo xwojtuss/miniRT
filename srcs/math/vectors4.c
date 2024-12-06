@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   vectors4.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:13:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/19 15:13:16 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:57:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-float	get_max_float(float *t, int size)
+float	get_max_double(double *t, int size)
 {
-	float	max_t;
+	double	max_t;
 	int		i;
 
 	i = 0;
@@ -27,9 +27,9 @@ float	get_max_float(float *t, int size)
 	return (max_t);
 }
 
-float	get_min_float(float *t, int size)
+float	get_min_double(double *t, int size)
 {
-	float	min_t;
+	double	min_t;
 	int		i;
 
 	i = 0;

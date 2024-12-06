@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/19 14:09:02 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:19:38 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	initialize_viewport(t_scene *scene)
 		scene->image_height = 1;
 	scene->viewport_height = 2.0 * tan(deg_to_rad(scene->camera->fov) / 2.0);
 	scene->viewport_width = scene->viewport_height * aspect_ratio;
-	scene->camera->right = normalize_vector(cross_product((t_vector){0, 1, 0},
+	scene->camera->right = normalize_vector(cross_product((t_vector){0, -1, 0},
 				scene->camera->orientation));
 	scene->camera->up = normalize_vector(cross_product(scene->camera->orientation,
 				scene->camera->right));

@@ -6,19 +6,19 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/06 16:48:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:37:49 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #include "phong_reflection.h"
 
-t_vector get_intersection_point(t_ray ray, float t)
+t_vector get_intersection_point(t_ray ray, double t)
 {
 	return (add_v(ray.origin, multiply_v(ray.direction, t)));
 }
 
-void	retrieve_t(float a, float b, float disc, float *t1, float *t2)
+void	retrieve_t(float a, float b, float disc, double *t1, double *t2)
 {
 	if (disc < 0)
 	{
@@ -26,20 +26,20 @@ void	retrieve_t(float a, float b, float disc, float *t1, float *t2)
 		*t2 = 0;
 		return ;
 	}
-	*t1 = (-b + sqrt(disc)) / (2 * a);
-	*t2 = (-b - sqrt(disc)) / (2 * a);
+	*t1 = (double)(-b + sqrt(disc)) / (double)(2 * a);
+	*t2 = (double)(-b - sqrt(disc)) / (double)(2 * a);
 }
 
-float	is_intersect_cylinder_caps(t_ray ray, t_vector caps_info[2],
-		t_cylinder *cylinder, float *prev_t)
+int	is_intersect_cylinder_caps(t_ray ray, t_vector caps_info[2],
+		t_cylinder *cylinder, double *prev_t)
 {
 	t_vector	p;
 
-	float t_cap_top, t_cap_bottom;
+	double t_cap_top, t_cap_bottom;
 	t_cap_bottom = dot_product(subtract_v(caps_info[0], ray.origin),
 			cylinder->orientation) / dot_product(ray.direction,
 			cylinder->orientation);
-	if (t_cap_bottom > FLT_EPSILON)
+	if (t_cap_bottom > DBL_EPSILON)
 	{
 		p = get_intersection_point(ray, t_cap_bottom);
 		if (vector_length(subtract_v(p, caps_info[0])) <= cylinder->diam / 2
@@ -49,7 +49,7 @@ float	is_intersect_cylinder_caps(t_ray ray, t_vector caps_info[2],
 	t_cap_top = dot_product(subtract_v(caps_info[1], ray.origin),
 			cylinder->orientation) / dot_product(ray.direction,
 			cylinder->orientation);
-	if (t_cap_top > FLT_EPSILON)
+	if (t_cap_top > DBL_EPSILON)
 	{
 		p = get_intersection_point(ray, t_cap_top);
 		if (vector_length(subtract_v(p, caps_info[1])) <= cylinder->diam / 2
@@ -59,7 +59,7 @@ float	is_intersect_cylinder_caps(t_ray ray, t_vector caps_info[2],
 	return (0);
 }
 
-void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, float *t1, float *t2)
+void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)
 {
 	t_vector	oc;
 	t_vector	d;
@@ -74,32 +74,32 @@ void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, float *t1, float *t2)
 					cylinder->orientation)));
 	a = dot_product(d, d);
 	b = 2 * dot_product(d, oc);
-	discriminant = b * b - 4 * a * dot_product(oc, oc) - pow(cylinder->diam / 2,
-			2);
-	*t1 = FLT_MIN;
-	*t2 = FLT_MIN;
+	discriminant = b * b - 4 * a * (dot_product(oc, oc) - pow(cylinder->diam / 2, 2));
+	*t1 = DBL_MIN;
+	*t2 = DBL_MIN;
 	if (discriminant < 0)
 		return ;
 	retrieve_t(a, b, discriminant, t1, t2);
 }
 
-int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
+int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 {
-	float	t;
+	double	t;
 	float	height_pos;
 
-	float t1, t2;
+	double t1, t2;
 	t_vector cap_top, cap_bottom, p;
+
+	get_t_cylinder(cylinder, ray, &t1, &t2);
+	if (t1 == DBL_MIN && t2 == DBL_MIN)
+		return (0);
 	cap_bottom = cylinder->position;
 	cap_top = add_v(cylinder->position, multiply_v(cylinder->orientation,
 				cylinder->height));
-	get_t_cylinder(cylinder, ray, &t1, &t2);
-	if (t1 == FLT_MIN && t2 == FLT_MIN)
-		return (0);
 	for (int i = 0; i < 2; ++i)
 	{
 		t = (i == 0) ? t1 : t2;
-		if (t > FLT_EPSILON)
+		if (t > DBL_EPSILON)
 		{
 			p = get_intersection_point(ray, t);
 			height_pos = dot_product(subtract_v(p, cylinder->position),
@@ -116,10 +116,10 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, float *prev_t)
 			cylinder, prev_t));
 }
 
-int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
+int	is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t)
 {
 	float	ND;
-	float	t;
+	double	t;
 
 	ND = dot_product(plane->orientation, ray.direction);
 	if (ND == 0)
@@ -131,15 +131,15 @@ int	is_intersect_plane(t_ray ray, t_plane *plane, float *prev_t)
 	return (0);
 }
 
-int	is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
+int	is_intersect_sphere(t_ray ray, t_sphere *sphere, double *prev_t)
 {
 	t_vector	origin_to_center;
 	float		a;
 	float		b;
 	float		c;
 	float		disc;
-	float		t1;
-	float		t2;
+	double		t1;
+	double		t2;
 	float		temp;
 
 	t1 = 0;
@@ -170,14 +170,14 @@ int	is_intersect_sphere(t_ray ray, t_sphere *sphere, float *prev_t)
 	return (0);
 }
 
-int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
+int	render_object(t_ray ray, t_objects *object, t_scene scene, double *t)
 {
 	(void)scene;
 	if (object->type == SPHERE)
 	{
 		if (is_intersect_sphere(ray, object->object, t) == 0)
 			return (0x000000);
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray, *t), get_normal_vector_sphere(get_intersection_point(ray, *t), ((t_sphere *)object->object)->position), ray.direction,
+		return (phong_reflection((t_raytrace_info){get_intersection_point(ray, *t), get_normal_sphere_new(get_intersection_point(ray, *t), ray.origin, (t_sphere *)object->object), ray.direction,
 				scene, color_to_vector(((t_sphere *)object->object)->color), object}));
 	}
 	else if (object->type == PLANE)
@@ -193,10 +193,11 @@ int	render_object(t_ray ray, t_objects *object, t_scene scene, float *t)
 	{
 		if (is_intersect_ray_cylinder(ray, object->object, t) == 0)
 			return (0x000000);
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
-					*t), get_normal_vector_cylinder(ray, object->object, *t),
-				ray.direction, scene,
-				color_to_vector(((t_cylinder *)object->object)->color), object}));
+		// return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
+		// 			*t), get_normal_vector_cylinder(ray, object->object, *t),
+		// 		ray.direction, scene,
+		// 		color_to_vector(((t_cylinder *)object->object)->color), object}));
+		return (color_to_int(((t_cylinder *)object->object)->color));
 	}
 	return (0x000000);
 }
@@ -206,9 +207,9 @@ int	trace_ray(t_ray ray, t_scene *scene)
 	t_objects	*curr;
 	int			color;
 	int			result;
-	float		t;
+	double		t;
 
-	t = FLT_MAX;
+	t = DBL_MAX;
 	curr = scene->objects;
 	color = 0x000000;
 	result = 0x000000;
