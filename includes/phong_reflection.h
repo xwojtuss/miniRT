@@ -29,4 +29,6 @@ int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 # define AMBIENT_CONST 0.1
 # define SHININESS_CONST 32
 
+# define OFFSET 1e-6
+
 #endif

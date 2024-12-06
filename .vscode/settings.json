@@ -4,7 +4,8 @@
         "mini_rt.h": "c",
         "xutil.h": "c",
         "keysym.h": "c",
-        "keysymdef.h": "c"
+        "keysymdef.h": "c",
+        "phong_reflection.h": "c"
     },
     "makefile.configureOnOpen": false
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/19 15:14:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:56:47 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define KEY_ESC 65307
 
 # define WIN_HEIGHT_DEFAULT 300
-# define WIN_WIDTH_DEFAULT 480
+# define WIN_WIDTH_DEFAULT 700
 
 # define FLOAT_PITCH_LIMIT 0.98
 
@@ -262,6 +262,7 @@ bool					did_switch_signs_v(t_vector v1, t_vector v2);
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
 int						vector_to_int(t_vector vector);
+t_vector	color_to_vector(t_color color);
 void					initialize_viewport(t_scene *scene);
 
 // debug2.c
