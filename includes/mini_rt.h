@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/06 16:55:45 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:13:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define KEY_ESC 65307
 
 # define WIN_HEIGHT_DEFAULT 300
-# define WIN_WIDTH_DEFAULT 700
+# define WIN_WIDTH_DEFAULT 400
 
 # define FLOAT_PITCH_LIMIT 0.98
 

@@ -13,8 +13,7 @@ typedef struct s_raytrace_info
 
 int				phong_reflection(t_raytrace_info info);
 
-t_vector		get_normal_vector_cylinder(t_ray ray, t_cylinder *cylinder,
-					double t);
+t_vector get_normal_vector_cylinder(t_vector intersection_point, t_cylinder *cylinder);
 t_vector		get_normal_vector_plane(t_ray ray, t_plane plane);
 t_vector		get_normal_vector_sphere(t_vector intersection_point,
 					t_vector center);
