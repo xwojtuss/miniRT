@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:15:54 by wkornato          #+#    #+#             */
-/*   Updated: 2024/11/12 21:37:58 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:37:07 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_scene(t_scene *scene)
 {
 	t_objects	*objects;
 	t_objects	*next;
+	t_lights	*light;
+	t_lights	*next_light;
 
 	if (!scene)
 		return ;
@@ -29,8 +31,13 @@ void	free_scene(t_scene *scene)
 			free(objects);
 		objects = next;
 	}
-	if (scene->light)
-		free(scene->light);
+	light = scene->light;
+	while (light)
+	{
+		next_light = light->next;
+		free(light);
+		light = next_light;
+	}
 	if (scene->ambient)
 		free(scene->ambient);
 	if (scene->camera)

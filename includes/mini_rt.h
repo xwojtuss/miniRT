@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/06 23:07:51 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:52:41 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define KEY_CLOSE_WINDOW 17
 # define KEY_ESC 65307
 
-# define WIN_HEIGHT_DEFAULT 300
-# define WIN_WIDTH_DEFAULT 400
+# define WIN_HEIGHT_DEFAULT 600
+# define WIN_WIDTH_DEFAULT 900
 
 # define FLOAT_PITCH_LIMIT 0.98
 
@@ -36,12 +36,12 @@
 # endif
 
 # include "libft.h"
+# include "mlx.h"
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <float.h>
 # include <math.h>
-# include <mlx.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <stdlib.h>
