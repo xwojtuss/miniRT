@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/06 21:31:13 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:55:50 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ void	initialize_mlx(t_scene *scene)
 			"miniRT");
 	if (!scene->win)
 		err_free("Could not create window", scene);
-	scene->img.img
-		= mlx_new_image(scene->mlx, scene->win_width, scene->win_height);
+	scene->img.img = mlx_new_image(scene->mlx, scene->win_width,
+			scene->win_height);
 	if (!scene->img.img)
 		err_free("Could not create image", scene);
-	scene->img.addr
-		= mlx_get_data_addr(scene->img.img, &scene->img.bits_per_pixel,
-			&scene->img.line_length, &scene->img.endian);
+	scene->img.addr = mlx_get_data_addr(scene->img.img,
+			&scene->img.bits_per_pixel, &scene->img.line_length,
+			&scene->img.endian);
 	if (!scene->img.addr)
 		err_free("Could not get image address", scene);
 	mlx_hook(scene->win, DestroyNotify, NoEventMask, close_win_handler, scene);
 	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hook, scene);
 	if (DEBUG_TOOLS)
-		mlx_hook(scene->win, MotionNotify, PointerMotionMask, mouse_hook, scene);
+		mlx_hook(scene->win, MotionNotify, PointerMotionMask, mouse_hook,
+			scene);
 }

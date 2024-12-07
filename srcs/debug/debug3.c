@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:17:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/11/18 15:00:30 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:53:16 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,5 @@ void	print_objects_parameters(t_scene *scene)
 		else if (current->type == CYLINDER)
 			print_cylinder_parameters(current->object);
 		current = current->next;
-	}
-}
-
-void	show_depth(t_scene scene)
-{
-	int		delay;
-	float	amount;
-	int		x;
-
-	delay = 10000;
-	x = 1;
-	amount = 0.02;
-	while (true)
-	{
-		if (x == 1 || x == 4 || x == 5 || x == 8)
-			scene.camera->position.z -= amount * 2;
-		else
-			scene.camera->position.z += amount * 2;
-		if (x == 3 || x == 4 || x == 7 || x == 8)
-			scene.camera->position.y -= amount;
-		else
-			scene.camera->position.y += amount;
-		if (x == 3 || x == 4 || x == 5 || x == 6)
-			scene.camera->position.x -= amount;
-		else
-			scene.camera->position.x += amount;
-		initialize_viewport(&scene);
-		render_scene(&scene);
-		usleep(delay);
-		x++;
-		if (x == 9)
-			x = 1;
 	}
 }
