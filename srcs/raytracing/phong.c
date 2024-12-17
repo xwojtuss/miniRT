@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/07 17:08:53 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/17 16:40:43 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ int	phong_reflection(t_raytrace_info info)
 
 	info.intersection_point = subtract_v(info.intersection_point,
 			multiply_v(info.normal_vector, 1e-4));
-	t_lights *curr = info.scene.light;
+	t_lights *curr = info.scene->light;
 	while (curr)
 	{
-		if (is_visible(&info.scene, info.intersection_point, info.normal_vector,
+		if (is_visible(info.scene, info.intersection_point, info.normal_vector,
 				curr->position))
 		{
 			light_dir = get_direction_vector(curr->position,
@@ -113,7 +113,7 @@ int	phong_reflection(t_raytrace_info info)
 					multiply_v(color_to_vector(curr->color), DIFFUSE_CONST
 						* dot_diffuse * curr->brightness));
 			reflected_ray = reflect_ray(light_dir, info.normal_vector);
-			view_vector = normalize_vector(subtract_v(info.scene.camera->position,
+			view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 						info.intersection_point));
 			dot_specular = fmax(0, dot_product(reflected_ray, view_vector));
 			// specular = multiply_v(info.color, SPECULAR_CONST * pow(dot_specular,
@@ -125,8 +125,8 @@ int	phong_reflection(t_raytrace_info info)
 		curr = curr->next;
 	}
 	total_color = add_v(multiply_v_color(info.color,
-				multiply_v(color_to_vector(info.scene.ambient->color),
-					info.scene.ambient->brightness * AMBIENT_CONST)),
+				multiply_v(color_to_vector(info.scene->ambient->color),
+					info.scene->ambient->brightness * AMBIENT_CONST)),
 			total_color);
 
 	total_color = clamp_vector(total_color, 0, 255);

@@ -53,3 +53,21 @@ t_vector	get_normal_vector_cylinder(t_vector intersection_point,
 	else
 		return (multiply_v(normalize_vector(projection_to_intersection), -1.0));
 }
+
+t_vector get_normal_vector_cylinder_new(t_vector intersect, t_cylinder *cylinder)
+{
+	if (vector_length(subtract_v(intersect, cylinder->position)) < cylinder->diam / 2 + OFFSET_NORMAL)
+		return (cylinder->orientation);
+	else if (vector_length(subtract_v(intersect, add_v(cylinder->position, multiply_v(cylinder->orientation, cylinder->height)))) < cylinder->diam / 2 + OFFSET_NORMAL)
+		return (multiply_v(cylinder->orientation, -1));
+	(void)cylinder;
+	(void)intersect;
+	double t = dot_product(subtract_v(intersect, cylinder->position), cylinder->orientation);
+	t_vector pt = add_v(cylinder->position, multiply_v(cylinder->orientation, t));
+	return (normalize_vector(subtract_v(intersect, pt)));
+	if (cylinder->is_caps == TOP)
+		return (cylinder->orientation);
+	else if (cylinder->is_caps == BOTTOM)
+		return (multiply_v(cylinder->orientation, -1));
+	return ((t_vector){0, 1, 0});
+}

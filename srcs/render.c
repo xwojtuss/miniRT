@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/07 17:36:56 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:44:28 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ double	is_intersect_cylinder_caps(t_ray ray, t_cylinder *cylinder,
 	{
 		p = get_intersection_point(ray, t_cap_bottom);
 		if (vector_length(subtract_v(p, cap_bottom)) <= cylinder->diam / 2)
-			return (t_cap_bottom);
+			return (cylinder->is_caps = BOTTOM, t_cap_bottom);
 	}
 	if (t_cap_top > DBL_EPSILON && t_cap_top < *prev_t)
 	{
 		p = get_intersection_point(ray, t_cap_top);
 		if (vector_length(subtract_v(p, cap_top)) <= cylinder->diam / 2)
-			return (t_cap_top);
+			return (cylinder->is_caps = TOP, t_cap_top);
 	}
 	return (0);
 }
@@ -98,6 +98,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 	double	temp;
 
 	double t1, t2;
+	cylinder->is_caps = NOWHERE;
 	get_t_cylinder(cylinder, ray, &t1, &t2);
 	if (t1 == DBL_MAX && t2 == DBL_MAX)
 		return (0);
@@ -114,7 +115,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 					cylinder->position), cylinder->orientation);
 		if (height_pos >= 0 && height_pos <= cylinder->height && (caps_t == 0
 				|| t1 < caps_t))
-			return (*prev_t = t1, 1);
+			return (*prev_t = t1, cylinder->is_caps = SIDE, 1);
 	}
 	if (t2 > DBL_EPSILON && t2 < *prev_t)
 	{
@@ -122,7 +123,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 					cylinder->position), cylinder->orientation);
 		if (height_pos >= 0 && height_pos <= cylinder->height && (caps_t == 0
 				|| t2 < caps_t))
-			return (*prev_t = t2, 1);
+			return (*prev_t = t2, cylinder->is_caps = SIDE, 1);
 	}
 	if (caps_t > DBL_EPSILON && caps_t < *prev_t)
 		return (*prev_t = caps_t, 1);
@@ -181,60 +182,68 @@ int	is_intersect_sphere(t_ray ray, t_sphere *sphere, double *prev_t)
 	return (0);
 }
 
-int	render_object(t_ray ray, t_objects *object, t_scene scene, double *t)
+t_objects	*get_closest_object(t_scene scene, t_ray ray, double *new_t)
 {
-	(void)scene;
-	if (object->type == SPHERE)
+	t_objects	*curr;
+	t_objects	*result;
+	double		t;
+
+	*new_t = INFINITY;
+	t = INFINITY;
+	curr = scene.objects;
+	result = scene.objects;
+	while (curr)
 	{
-		if (is_intersect_sphere(ray, object->object, t) == 0)
-			return (0x000000);
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
-					*t), get_normal_sphere_new(get_intersection_point(ray, *t),
-					ray.origin, (t_sphere *)object->object), ray.direction,
-				scene, color_to_vector(((t_sphere *)object->object)->color),
-				object}));
+		if (curr->type == SPHERE && is_intersect_sphere(ray, curr->object, &t) && t < *new_t)
+		{
+			*new_t = t;
+			result = curr;
+		}
+		else if (curr->type == PLANE && is_intersect_plane(ray, curr->object, &t) && t < *new_t)
+		{
+			*new_t = t;
+			result = curr;
+		}
+		else if (curr->type == CYLINDER && is_intersect_ray_cylinder(ray, curr->object, &t) && t < *new_t)
+		{
+			*new_t = t;
+			result = curr;
+		}
+		curr = curr->next;
 	}
-	else if (object->type == PLANE)
-	{
-		if (is_intersect_plane(ray, object->object, t) == 0)
-			return (0x000000);
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
-					*t), get_normal_vector_plane(ray,
-					*(t_plane *)object->object), ray.direction, scene,
-				color_to_vector(((t_plane *)object->object)->color), object}));
-	}
-	else if (object->type == CYLINDER)
-	{
-		if (is_intersect_ray_cylinder(ray, object->object, t) == 0)
-			return (0x000000);
-		return (phong_reflection((t_raytrace_info){get_intersection_point(ray,
-					*t), get_normal_vector_cylinder(get_intersection_point(ray,
-						*t), (t_cylinder *)object->object), ray.direction,
-				scene, color_to_vector(((t_cylinder *)object->object)->color),
-				object}));
-	}
-	return (0x000000);
+	if (*new_t >= DBL_MAX)
+		return (NULL);
+	return (result);
 }
 
 int	trace_ray(t_ray ray, t_scene *scene)
 {
-	t_objects	*curr;
-	int			color;
-	int			result;
-	double		t;
+	t_raytrace_info		raytrace;
+	// int			color;
+	// int			result;
 
-	t = DBL_MAX;
-	curr = scene->objects;
-	color = 0x000000;
-	result = 0x000000;
-	while (curr)
+	raytrace.scene = scene;
+	raytrace.t = INFINITY;
+	raytrace.object = get_closest_object(*scene, ray, &raytrace.t);
+	if (raytrace.object == NULL)
+		return (0x000000);
+	raytrace.intersection_point = get_intersection_point(ray, raytrace.t);
+	if (raytrace.object->type == SPHERE)
 	{
-		color = render_object(ray, curr, *scene, &t);
-		if (color != 0x000000)
-			result = color;
-		curr = curr->next;
+		raytrace.color = color_to_vector(((t_sphere *)(raytrace.object->object))->color);
+		raytrace.normal_vector = get_normal_sphere_new(raytrace.intersection_point, scene->camera->position, raytrace.object->object);
 	}
-	return (result);
+	else if (raytrace.object->type == CYLINDER)
+	{
+		raytrace.color = color_to_vector(((t_cylinder *)(raytrace.object->object))->color);
+		raytrace.normal_vector = get_normal_vector_cylinder(raytrace.intersection_point, raytrace.object->object);
+	}
+	else if (raytrace.object->type == PLANE)
+	{
+		raytrace.color = color_to_vector(((t_plane *)(raytrace.object->object))->color);
+		raytrace.normal_vector = get_normal_vector_plane(ray, *(t_plane *)raytrace.object->object);
+	}
+	return (phong_reflection(raytrace));
 }
 
 void	render_scene(t_scene *scene)
