@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/07 16:52:41 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:46:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef enum e_where
+{
+	BOTTOM,
+	TOP,
+	SIDE,
+	NOWHERE
+}						t_where;
 
 typedef enum e_object_param
 {
@@ -139,6 +147,7 @@ typedef struct s_cylinder
 	float				diam;
 	float				height;
 	t_color				color;
+	t_where				is_caps;
 }						t_cylinder;
 
 typedef struct s_image
