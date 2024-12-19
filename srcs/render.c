@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 16:59:33 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:31:58 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 
 	raytrace = init_raytrace_info(ray, scene);
 	if (raytrace.object == NULL || raytrace.t == INFINITY)
-		return (0x000000);
+		return (DEFAULT_BACKGROUND_COLOR);
 	raytrace.inter = get_inter(ray, raytrace.t);
 	if (raytrace.object->type == SPHERE)
 	{

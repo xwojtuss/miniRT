@@ -6,14 +6,14 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/19 17:29:34 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:18:55 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
-# define OFFSET_NORMAL 1e-4
+# define OFFSET_NORMAL 1
 # define ROTATE_DEGREE 5
 # define FOV_OFFSET 5
 # define MOVE_STEP 0.5
@@ -31,16 +31,18 @@
 
 # define FLOAT_PITCH_LIMIT 0.98
 
+# define DEFAULT_BACKGROUND_COLOR 0x000000
+
 # ifndef DEBUG_TOOLS
 #  define DEBUG_TOOLS 1
 # endif
 
+# include "float.h"
 # include "libft.h"
 # include "mlx.h"
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
-# include <float.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdint.h>
@@ -147,7 +149,7 @@ typedef struct s_cylinder
 	float				diam;
 	float				height;
 	t_color				color;
-	t_where				is_caps;
+	t_where				inter_where;
 }						t_cylinder;
 
 typedef struct s_image
@@ -180,6 +182,9 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
+void					print_object_parameters(t_objects *object);
+t_objects				*get_closest_object(t_scene scene, t_ray ray,
+							double *new_t);
 t_vector				get_inter(t_ray ray, double t);
 void					retrieve_t(double a, double b, double disc,
 							double *ts[2]);
@@ -261,7 +266,8 @@ void					print_objects_parameters(t_scene *scene);
 void					init_scene(t_scene *scene);
 void					initialize_mlx(t_scene *scene);
 int						key_hook(int keycode, t_scene *scene);
-int						mouse_hook(int x, int y, t_scene *scene);
+int						mouse_click_handler(int button, int x, int y,
+							t_scene *scene);
 void					my_mlx_pixel_put(t_image *data, int x, int y,
 							int color);
 
@@ -280,6 +286,8 @@ t_vector				color_to_vector_cylinder(void *object);
 t_vector				color_to_vector_sphere(void *object);
 t_vector				color_to_vector_plane(void *object);
 
+bool					check_debug_tools(int keycode, t_scene *scene);
+
 // debug2.c
 void					print_sphere_parameters(t_sphere *sphere);
 void					print_plane_parameters(t_plane *plane);
@@ -290,6 +298,5 @@ void					print_camera_parameters(t_camera *camera);
 // debug3.c
 void					print_ambient_parameters(t_ambient *ambient);
 void					print_objects_parameters(t_scene *scene);
-void					show_depth(t_scene scene);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:19:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:26:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ double	is_intersect_cylinder_caps(t_ray ray, t_cylinder *cylinder,
 	{
 		if (vector_length(subtract_v(get_inter(ray, t_cap_bottom),
 					cylinder->position)) <= cylinder->diam / 2)
-			return (cylinder->is_caps = BOTTOM, t_cap_bottom);
+			return (cylinder->inter_where = BOTTOM, t_cap_bottom);
 	}
 	if (t_cap_top > DBL_EPSILON && t_cap_top < *prev_t)
 	{
 		if (vector_length(subtract_v(get_inter(ray, t_cap_top),
 					add_v(cylinder->position, multiply_v(cylinder->orientation,
 							cylinder->height)))) <= cylinder->diam / 2)
-			return (cylinder->is_caps = TOP, t_cap_top);
+			return (cylinder->inter_where = TOP, t_cap_top);
 	}
 	return (0);
 }

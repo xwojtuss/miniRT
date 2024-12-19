@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 16:51:24 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:53:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,6 @@ void	initialize_mlx(t_scene *scene)
 		err_free("Could not get image address", scene);
 	mlx_hook(scene->win, DestroyNotify, NoEventMask, close_win_handler, scene);
 	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hook, scene);
+	if (DEBUG_TOOLS)
+		mlx_mouse_hook(scene->win, mouse_click_handler, scene);
 }

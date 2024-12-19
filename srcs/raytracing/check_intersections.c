@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:16:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:21:14 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	check_side(t_ray ray, t_cylinder *cylinder, double *ts[3])
 				cylinder->position), cylinder->orientation);
 	if (height_pos >= 0 && height_pos <= cylinder->height && (*ts[2] == 0
 			|| *ts[0] < *ts[2]))
-		return (*ts[1] = *ts[0], cylinder->is_caps = SIDE, 1);
+		return (*ts[1] = *ts[0], cylinder->inter_where = SIDE, 1);
 	return (0);
 }
 
@@ -31,7 +31,7 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 	double	t1;
 	double	t2;
 
-	cylinder->is_caps = NOWHERE;
+	cylinder->inter_where = NOWHERE;
 	get_t_cylinder(cylinder, ray, &t1, &t2);
 	if (t1 == DBL_MAX && t2 == DBL_MAX)
 		return (0);

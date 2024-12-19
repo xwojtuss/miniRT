@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:28:02 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ t_vector	get_normal_vector_cylinder_new(t_vector intersect,
 	t_vector	parallel;
 	t_vector	normal;
 
-	if (cylinder->is_caps == TOP)
+	if (cylinder->inter_where == TOP)
 		return (multiply_v(cylinder->orientation, -1));
-	else if (cylinder->is_caps == BOTTOM)
+	else if (cylinder->inter_where == BOTTOM)
 		return (cylinder->orientation);
-	else if (cylinder->is_caps == SIDE)
+	else if (cylinder->inter_where == SIDE)
 	{
 		pos_to_inter = subtract_v(intersect, cylinder->position);
 		parallel = multiply_v(cylinder->orientation,

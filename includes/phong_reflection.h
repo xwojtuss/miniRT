@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:54:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:29:29 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:03:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 t_vector		get_normal_vector_cylinder_new(t_vector intersect,
 					t_cylinder *cylinder);
 
-# define SPECULAR_CONST 0.2
-# define DIFFUSE_CONST 0.4
+# define SPECULAR_CONST 0.5
+# define DIFFUSE_CONST 0.7
 # define AMBIENT_CONST 0.3
-# define SHININESS_CONST 0.5
-
-# define OFFSET 1e-6
+# define SHININESS_CONST 2
 
 #endif

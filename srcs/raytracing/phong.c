@@ -6,14 +6,12 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:28:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:17:15 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #include "phong_reflection.h"
-
-t_vector	get_inter(t_ray ray, double t);
 
 t_vector	reflect_ray(t_vector incident, t_vector normal)
 {
@@ -56,36 +54,44 @@ int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	return (1);
 }
 
+void	calculate_color(t_vector *total_color, t_lights *curr,
+		t_raytrace_info info, t_vector light_dir)
+{
+	t_vector	diffuse;
+	t_vector	reflected_ray;
+	t_vector	view_vector;
+	t_vector	specular;
+
+	diffuse = multiply_v_color(info.color,
+			multiply_v(color_to_vector(curr->color), DIFFUSE_CONST * fmax(0,
+					dot_product(light_dir, info.normal_vector))
+				* curr->brightness));
+	reflected_ray = reflect_ray(light_dir, info.normal_vector);
+	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
+				info.inter));
+	specular = multiply_v(color_to_vector(curr->color), SPECULAR_CONST
+			* pow(fmax(0, dot_product(reflected_ray, view_vector)),
+				SHININESS_CONST) * curr->brightness);
+	*total_color = add_v(*total_color, add_v(diffuse, specular));
+}
+
 int	phong_reflection(t_raytrace_info info)
 {
-	t_vector total_color = {0, 0, 0};
-	t_vector light_dir;
-	float dot_diffuse;
-	t_vector diffuse;
-	t_vector reflected_ray;
-	t_vector view_vector;
-	float dot_specular;
-	t_vector specular;
+	t_vector	total_color;
+	t_vector	light_dir;
+	t_lights	*curr;
 
-	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector, 1e-4));
-	t_lights *curr = info.scene->light;
+	total_color = (t_vector){0, 0, 0};
+	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector,
+				OFFSET_NORMAL));
+	curr = info.scene->light;
 	while (curr)
 	{
 		if (is_visible(info.scene, info.inter, info.normal_vector,
 				curr->position))
 		{
 			light_dir = get_direction_vector(curr->position, info.inter);
-			dot_diffuse = fmax(0, dot_product(light_dir, info.normal_vector));
-			diffuse = multiply_v_color(info.color,
-					multiply_v(color_to_vector(curr->color), DIFFUSE_CONST
-						* dot_diffuse * curr->brightness));
-			reflected_ray = reflect_ray(light_dir, info.normal_vector);
-			view_vector = normalize_vector(subtract_v(info.scene->camera->position,
-						info.inter));
-			dot_specular = fmax(0, dot_product(reflected_ray, view_vector));
-			specular = multiply_v(color_to_vector(curr->color), SPECULAR_CONST
-					* pow(dot_specular, SHININESS_CONST) * curr->brightness);
-			total_color = add_v(total_color, add_v(diffuse, specular));
+			calculate_color(&total_color, curr, info, light_dir);
 		}
 		curr = curr->next;
 	}
@@ -93,8 +99,6 @@ int	phong_reflection(t_raytrace_info info)
 				multiply_v(color_to_vector(info.scene->ambient->color),
 					info.scene->ambient->brightness * AMBIENT_CONST)),
 			total_color);
-
 	total_color = clamp_vector(total_color, 0, 255);
-
 	return (vector_to_int(total_color));
 }

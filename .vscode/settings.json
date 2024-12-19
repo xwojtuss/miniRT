@@ -5,7 +5,13 @@
         "xutil.h": "c",
         "keysym.h": "c",
         "keysymdef.h": "c",
-        "phong_reflection.h": "c"
+        "phong_reflection.h": "c",
+        "fcntl.h": "c",
+        "unistd.h": "c",
+        "stdint.h": "c",
+        "stdlib.h": "c",
+        "stdbool.h": "c",
+        "math.h": "c"
     },
     "makefile.configureOnOpen": false
 }
