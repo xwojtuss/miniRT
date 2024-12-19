@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:15:54 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/07 16:37:07 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:15:25 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	free_scene(t_scene *scene)
+static void	free_objects(t_objects *objects)
 {
-	t_objects	*objects;
 	t_objects	*next;
-	t_lights	*light;
-	t_lights	*next_light;
 
-	if (!scene)
-		return ;
-	objects = scene->objects;
 	while (objects)
 	{
 		next = objects->next;
@@ -31,6 +25,16 @@ void	free_scene(t_scene *scene)
 			free(objects);
 		objects = next;
 	}
+}
+
+void	free_scene(t_scene *scene)
+{
+	t_lights	*light;
+	t_lights	*next_light;
+
+	if (!scene)
+		return ;
+	free_objects(scene->objects);
 	light = scene->light;
 	while (light)
 	{

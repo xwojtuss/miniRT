@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/17 17:46:21 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:42:20 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,9 +180,14 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
+t_vector				get_inter(t_ray ray, double t);
+void					retrieve_t(double a, double b, double disc, double *t1,
+							double *t2);
+double					is_intersect_cylinder_caps(t_ray ray,
+							t_cylinder *cylinder, double *prev_t);
+void					get_t_cylinder(t_cylinder *cylinder, t_ray ray,
+							double *t1, double *t2);
 t_vector				get_direction_vector(t_vector from, t_vector to);
-float					get_min_float(double *t, int size);
-float					get_max_float(double *t, int size);
 void					assign_vector(t_vector *vector, float x, float y,
 							float z);
 void					assign_color(t_color *color, int r, int g, int b);
@@ -236,7 +241,6 @@ void					err_free_array(char *error, t_scene *scene,
 void					free_array(char **array);
 
 void					free_scene(t_scene *scene);
-void					free_objects(t_objects *objects);
 
 int						close_win(void *context, int exit_code);
 int						close_win_handler(void *context);
@@ -247,11 +251,9 @@ void					print_array(char **array);
 double					vector_length(t_vector vector);
 t_vector				multiply_v_color(t_vector v1, t_vector v2);
 float					dot_product(t_vector one, t_vector two);
-float					get_angle_between(t_vector one, t_vector two);
 t_vector				normalize_vector(t_vector vector);
 void					print_vector(t_vector vector);
 
-float					rad_to_deg(float rad);
 float					deg_to_rad(float deg);
 
 void					print_objects_parameters(t_scene *scene);
@@ -269,18 +271,14 @@ t_vector				multiply_v(t_vector vector, float multiplier);
 t_vector				add_v(t_vector one, t_vector two);
 t_vector				cross_product(t_vector one, t_vector two);
 
-t_vector				rotate_on_x(t_vector vector);
-t_vector				rotate_on_y(t_vector vector);
-t_vector				rotate_on_z(t_vector vector);
-t_vector				rotate_vector(float m[3][3], t_vector v);
-
-bool					did_switch_signs_v(t_vector v1, t_vector v2);
-
 int						rgb_to_int(int r, int g, int b);
 int						color_to_int(t_color color);
 int						vector_to_int(t_vector vector);
 t_vector				color_to_vector(t_color color);
 void					initialize_viewport(t_scene *scene);
+t_vector	color_to_vector_cylinder(void *object);
+t_vector	color_to_vector_sphere(void *object);
+t_vector	color_to_vector_plane(void *object);
 
 // debug2.c
 void					print_sphere_parameters(t_sphere *sphere);
