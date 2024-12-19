@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/19 16:42:20 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:29:34 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,8 @@ typedef struct s_scene
 }						t_scene;
 
 t_vector				get_inter(t_ray ray, double t);
-void					retrieve_t(double a, double b, double disc, double *t1,
-							double *t2);
+void					retrieve_t(double a, double b, double disc,
+							double *ts[2]);
 double					is_intersect_cylinder_caps(t_ray ray,
 							t_cylinder *cylinder, double *prev_t);
 void					get_t_cylinder(t_cylinder *cylinder, t_ray ray,
@@ -276,9 +276,9 @@ int						color_to_int(t_color color);
 int						vector_to_int(t_vector vector);
 t_vector				color_to_vector(t_color color);
 void					initialize_viewport(t_scene *scene);
-t_vector	color_to_vector_cylinder(void *object);
-t_vector	color_to_vector_sphere(void *object);
-t_vector	color_to_vector_plane(void *object);
+t_vector				color_to_vector_cylinder(void *object);
+t_vector				color_to_vector_sphere(void *object);
+t_vector				color_to_vector_plane(void *object);
 
 // debug2.c
 void					print_sphere_parameters(t_sphere *sphere);

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   normal_vectors.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
+/*   Updated: 2024/12/19 17:28:02 by wkornato         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mini_rt.h"
 
-t_vector	get_normal_sphere_new(t_vector inter,
-		t_vector camera_pos, t_sphere *sphere)
+t_vector	get_normal_sphere_new(t_vector inter, t_vector camera_pos,
+		t_sphere *sphere)
 {
 	t_vector	result;
 
@@ -12,8 +24,7 @@ t_vector	get_normal_sphere_new(t_vector inter,
 	return (result);
 }
 
-t_vector	get_normal_vector_sphere(t_vector inter,
-		t_vector center)
+t_vector	get_normal_vector_sphere(t_vector inter, t_vector center)
 {
 	return (get_direction_vector(inter, center));
 }
@@ -26,20 +37,24 @@ t_vector	get_normal_vector_plane(t_ray ray, t_plane plane)
 	return (plane.orientation);
 }
 
-t_vector get_normal_vector_cylinder_new(t_vector intersect, t_cylinder *cylinder)
+t_vector	get_normal_vector_cylinder_new(t_vector intersect,
+		t_cylinder *cylinder)
 {
+	t_vector	pos_to_inter;
+	t_vector	parallel;
+	t_vector	normal;
+
 	if (cylinder->is_caps == TOP)
 		return (multiply_v(cylinder->orientation, -1));
 	else if (cylinder->is_caps == BOTTOM)
 		return (cylinder->orientation);
 	else if (cylinder->is_caps == SIDE)
 	{
-		t_vector	pos_to_inter = subtract_v(intersect, cylinder->position);
-		t_vector	parallel = multiply_v(cylinder->orientation,
+		pos_to_inter = subtract_v(intersect, cylinder->position);
+		parallel = multiply_v(cylinder->orientation,
 				dot_product(pos_to_inter, cylinder->orientation));
-		t_vector	normal = subtract_v(pos_to_inter, parallel);
-		(void)normal;
+		normal = subtract_v(pos_to_inter, parallel);
 		return (normalize_vector(multiply_v(normal, -1)));
 	}
-	return (printf("idk"), (t_vector){0, 1, 0});
+	return ((t_vector){0, 1, 0});
 }

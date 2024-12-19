@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 16:47:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:59:33 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_objects	*get_closest_object(t_scene scene, t_ray ray, double *new_t)
 	return (result);
 }
 
-t_raytrace_info	init_raytrace_info(t_ray ray, t_scene *scene)
+static t_raytrace_info	init_raytrace_info(t_ray ray, t_scene *scene)
 {
 	t_raytrace_info	raytrace;
 
@@ -55,7 +55,7 @@ t_raytrace_info	init_raytrace_info(t_ray ray, t_scene *scene)
 	return (raytrace);
 }
 
-int	trace_ray(t_ray ray, t_scene *scene)
+static int	trace_ray(t_ray ray, t_scene *scene)
 {
 	t_raytrace_info	raytrace;
 

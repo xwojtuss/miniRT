@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 16:35:52 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:28:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,6 @@ t_vector	clamp_vector(t_vector vector, int min, int max)
 	return (vector);
 }
 
-bool	find_closest_intersection(t_scene scene, t_ray ray,
-		t_vector *inter)
-{
-	t_objects	*curr;
-	double		t;
-	double		min_t;
-
-	min_t = DBL_MAX;
-	t = DBL_MAX;
-	curr = scene.objects;
-	while (curr)
-	{
-		if (curr->type == SPHERE && is_intersect_sphere(ray, curr->object, &t) && t < min_t)
-		{
-			min_t = t;
-			*inter = get_inter(ray, t);
-		}
-		else if (curr->type == PLANE && is_intersect_plane(ray, curr->object, &t) && t < min_t)
-		{
-			min_t = t;
-			*inter = get_inter(ray, t);
-		}
-		else if (curr->type == CYLINDER && is_intersect_ray_cylinder(ray, curr->object, &t) && t < min_t)
-		{
-			min_t = t;
-			*inter = get_inter(ray, t);
-		}
-		curr = curr->next;
-	}
-	return (min_t < DBL_MAX);
-}
-
 int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 		t_vector light_position)
 {
@@ -68,15 +36,16 @@ int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	t_vector	shadow_intersection;
 	float		light_distance;
 	float		intersection_distance;
+	double		t;
 
-	shadow_ray.origin = add_v(inter, multiply_v(normal,
-				DBL_EPSILON));
+	shadow_ray.origin = add_v(inter, multiply_v(normal, DBL_EPSILON));
 	shadow_ray.direction = normalize_vector(subtract_v(light_position,
 				shadow_ray.origin));
 	light_distance = vector_length(subtract_v(light_position,
 				shadow_ray.origin));
-	if (find_closest_intersection(*scene, shadow_ray, &shadow_intersection))
+	if (get_closest_object(*scene, shadow_ray, &t))
 	{
+		shadow_intersection = get_inter(shadow_ray, t);
 		shadow_intersection = add_v(shadow_intersection, multiply_v(normal,
 					DBL_EPSILON));
 		intersection_distance = vector_length(subtract_v(shadow_intersection,
@@ -98,16 +67,14 @@ int	phong_reflection(t_raytrace_info info)
 	float dot_specular;
 	t_vector specular;
 
-	info.inter = subtract_v(info.inter,
-			multiply_v(info.normal_vector, 1e-4));
+	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector, 1e-4));
 	t_lights *curr = info.scene->light;
 	while (curr)
 	{
 		if (is_visible(info.scene, info.inter, info.normal_vector,
 				curr->position))
 		{
-			light_dir = get_direction_vector(curr->position,
-					info.inter);
+			light_dir = get_direction_vector(curr->position, info.inter);
 			dot_diffuse = fmax(0, dot_product(light_dir, info.normal_vector));
 			diffuse = multiply_v_color(info.color,
 					multiply_v(color_to_vector(curr->color), DIFFUSE_CONST
@@ -116,10 +83,8 @@ int	phong_reflection(t_raytrace_info info)
 			view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 						info.inter));
 			dot_specular = fmax(0, dot_product(reflected_ray, view_vector));
-			// specular = multiply_v(info.color, SPECULAR_CONST * pow(dot_specular,
-			// 			SHININESS_CONST) * curr->brightness);
-			specular = multiply_v(color_to_vector(curr->color),
-	SPECULAR_CONST * pow(dot_specular, SHININESS_CONST) * curr->brightness);
+			specular = multiply_v(color_to_vector(curr->color), SPECULAR_CONST
+					* pow(dot_specular, SHININESS_CONST) * curr->brightness);
 			total_color = add_v(total_color, add_v(diffuse, specular));
 		}
 		curr = curr->next;
