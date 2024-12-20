@@ -2,6 +2,11 @@
 
 miniRT - a raytracer written in C that simulates the light path using the full Phong reflection model. It is able to render textures and normal maps on three different shapes - plane, sphere and cylinder.
 This project uses minilibx, which is an X11 library designed for 42 students. The library is automatically cloned from github, configured and compiled.
+
+![all](https://github.com/xwojtuss/miniRT/blob/main/renders/all.png)
+![cylinders](https://github.com/xwojtuss/miniRT/blob/main/renders/cylinders.png)
+![parquet](https://github.com/xwojtuss/miniRT/blob/main/renders/parquet.png)
+
 The scene is loaded via a file with the extention .rt, the configuration is as follows (parameters like color, position and orientation are made up of three numbers delimited by a comma):
 Only one ambient light:
 ```
