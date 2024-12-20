@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:54:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 20:03:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:10:40 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,15 @@ typedef struct s_raytrace_info
 	t_scene		*scene;
 	t_vector	color;
 	t_objects	*object;
+	t_vector	tangent;
+	t_vector	bitangent;
+	double		u_val;
+	double		v_val;
 	double		t;
+	double		ambient;
+	double		diffuse;
+	double		specular;
+	double		shininess;
 }				t_raytrace_info;
 
 int				phong_reflection(t_raytrace_info info);
