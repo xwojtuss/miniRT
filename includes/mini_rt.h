@@ -6,14 +6,14 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/19 21:18:55 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:46:09 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_RT_H
 # define MINI_RT_H
 
-# define OFFSET_NORMAL 1
+# define OFFSET_NORMAL 1e-3
 # define ROTATE_DEGREE 5
 # define FOV_OFFSET 5
 # define MOVE_STEP 0.5
@@ -48,6 +48,23 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct s_image
+{
+	void				*img;
+	char				*addr;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+}						t_image;
+
+typedef struct	t_texture
+{
+	char	*name;
+	t_image	img;
+	int		width;
+	int		height;
+}				t_texture;
 
 typedef enum e_where
 {
@@ -133,6 +150,12 @@ typedef struct s_sphere
 	t_vector			position;
 	float				diam;
 	t_color				color;
+	t_texture			*texture;
+	t_texture			*bump;
+	float				specular;
+	float				diffuse;
+	float				ambient;
+	float				shininess;
 }						t_sphere;
 
 typedef struct s_plane
@@ -140,6 +163,12 @@ typedef struct s_plane
 	t_vector			position;
 	t_vector			orientation;
 	t_color				color;
+	t_texture			*texture;
+	t_texture			*bump;
+	float				specular;
+	float				diffuse;
+	float				ambient;
+	float				shininess;
 }						t_plane;
 
 typedef struct s_cylinder
@@ -150,16 +179,13 @@ typedef struct s_cylinder
 	float				height;
 	t_color				color;
 	t_where				inter_where;
+	t_texture			*texture;
+	t_texture			*bump;
+	float				specular;
+	float				diffuse;
+	float				ambient;
+	float				shininess;
 }						t_cylinder;
-
-typedef struct s_image
-{
-	void				*img;
-	char				*addr;
-	int					bits_per_pixel;
-	int					line_length;
-	int					endian;
-}						t_image;
 
 typedef struct s_scene
 {
@@ -181,6 +207,12 @@ typedef struct s_scene
 	t_ambient			*ambient;
 	t_camera			*camera;
 }						t_scene;
+
+void	assign_default_phong(t_objects *object);
+t_vector	int_color_to_vector(int color);
+unsigned int	get_pixel_color(t_image image, int x, int y);
+t_texture	*new_texture(char *name);
+void		assign_phong(t_objects *new, char **line, size_t start);
 
 void					print_object_parameters(t_objects *object);
 t_objects				*get_closest_object(t_scene scene, t_ray ray,

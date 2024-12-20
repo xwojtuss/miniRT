@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 16:58:27 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:03:09 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	parse_line(t_scene *scene, int fd)
 	line = get_next_line(fd);
 	if (!line || !*line)
 		return (0);
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
 	instructions = ft_split(line, ' ');
 	free(line);
 	if (!instructions)

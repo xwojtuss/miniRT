@@ -20,7 +20,7 @@ SRCS = main.c misc.c math/vectors.c math/vectors2.c objects/cylinder.c \
 	debug/debug2.c debug/debug3.c initialize.c mlx/mlx_misc.c mlx/mlx_hooks.c \
 	mlx/mlx_init.c math/vectors3.c math/vectors4.c raytracing/normal_vectors.c \
 	raytracing/phong.c raytracing/check_intersections.c raytracing/intersection_misc.c \
-	colors.c raytracing/find_t.c
+	colors.c raytracing/find_t.c mlx/textures.c raytracing/constants.c
 
 SRCS_FILES = $(addprefix srcs/, ${SRCS})
 

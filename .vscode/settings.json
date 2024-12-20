@@ -11,7 +11,9 @@
         "stdint.h": "c",
         "stdlib.h": "c",
         "stdbool.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "textures.h": "c",
+        "mlx.h": "c"
     },
     "makefile.configureOnOpen": false
 }

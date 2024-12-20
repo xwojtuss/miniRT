@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/17 17:02:48 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:52:08 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		err("Invalid number of arguments");
+	if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 3, ".rt", 3))
+		err("Invalid file extension");
 	init_scene(&scene);
 	scene.file = argv[1];
 	read_scene(&scene, argv[1]);

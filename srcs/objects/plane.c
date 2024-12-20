@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 20:05:45 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:49:25 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	check_plane_values(t_plane *plane, t_scene *scene, char **line)
 		err_free_array("Invalid orientation for plane", scene, line);
 	if (plane->color.r < 0 || plane->color.g < 0 || plane->color.b < 0)
 		err_free_array("Color of plane is not correct", scene, line);
+	if (plane->ambient < 0 || plane->diffuse < 0 || plane->specular < 0
+		|| plane->shininess < 0 || plane->ambient > 1
+		|| plane->diffuse > 1 || plane->specular > 1)
+		err_free_array("Phong values for plane are not correct", scene,
+			line);
 }
 
 void	assign_plane_values(void *object, char **temp, t_object_param type)
@@ -39,11 +44,31 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 {
 	t_plane	*plane;
 
-	if (argc != 4)
+	if (argc < 4 || argc > 10)
 		err_free_array("Invalid number of arguments for plane", scene, line);
 	plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		err_free_array("Could not allocate memory for plane", scene, line);
 	new->object = plane;
+	if ((argc > 4 && !ft_strcmp(line[4], "-")) || argc < 4)
+		plane->texture = NULL;
+	else if (argc > 4)
+	{
+		plane->texture = new_texture(line[4]);
+		if (!plane->texture)
+			err_free_array("Could not allocate memory for texture", scene, line);
+	}
+	if ((argc > 5 && !ft_strcmp(line[5], "-")) || argc < 5)
+		plane->bump = NULL;
+	else if (argc > 5)
+	{
+		plane->bump = new_texture(line[5]);
+		if (!plane->bump)
+			err_free_array("Could not allocate memory for bump map", scene, line);
+	}
+	if (argc == 10)
+		assign_phong(new, line, 6);
+	else
+		assign_default_phong(new);
 	return (plane);
 }
