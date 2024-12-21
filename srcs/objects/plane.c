@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 14:49:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:50:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	check_plane_values(t_plane *plane, t_scene *scene, char **line)
 	if (plane->color.r < 0 || plane->color.g < 0 || plane->color.b < 0)
 		err_free_array("Color of plane is not correct", scene, line);
 	if (plane->ambient < 0 || plane->diffuse < 0 || plane->specular < 0
-		|| plane->shininess < 0 || plane->ambient > 1
-		|| plane->diffuse > 1 || plane->specular > 1)
-		err_free_array("Phong values for plane are not correct", scene,
-			line);
+		|| plane->shininess < 0 || plane->ambient > 1 || plane->diffuse > 1
+		|| plane->specular > 1)
+		err_free_array("Phong values for plane are not correct", scene, line);
 }
 
 void	assign_plane_values(void *object, char **temp, t_object_param type)
@@ -50,22 +49,12 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 	if (!plane)
 		err_free_array("Could not allocate memory for plane", scene, line);
 	new->object = plane;
-	if ((argc > 4 && !ft_strcmp(line[4], "-")) || argc < 4)
-		plane->texture = NULL;
-	else if (argc > 4)
-	{
+	plane->texture = NULL;
+	if (argc > 4 && ft_strcmp(line[4], "-"))
 		plane->texture = new_texture(line[4]);
-		if (!plane->texture)
-			err_free_array("Could not allocate memory for texture", scene, line);
-	}
-	if ((argc > 5 && !ft_strcmp(line[5], "-")) || argc < 5)
-		plane->bump = NULL;
-	else if (argc > 5)
-	{
+	plane->bump = NULL;
+	if (argc > 5 && ft_strcmp(line[5], "-"))
 		plane->bump = new_texture(line[5]);
-		if (!plane->bump)
-			err_free_array("Could not allocate memory for bump map", scene, line);
-	}
 	if (argc == 10)
 		assign_phong(new, line, 6);
 	else

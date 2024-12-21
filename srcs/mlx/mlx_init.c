@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 16:16:40 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:57:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,25 @@ void	open_texture_helper(t_texture *texture, t_scene *scene)
 void	open_textures(t_scene *scene)
 {
 	t_objects	*curr;
-	t_texture	*texture;
-	t_texture	*bump;
 
 	curr = scene->objects;
 	while (curr)
 	{
 		if (curr->type == PLANE)
 		{
-			texture = ((t_plane *)curr->object)->texture;
-			bump = ((t_plane *)curr->object)->bump;
+			open_texture_helper(((t_plane *)curr->object)->texture, scene);
+			open_texture_helper(((t_plane *)curr->object)->bump, scene);
 		}
 		else if (curr->type == SPHERE)
 		{
-			texture = ((t_sphere *)curr->object)->texture;
-			bump = ((t_sphere *)curr->object)->bump;
+			open_texture_helper(((t_sphere *)curr->object)->texture, scene);
+			open_texture_helper(((t_sphere *)curr->object)->bump, scene);
 		}
 		else if (curr->type == CYLINDER)
 		{
-			texture = ((t_cylinder *)curr->object)->texture;
-			bump = ((t_cylinder *)curr->object)->bump;
+			open_texture_helper(((t_cylinder *)curr->object)->texture, scene);
+			open_texture_helper(((t_cylinder *)curr->object)->bump, scene);
 		}
-		open_texture_helper(texture, scene);
-		open_texture_helper(bump, scene);
 		curr = curr->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:59 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 14:49:12 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:50:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,12 @@ t_sphere	*new_sphere(t_scene *scene, t_objects *new, char **line,
 		err_free_array("Could not allocate memory for sphere", scene, line);
 	new->object = sphere;
 	sphere->diam = ft_atof(line[2]);
-	if ((argc > 4 && !ft_strcmp(line[4], "-")) || argc < 4)
-		sphere->texture = NULL;
-	else if (argc > 4)
-	{
+	sphere->texture = NULL;
+	if (argc > 4 && ft_strcmp(line[4], "-"))
 		sphere->texture = new_texture(line[4]);
-		if (!sphere->texture)
-			err_free_array("Could not allocate memory for texture", scene, line);
-	}
-	if ((argc > 5 && !ft_strcmp(line[5], "-")) || argc < 5)
-		sphere->bump = NULL;
-	else if (argc > 5)
-	{
+	sphere->bump = NULL;
+	if (argc > 5 && ft_strcmp(line[5], "-"))
 		sphere->bump = new_texture(line[5]);
-		if (!sphere->bump)
-			err_free_array("Could not allocate memory for bump map", scene, line);
-	}
 	if (argc == 10)
 		assign_phong(new, line, 6);
 	else

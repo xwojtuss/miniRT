@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 15:54:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:50:24 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,12 @@ t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 	new->object = cylinder;
 	cylinder->diam = ft_atof(line[3]);
 	cylinder->height = ft_atof(line[4]);
-	if ((argc > 6 && !ft_strcmp(line[6], "-")) || argc < 6)
-		cylinder->texture = NULL;
-	else if (argc > 6)
-	{
+	cylinder->texture = NULL;
+	if (argc > 6 && ft_strcmp(line[6], "-"))
 		cylinder->texture = new_texture(line[6]);
-		if (!cylinder->texture)
-			err_free_array("Could not allocate memory for texture", scene, line);
-	}
-	if ((argc > 7 && !ft_strcmp(line[7], "-")) || argc < 7)
-		cylinder->bump = NULL;
-	else if (argc > 7)
-	{
+	cylinder->bump = NULL;
+	if (argc > 7 && ft_strcmp(line[7], "-"))
 		cylinder->bump = new_texture(line[7]);
-		if (!cylinder->bump)
-			err_free_array("Could not allocate memory for bump map", scene, line);
-	}
 	if (argc == 12)
 		assign_phong(new, line, 8);
 	else

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   phong_reflection.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:54:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 16:10:40 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:21:03 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHONG_REFLECTION_H
 # define PHONG_REFLECTION_H
+
+# include "mini_rt.h"
 
 typedef struct s_raytrace_info
 {
@@ -32,11 +34,22 @@ typedef struct s_raytrace_info
 	double		shininess;
 }				t_raytrace_info;
 
+float			get_ambient(t_objects *object);
+float			get_diffuse(t_objects *object);
+float			get_specular(t_objects *object);
+float			get_shininess(t_objects *object);
+
+t_vector		get_color_plane(t_plane *plane, t_raytrace_info *raytrace);
+t_vector		get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace);
+t_vector		get_color_cylinder(t_cylinder *cylinder,
+					t_raytrace_info *raytrace);
+void			recalculate_normal_vector(t_raytrace_info *raytrace);
+
 int				phong_reflection(t_raytrace_info info);
 t_objects		*get_closest_object(t_scene scene, t_ray ray, double *new_t);
-t_vector		get_normal_vector_plane(t_ray ray, t_plane plane);
+t_vector		get_nv_plane(t_ray ray, t_plane *plane);
 t_vector		get_normal_vector_sphere(t_vector inter, t_vector center);
-t_vector		get_normal_sphere_new(t_vector inter, t_vector camera_pos,
+t_vector		get_nv_sphere(t_vector inter, t_vector camera_pos,
 					t_sphere *sphere);
 
 int				is_intersect_sphere(t_ray ray, t_sphere *sphere,
@@ -44,8 +57,7 @@ int				is_intersect_sphere(t_ray ray, t_sphere *sphere,
 int				is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t);
 int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 					double *prev_t);
-t_vector		get_normal_vector_cylinder_new(t_vector intersect,
-					t_cylinder *cylinder);
+t_vector		get_nv_cylinder(t_vector intersect, t_cylinder *cylinder);
 
 # define SPECULAR_CONST 0.5
 # define DIFFUSE_CONST 0.7

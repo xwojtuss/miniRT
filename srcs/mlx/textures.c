@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:29:04 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 14:37:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:54:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-unsigned int get_pixel_color(t_image image, int x, int y)
+unsigned int	get_pixel_color(t_image image, int x, int y)
 {
-	int offset;
-	
+	int	offset;
+
 	offset = (y * image.line_length) + (x * (image.bits_per_pixel / 8));
-	return *(unsigned int *)(image.addr + offset);
+	return (*(unsigned int *)(image.addr + offset));
 }
 
 void	assign_phong(t_objects *new, char **line, size_t start)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 14:35:38 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:19:30 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,50 +54,6 @@ int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	return (1);
 }
 
-float	get_diffuse(t_objects *object)
-{
-	if (object->type == PLANE)
-		return (((t_plane *)object->object)->diffuse);
-	else if (object->type == SPHERE)
-		return (((t_sphere *)object->object)->diffuse);
-	else if (object->type == CYLINDER)
-		return (((t_cylinder *)object->object)->diffuse);
-	return (0);
-}
-
-float	get_ambient(t_objects *object)
-{
-	if (object->type == PLANE)
-		return (((t_plane *)object->object)->ambient);
-	else if (object->type == SPHERE)
-		return (((t_sphere *)object->object)->ambient);
-	else if (object->type == CYLINDER)
-		return (((t_cylinder *)object->object)->ambient);
-	return (0);
-}
-
-float	get_specular(t_objects *object)
-{
-	if (object->type == PLANE)
-		return (((t_plane *)object->object)->specular);
-	else if (object->type == SPHERE)
-		return (((t_sphere *)object->object)->specular);
-	else if (object->type == CYLINDER)
-		return (((t_cylinder *)object->object)->specular);
-	return (0);
-}
-
-float	get_shininess(t_objects *object)
-{
-	if (object->type == PLANE)
-		return (((t_plane *)object->object)->shininess);
-	else if (object->type == SPHERE)
-		return (((t_sphere *)object->object)->shininess);
-	else if (object->type == CYLINDER)
-		return (((t_cylinder *)object->object)->shininess);
-	return (0);
-}
-
 void	calculate_color(t_vector *total_color, t_lights *curr,
 		t_raytrace_info info, t_vector light_dir)
 {
@@ -107,15 +63,16 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 	t_vector	specular;
 
 	diffuse = multiply_v_color(info.color,
-			multiply_v(color_to_vector(curr->color), get_diffuse(info.object) * fmax(0,
-					dot_product(light_dir, info.normal_vector))
+			multiply_v(color_to_vector(curr->color), get_diffuse(info.object)
+				* fmax(0, dot_product(light_dir, info.normal_vector))
 				* curr->brightness));
 	reflected_ray = reflect_ray(light_dir, info.normal_vector);
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
-	specular = multiply_v(color_to_vector(curr->color), get_specular(info.object)
-			* pow(fmax(0, dot_product(reflected_ray, view_vector)),
-				get_shininess(info.object)) * curr->brightness);
+	specular = multiply_v(color_to_vector(curr->color),
+			get_specular(info.object) * pow(fmax(0, dot_product(reflected_ray,
+						view_vector)), get_shininess(info.object))
+			* curr->brightness);
 	*total_color = add_v(*total_color, add_v(diffuse, specular));
 }
 
@@ -141,8 +98,8 @@ int	phong_reflection(t_raytrace_info info)
 	}
 	total_color = add_v(multiply_v_color(info.color,
 				multiply_v(color_to_vector(info.scene->ambient->color),
-					info.scene->ambient->brightness * get_ambient(info.object))),
-			total_color);
+					info.scene->ambient->brightness
+					* get_ambient(info.object))), total_color);
 	total_color = clamp_vector(total_color, 0, 255);
 	return (vector_to_int(total_color));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:00 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 19:54:01 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:14:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 	size_t	argc;
 
 	argc = ft_arrlen(instructions);
+	if (argc == 0)
+		return (free_array(instructions));
 	if (!ft_strcmp(instructions[0], "A"))
 		parse_ambient_light(scene, instructions, argc);
 	else if (!ft_strcmp(instructions[0], "C"))
@@ -39,7 +41,7 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 		parse_new_object(scene, instructions, argc, PLANE);
 	else if (!ft_strcmp(instructions[0], "cy"))
 		parse_new_object(scene, instructions, argc, CYLINDER);
-	else if (!(argc == 1 && instructions[0][0] == '\n'))
+	else
 	{
 		free_array(instructions);
 		close(fd);

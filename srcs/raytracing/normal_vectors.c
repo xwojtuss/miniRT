@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   normal_vectors.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:18:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_vector	get_normal_sphere_new(t_vector inter, t_vector camera_pos,
+t_vector	get_nv_sphere(t_vector inter, t_vector camera_pos,
 		t_sphere *sphere)
 {
 	t_vector	result;
@@ -29,15 +29,15 @@ t_vector	get_normal_vector_sphere(t_vector inter, t_vector center)
 	return (get_direction_vector(inter, center));
 }
 
-t_vector	get_normal_vector_plane(t_ray ray, t_plane plane)
+t_vector	get_nv_plane(t_ray ray, t_plane *plane)
 {
-	if (dot_product(subtract_v(ray.origin, plane.position),
-			plane.orientation) > 0)
-		return (multiply_v(plane.orientation, -1));
-	return (plane.orientation);
+	if (dot_product(subtract_v(ray.origin, plane->position),
+			plane->orientation) > 0)
+		return (multiply_v(plane->orientation, -1));
+	return (plane->orientation);
 }
 
-t_vector	get_normal_vector_cylinder_new(t_vector intersect,
+t_vector	get_nv_cylinder(t_vector intersect,
 		t_cylinder *cylinder)
 {
 	t_vector	pos_to_inter;

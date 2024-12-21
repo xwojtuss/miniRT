@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_intersections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:16:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:17:48 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

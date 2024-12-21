@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/20 14:46:09 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:21:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ typedef struct s_image
 	int					endian;
 }						t_image;
 
-typedef struct	t_texture
+typedef struct t_texture
 {
-	char	*name;
-	t_image	img;
-	int		width;
-	int		height;
-}				t_texture;
+	char				*name;
+	t_image				img;
+	int					width;
+	int					height;
+}						t_texture;
 
 typedef enum e_where
 {
@@ -208,11 +208,11 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
-void	assign_default_phong(t_objects *object);
-t_vector	int_color_to_vector(int color);
-unsigned int	get_pixel_color(t_image image, int x, int y);
-t_texture	*new_texture(char *name);
-void		assign_phong(t_objects *new, char **line, size_t start);
+void					assign_default_phong(t_objects *object);
+t_vector				int_color_to_vector(int color);
+unsigned int			get_pixel_color(t_image image, int x, int y);
+t_texture				*new_texture(char *name);
+void					assign_phong(t_objects *new, char **line, size_t start);
 
 void					print_object_parameters(t_objects *object);
 t_objects				*get_closest_object(t_scene scene, t_ray ray,
