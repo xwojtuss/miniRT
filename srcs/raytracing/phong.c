@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:19:30 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/30 04:37:35 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
 	specular = multiply_v(color_to_vector(curr->color),
-			get_specular(info.object) * pow(fmax(0, dot_product(reflected_ray,
-						view_vector)), get_shininess(info.object))
-			* curr->brightness);
+			get_specular(info.object) * pow(fmax(0,
+					dot_product(info.normal_vector,
+						normalize_vector(add_v(light_dir, view_vector)))),
+				get_shininess(info.object)) * curr->brightness);
 	*total_color = add_v(*total_color, add_v(diffuse, specular));
 }
 

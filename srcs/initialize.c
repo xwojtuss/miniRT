@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 21:00:08 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/30 04:37:47 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ void	initialize_viewport(t_scene *scene)
 		scene->image_height = 1;
 	scene->viewport_height = 2.0 * tan(deg_to_rad(camera->fov) / 2.0);
 	scene->viewport_width = scene->viewport_height * aspect_ratio;
-	camera->right = normalize_vector(cross_product((t_vector){0, -1, 0},
-				camera->orientation));
+	if (fabs(camera->orientation.y) == 1)
+		camera->right = normalize_vector(cross_product((t_vector){1, 0, 0},
+					camera->orientation));
+	else
+		camera->right = normalize_vector(cross_product((t_vector){0, -1, 0},
+					camera->orientation));
 	camera->up = normalize_vector(cross_product(camera->orientation,
 				camera->right));
 	setup_screen(scene);

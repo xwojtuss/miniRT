@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:35:53 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/30 04:54:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
 	int	x;
 	int	y;
 
-	raytrace->u_val = (atan2(raytrace->normal_vector.z,
+	raytrace->u_val = 1.0 - (atan2(raytrace->normal_vector.z,
 				raytrace->normal_vector.x) + PI) / PI;
 	raytrace->v_val = acos(raytrace->normal_vector.y) / PI;
 	if (raytrace->normal_vector.x == 1)
@@ -83,7 +83,7 @@ t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
 				raytrace->tangent));
 	raytrace->bitangent = cross_product(cylinder->orientation,
 			raytrace->tangent);
-	raytrace->u_val = atan2(dot_product(p_local, raytrace->bitangent),
+	raytrace->u_val = 1.0 - atan2(dot_product(p_local, raytrace->bitangent),
 			dot_product(p_local, raytrace->tangent)) / (PI * 2);
 	if (raytrace->u_val < 0)
 		raytrace->u_val += 1;
