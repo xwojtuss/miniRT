@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/30 23:56:05 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 00:41:25 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,17 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 			multiply_v(color_to_vector(curr->color), get_diffuse(info.object)
 				* fmax(0, dot_product(light_dir, info.normal_vector))
 				* curr->brightness));
-	reflected_ray = reflect_ray(light_dir, info.normal_vector);
+	reflected_ray = reflect_ray(multiply_v(light_dir, -1), info.normal_vector);
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
 	specular = multiply_v(color_to_vector(curr->color),
-			get_specular(info.object) * pow(fmax(0, dot_product(reflected_ray,
-						view_vector)), get_shininess(info.object))
-			* curr->brightness);
+			get_specular(info.object) * pow(dot_product(reflected_ray,
+					view_vector) * -1, get_shininess(info.object) * 2)
+			* sqrt(fmax(0.0, dot_product(info.normal_vector,
+						light_dir))) * curr->brightness);
 	*total_color = add_v(*total_color, add_v(diffuse, specular));
 }
+
 int	phong_reflection(t_raytrace_info info)
 {
 	t_vector	total_color;
