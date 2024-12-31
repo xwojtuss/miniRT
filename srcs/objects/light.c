@@ -6,19 +6,19 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:57 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/07 16:59:09 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:18:39 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	check_light_values(t_lights *light, t_scene *scene, char **line)
+static void	check_light_values(t_lights *light, t_scene *scene, char **line)
 {
 	if (light->brightness < 0 || light->brightness > 1)
 		err_free_array("Invalid brightness for light", scene, line);
 }
 
-void	assign_color_to_light(bool is_default, char *values, t_scene *scene,
+static void	assign_color_to_light(bool is_default, char *values, t_scene *scene,
 		t_color *color)
 {
 	char	**temp;

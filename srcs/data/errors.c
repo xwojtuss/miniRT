@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:02 by wkornato          #+#    #+#             */
-/*   Updated: 2024/08/22 19:54:03 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:31:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,6 @@ void	err_free(char *message, t_scene *scene)
 	ft_putstr_fd(message, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 	free_scene(scene);
-	exit(EXIT_FAILURE);
-}
-
-void	err_free_fd(char *message, t_scene *scene, int fd)
-{
-	ft_putstr_fd("Error\n", STDERR_FILENO);
-	ft_putstr_fd(message, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	free_scene(scene);
-	close(fd);
 	exit(EXIT_FAILURE);
 }
 

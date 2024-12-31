@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:47:03 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 
 	raytrace = init_raytrace_info(ray, scene);
 	if (raytrace.object == NULL || raytrace.t == INFINITY)
-		return (vector_to_int(multiply_v(color_to_vector(scene->ambient->color),
+		return (vector_to_int(scale_v(color_to_vector(scene->ambient->color),
 					scene->ambient->brightness)));
 	raytrace.inter = get_inter(ray, raytrace.t);
 	if (raytrace.object->type == SPHERE)
@@ -106,8 +106,8 @@ void	render_scene(t_scene *scene)
 		while (x < scene->win_width)
 		{
 			pixel_center = add_v(scene->viewport_top_left,
-					add_v(multiply_v(scene->viewport_grid_vector_x, x),
-						multiply_v(scene->viewport_grid_vector_y, y)));
+					add_v(scale_v(scene->viewport_grid_vector_x, x),
+						scale_v(scene->viewport_grid_vector_y, y)));
 			ray_direction = subtract_v(pixel_center, scene->camera->position);
 			ray = (t_ray){scene->camera->position, ray_direction};
 			my_mlx_pixel_put(&scene->img, x, y, trace_ray(ray, scene));

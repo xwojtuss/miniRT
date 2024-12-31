@@ -12,15 +12,20 @@ LIBS = ${LIBFT} ${MINILIBX} -lm -lX11 -lXext
 
 NAME = miniRT
 
-SRCS = main.c misc.c math/vectors.c math/vectors2.c objects/cylinder.c \
-	objects/plane.c objects/sphere.c objects/camera.c \
-	objects/light.c objects/ambient.c check_scene.c \
-	errors.c free.c parse.c raytracing/render.c debug/debug.c math/angles.c \
-	debug/debug2.c debug/debug3.c initialize.c mlx/mlx_misc.c mlx/mlx_hooks.c \
-	mlx/mlx_init.c math/vectors3.c math/vectors4.c raytracing/normal_vectors.c \
-	raytracing/phong.c raytracing/check_intersections.c raytracing/intersection_misc.c \
-	colors.c raytracing/find_t.c mlx/textures.c raytracing/constants.c \
-	raytracing/get_texture.c objects/cone.c objects/divide.c
+S_DATA = check_scene.c errors.c free.c initialize.c misc.c parse.c
+S_DEBUG = debug.c debug2.c debug3.c
+S_MATH = angles.c colors.c vectors.c vectors2.c vectors3.c vectors4.c
+S_MLX = mlx_hooks.c mlx_init.c mlx_misc.c textures.c
+S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c sphere.c
+S_RAYTRACING = check_intersections.c constants.c find_t.c intersection_misc.c \
+		normal_vectors.c phong.c render.c uv_translate.c
+
+SRCS = main.c $(addprefix data/, ${S_DATA}) \
+		$(addprefix debug/, ${S_DEBUG}) \
+		$(addprefix math/, ${S_MATH}) \
+		$(addprefix mlx/, ${S_MLX}) \
+		$(addprefix objects/, ${S_OBJECTS}) \
+		$(addprefix raytracing/, ${S_RAYTRACING})
 
 SRCS_FILES = $(addprefix srcs/, ${SRCS})
 

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:12:33 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:27:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:17:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vector	cross_product(t_vector one, t_vector two)
 	return (result);
 }
 
-t_vector	multiply_v_color(t_vector v1, t_vector v2)
+t_vector	scale_v_color(t_vector v1, t_vector v2)
 {
 	t_vector	result;
 
@@ -37,4 +37,15 @@ t_vector	clamp_vector(t_vector vector, int min, int max)
 	vector.y = fmin(max, fmax(min, vector.y));
 	vector.z = fmin(max, fmax(min, vector.z));
 	return (vector);
+}
+
+t_vector	get_direction_v(t_vector from, t_vector to)
+{
+	return (normalize_vector(subtract_v(to, from)));
+}
+void	copy_vector(t_vector *dest, t_vector src)
+{
+	dest->x = src.x;
+	dest->y = src.y;
+	dest->z = src.z;
 }

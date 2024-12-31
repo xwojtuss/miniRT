@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:18:30 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:17:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,39 +38,6 @@ void	assign_cylinder_values(void *object, char **temp, t_object_param type)
 	else if (type == COLOR)
 		assign_color(&((t_cylinder *)object)->color, ft_atoi(temp[0]),
 			ft_atoi(temp[1]), ft_atoi(temp[2]));
-}
-
-t_texture	*copy_texture(t_texture *reference)
-{
-	t_texture	*new;
-
-	if (!reference)
-		return (NULL);
-	new = (t_texture *)ft_calloc(1, sizeof(t_texture));
-	if (!new)
-		return (NULL);
-	if (reference->name)
-		new->name = ft_strdup(reference->name);
-	else
-		new->name = NULL;
-	new->img = reference->img;
-	new->width = reference->width;
-	new->height = reference->height;
-	return (new);
-}
-
-void	copy_vector(t_vector *dest, t_vector src)
-{
-	dest->x = src.x;
-	dest->y = src.y;
-	dest->z = src.z;
-}
-
-void	copy_color(t_color *dest, t_color src)
-{
-	dest->r = src.r;
-	dest->g = src.g;
-	dest->b = src.b;
 }
 
 t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,

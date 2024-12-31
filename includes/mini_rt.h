@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 20:52:14 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:00:25 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,47 +203,144 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
-void					add_cap(t_scene *scene, t_objects *reference,
-							bool is_top);
-void					add_base(t_scene *scene, t_objects *reference);
+//	SRCS
+//		DATA
+//			CHECK_SCENE.C
 
-void					assign_default_phong(t_objects *object,
-							float ambient_const);
-t_vector				int_color_to_vector(int color);
-unsigned int			get_pixel_color(t_image image, int x, int y);
+void					check_scene(t_scene *scene);
+void					check_line(char **instructions, t_scene *scene, int fd);
 
-t_texture				*copy_texture(t_texture *reference);
-t_texture				*new_texture(char *name);
-void					assign_phong(t_objects *new, char **line, size_t start);
+//			ERRORS.C
 
+void					err(char *message);
+void					err_free(char *message, t_scene *scene);
+void					err_free_array(char *message, t_scene *scene,
+							char **array);
+
+//			FREE.C
+
+void					free_scene(t_scene *scene);
+void					free_array(char **array);
+
+//			INITIALIZE.C
+
+void					initialize_viewport(t_scene *scene);
+void					init_scene(t_scene *scene);
+
+//			MISC.C
+
+t_objects				*get_last_object(t_objects *objects);
+
+//			PARSE.C
+
+void					parse_new_object(t_scene *scene, char **line,
+							size_t argc, t_object_type type);
+int						parse_line(t_scene *scene, int fd);
+
+//		DEBUG
+//			DEBUG.C
+
+void					print_vector(t_vector vector);
+void					print_array(char **array);
+bool					check_debug_tools(int keycode, t_scene *scene);
+
+//			DEBUG2.C
+
+void					print_sphere_parameters(t_sphere *sphere);
+void					print_plane_parameters(t_plane *plane);
+void					print_cylinder_parameters(t_cylinder *cylinder);
+void					print_cone_parameters(t_cone *cone);
+void					print_camera_parameters(t_camera *camera);
+
+//			DEBUG3.C
+
+void					print_light_parameters(t_lights *light);
+void					print_ambient_parameters(t_ambient *ambient);
 void					print_object_parameters(t_objects *object);
-t_objects				*get_closest_object(t_scene scene, t_ray ray,
-							double *new_t);
-t_vector				get_inter(t_ray ray, double t);
-void					retrieve_t(double a, double b, double disc,
-							double *ts[2]);
-double					is_intersect_cylinder_caps(t_ray ray,
-							t_cylinder *cylinder, double *prev_t);
-void					get_t_cylinder(t_cylinder *cylinder, t_ray ray,
-							double *t1, double *t2);
-t_vector				get_direction_vector(t_vector from, t_vector to);
+void					print_objects_parameters(t_scene *scene);
+
+//		MATH
+//			ANGLES.C
+
+float					deg_to_rad(float deg);
+
+//			VECTORS.C
+
+t_vector				scale_v(t_vector vector, float multiplier);
+t_vector				divide_v(t_vector vector, float divider);
+t_vector				subtract_v(t_vector one, t_vector two);
+t_vector				add_v(t_vector one, t_vector two);
+float					dot_v(t_vector one, t_vector two);
+
+//			VECTORS2.C
+
+double					get_length_v(t_vector vector);
+t_vector				normalize_vector(t_vector vector);
 void					assign_vector(t_vector *vector, float x, float y,
 							float z);
 void					assign_color(t_color *color, int r, int g, int b);
 
-void					check_sphere_values(t_sphere *sphere, t_scene *scene,
-							char **line);
-void					assign_sphere_values(void *object, char **temp,
-							t_object_param type);
-t_sphere				*new_sphere(t_scene *scene, t_objects *new, char **line,
+//			VECTORS3.C
+
+t_vector				cross_product(t_vector one, t_vector two);
+t_vector				scale_v_color(t_vector v1, t_vector v2);
+t_vector				clamp_vector(t_vector vector, int min, int max);
+t_vector				get_direction_v(t_vector from, t_vector to);
+void					copy_vector(t_vector *dest, t_vector src);
+
+//			COLORS.C
+
+int						vector_to_int(t_vector vector);
+t_vector				color_to_vector(t_color color);
+t_vector				int_color_to_vector(int color);
+void					copy_color(t_color *dest, t_color src);
+
+//		MLX
+//			MLX_HOOKS.C
+
+int						key_hook(int keycode, t_scene *scene);
+int						mouse_click_handler(int button, int x, int y,
+							t_scene *scene);
+int						close_win_handler(void *context);
+
+//			MLX_INIT.C
+
+void					open_textures(t_scene *scene);
+void					initialize_mlx(t_scene *scene);
+
+//			MLX_MISC.C
+
+void					my_mlx_pixel_put(t_image *data, int x, int y,
+							int color);
+int						close_win(void *context, int exit_code);
+
+//			TEXTURES.C
+
+t_texture				*copy_texture(t_texture *reference);
+unsigned int			get_pixel_color(t_image image, int x, int y);
+void					assign_phong(t_objects *new, char **line, size_t start);
+t_texture				*new_texture(char *name);
+
+//		OBJECTS
+//			AMBIENT.C
+
+void					parse_ambient_light(t_scene *scene, char **instructions,
 							size_t argc);
 
-void					check_plane_values(t_plane *plane, t_scene *scene,
+//			CAMERA.C
+
+void					parse_camera(t_scene *scene, char **line, size_t argc);
+
+//			CONE.C
+
+void					check_cone_values(t_cone *cone, t_scene *scene,
 							char **line);
-void					assign_plane_values(void *object, char **temp,
+void					assign_cone_values(void *object, char **temp,
 							t_object_param type);
-t_plane					*new_plane(t_scene *scene, t_objects *new, char **line,
+t_cone					*new_cone(t_scene *scene, t_objects *new, char **line,
 							size_t argc);
+
+//			CYLINDER.C
 
 void					check_cylinder_values(t_cylinder *cylinder,
 							t_scene *scene, char **line);
@@ -252,101 +349,95 @@ void					assign_cylinder_values(void *object, char **temp,
 t_cylinder				*new_cylinder(t_scene *scene, t_objects *new,
 							char **line, size_t argc);
 
-void					check_cone_values(t_cone *cone, t_scene *scene,
-							char **line);
-void					assign_cone_values(void *object, char **temp,
-							t_object_param type);
-t_cone					*new_cone(t_scene *scene, t_objects *new, char **line,
+//			DIVIDE.C
+
+void					add_base(t_scene *scene, t_objects *reference);
+void					add_cap(t_scene *scene, t_objects *reference,
+							bool is_top);
+void					add_caps(t_scene *scene, char *type);
+
+//			LIGHT.C
+
+void					parse_light(t_scene *scene, char **instructions,
 							size_t argc);
+
+//			PLANE.C
+
+void					check_plane_values(t_plane *plane, t_scene *scene,
+							char **line);
+void					assign_plane_values(void *object, char **temp,
+							t_object_param type);
+t_plane					*new_plane(t_scene *scene, t_objects *new, char **line,
+							size_t argc);
+
+//			SPHERE.C
+
+void					check_sphere_values(t_sphere *sphere, t_scene *scene,
+							char **line);
+void					assign_sphere_values(void *object, char **temp,
+							t_object_param type);
+t_sphere				*new_sphere(t_scene *scene, t_objects *new, char **line,
+							size_t argc);
+
+//		RAYTRACING
+//			CHECK_INTERSECTIONS.C
+
+bool					is_intersect_ray_cylinder(t_ray ray,
+							t_cylinder *cylinder, double *prev_t);
+bool					is_intersect_plane(t_ray ray, t_plane *plane,
+							double *prev_t);
+bool					is_intersect_sphere(t_ray ray, t_sphere *sphere,
+							double *prev_t);
+bool					is_intersect_cone(t_ray ray, t_cone *cone,
+							double *prev_t);
+
+//			CONSTANTS.C
+
+void					assign_default_phong(t_objects *object,
+							float ambient_const);
+
+//			FIND_T.C
+
+void					retrieve_t(double a, double b, double disc,
+							double *ts[2]);
+void					get_t_sphere(t_sphere *sphere, t_ray ray, double *t1,
+							double *t2);
+void					get_t_cylinder(t_cylinder *cylinder, t_ray ray,
+							double *t1, double *t2);
+void					get_t_cone(t_cone *cone, t_ray ray, double *t1,
+							double *t2);
+
+//			INTERSECTION_MISC.C
+
+t_vector				get_inter(t_ray ray, double t);
 bool					check_side_cylinder(t_ray ray, t_cylinder *cylinder,
 							double *t1, double *prev_t);
 bool					check_side_cone(t_ray ray, t_cone *cone, double *t1,
 							double *prev_t);
-void	get_t_sphere(t_sphere *sphere, t_ray ray, double *t1, double *t2);
-void	get_t_cone(t_cone *cone, t_ray ray, double *t1, double *t2);
-void					check_scene(t_scene *scene);
-void					parse_ambient_light(t_scene *scene, char **instructions,
-							size_t argc);
-void					check_line(char **instructions, t_scene *scene, int fd);
-void					add_caps(t_scene *scene, char *type);
-t_vector				clamp_vector(t_vector vector, int min, int max);
-void					split_and_assign_vector(t_objects *object, char *line,
-							t_object_param type, t_scene *scene);
-void					check_values(t_objects *object, t_object_type type,
-							t_scene *scene, char **line);
-void					parse_new_object(t_scene *scene, char **line,
-							size_t argc, t_object_type type);
-int						parse_line(t_scene *scene, int fd);
+bool					is_inside_cylinder(t_vector ray_origin,
+							t_cylinder cylinder);
 
-void					parse_camera(t_scene *scene, char **line, size_t argc);
-void					parse_light(t_scene *scene, char **instructions,
-							size_t argc);
-void					parse_ambient(t_scene *scene, char **instructions,
-							size_t argc);
+//			NORMAL_VECTORS.C
 
-t_objects				*get_last_object(t_objects *objects);
+t_vector				get_nv_sphere(t_vector inter, t_vector camera_pos,
+							t_sphere *sphere);
+t_vector				get_normal_vector_sphere(t_vector inter,
+							t_vector center);
+t_vector				get_nv_plane(t_ray ray, t_plane *plane);
+t_vector				get_nv_cylinder(t_vector intersect,
+							t_cylinder *cylinder, t_ray ray);
+t_vector				get_nv_cone(t_vector intersect, t_cone *cone,
+							t_ray ray);
 
-void					err(char *error);
-void					err_free(char *error, t_scene *scene);
-void					err_free_array(char *error, t_scene *scene,
-							char **array);
-void					free_array(char **array);
+//			PHONG.C
+//				in phong_reflection.h
+//			RENDER.C
 
-void					free_scene(t_scene *scene);
-
-int						close_win(void *context, int exit_code);
-int						close_win_handler(void *context);
-
+t_objects				*get_closest_object(t_scene scene, t_ray ray,
+							double *new_t);
 void					render_scene(t_scene *scene);
-void					print_array(char **array);
 
-double					vector_length(t_vector vector);
-t_vector				multiply_v_color(t_vector v1, t_vector v2);
-float					dot_product(t_vector one, t_vector two);
-t_vector				normalize_vector(t_vector vector);
-void					print_vector(t_vector vector);
-
-float					deg_to_rad(float deg);
-
-void					print_objects_parameters(t_scene *scene);
-
-void					init_scene(t_scene *scene);
-void					initialize_mlx(t_scene *scene);
-int						key_hook(int keycode, t_scene *scene);
-int						mouse_click_handler(int button, int x, int y,
-							t_scene *scene);
-void					my_mlx_pixel_put(t_image *data, int x, int y,
-							int color);
-
-t_vector				subtract_v(t_vector one, t_vector two);
-t_vector				divide_v(t_vector vector, float divider);
-t_vector				multiply_v(t_vector vector, float multiplier);
-t_vector				add_v(t_vector one, t_vector two);
-t_vector				cross_product(t_vector one, t_vector two);
-
-int						rgb_to_int(int r, int g, int b);
-int						color_to_int(t_color color);
-int						vector_to_int(t_vector vector);
-t_vector				color_to_vector(t_color color);
-void					initialize_viewport(t_scene *scene);
-t_vector				color_to_vector_cylinder(void *object);
-t_vector				color_to_vector_sphere(void *object);
-t_vector				color_to_vector_plane(void *object);
-void					copy_vector(t_vector *dest, t_vector src);
-void					copy_color(t_color *dest, t_color src);
-
-bool					check_debug_tools(int keycode, t_scene *scene);
-
-// debug2.c
-void					print_sphere_parameters(t_sphere *sphere);
-void					print_plane_parameters(t_plane *plane);
-void					print_light_parameters(t_lights *light);
-void					print_cylinder_parameters(t_cylinder *cylinder);
-void					print_cone_parameters(t_cone *cone);
-void					print_camera_parameters(t_camera *camera);
-
-// debug3.c
-void					print_ambient_parameters(t_ambient *ambient);
-void					print_objects_parameters(t_scene *scene);
+//			UV_TRANSLATE.C
+//				in phong_reflection.h
 
 #endif

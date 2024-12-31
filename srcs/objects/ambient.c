@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:44 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:33:10 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:14:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	check_ambient_values(t_ambient *obj, t_scene *scene, char **line)
+static void	check_ambient_values(t_ambient *obj, t_scene *scene, char **line)
 {
 	if (obj->brightness < 0 || obj->brightness > 1)
 		err_free_array("Invalid brightness for ambient light", scene, line);

@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:52 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/06 19:40:24 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:02:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_vector	multiply_v(t_vector vector, float multiplier)
+t_vector	scale_v(t_vector vector, float multiplier)
 {
 	t_vector	result;
 
@@ -52,7 +52,7 @@ t_vector	add_v(t_vector one, t_vector two)
 	return (result);
 }
 
-float	dot_product(t_vector one, t_vector two)
+float	dot_v(t_vector one, t_vector two)
 {
 	return (one.x * two.x + one.y * two.y + one.z * two.z);
 }

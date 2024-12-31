@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:06 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 15:52:08 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:28:35 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	read_scene(t_scene *scene, char *file)
+static void	read_scene(t_scene *scene, char *file)
 {
 	int	fd;
 

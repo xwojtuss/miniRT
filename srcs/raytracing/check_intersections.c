@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:16:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:10:30 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:02:59 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ bool	is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t)
 {
 	double	t;
 
-	if (dot_product(plane->orientation, ray.direction) == 0)
+	if (dot_v(plane->orientation, ray.direction) == 0)
 		return (false);
-	t = dot_product(multiply_v(plane->orientation, -1), subtract_v(ray.origin,
-				plane->position)) / dot_product(plane->orientation,
+	t = dot_v(scale_v(plane->orientation, -1), subtract_v(ray.origin,
+				plane->position)) / dot_v(plane->orientation,
 			ray.direction);
-	if (t > 0 && *prev_t > t && vector_length(subtract_v(get_inter(ray, t),
+	if (t > 0 && *prev_t > t && get_length_v(subtract_v(get_inter(ray, t),
 				plane->position)) < plane->diam / 2 + OFFSET_NORMAL)
 		return (*prev_t = t, true);
 	return (false);
@@ -64,7 +64,7 @@ bool	is_intersect_sphere(t_ray ray, t_sphere *sphere, double *prev_t)
 		t1 = t2;
 		t2 = temp;
 	}
-	if (vector_length(subtract_v(ray.origin, sphere->position)) <= sphere->diam
+	if (get_length_v(subtract_v(ray.origin, sphere->position)) <= sphere->diam
 		/ 2 && t2 > 0 && *prev_t > t2)
 		return (*prev_t = t2, true);
 	else if (t1 > 0 && *prev_t > t1)
@@ -85,14 +85,14 @@ bool	is_intersect_cone(t_ray ray, t_cone *cone, double *prev_t)
 		return (false);
 	if (t1 > DBL_EPSILON && t1 < *prev_t)
 	{
-		height_proj = dot_product(subtract_v(get_inter(ray, t1),
+		height_proj = dot_v(subtract_v(get_inter(ray, t1),
 					cone->position), cone->orientation);
 		if (height_proj >= 0 && height_proj <= cone->height)
 			return (*prev_t = t1, true);
 	}
 	if (t2 > DBL_EPSILON && t2 < *prev_t)
 	{
-		height_proj = dot_product(subtract_v(get_inter(ray, t2),
+		height_proj = dot_v(subtract_v(get_inter(ray, t2),
 					cone->position), cone->orientation);
 		if (height_proj >= 0 && height_proj <= cone->height)
 			return (*prev_t = t2, true);

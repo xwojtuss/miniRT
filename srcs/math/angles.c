@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   angles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:21 by wkornato          #+#    #+#             */
-/*   Updated: 2024/09/24 15:40:22 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:04:50 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
-
-float	rad_to_deg(float rad)
-{
-	return (rad * 180 / PI);
-}
 
 float	deg_to_rad(float deg)
 {

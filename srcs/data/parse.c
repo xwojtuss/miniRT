@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:17:34 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:33:33 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_objects	*add_object(t_scene *scene, t_object_type type, char **line)
+static t_objects	*add_object(t_scene *scene, t_object_type type, char **line)
 {
 	t_objects	*last;
 	t_objects	*new;
@@ -32,7 +32,7 @@ t_objects	*add_object(t_scene *scene, t_object_type type, char **line)
 	return (new);
 }
 
-void	split_and_assign_vector(t_objects *object, char *line,
+static void	split_and_assign_vector(t_objects *object, char *line,
 		t_object_param type, t_scene *scene)
 {
 	char	**temp;
@@ -42,7 +42,7 @@ void	split_and_assign_vector(t_objects *object, char *line,
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
-	orientation_multitude = vector_length((t_vector){ft_atof(temp[0]),
+	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1
 			|| 1 - orientation_multitude > 0.001
@@ -60,7 +60,7 @@ void	split_and_assign_vector(t_objects *object, char *line,
 	free_array(temp);
 }
 
-void	check_values(t_objects *object, t_object_type type, t_scene *scene,
+static void	check_values(t_objects *object, t_object_type type, t_scene *scene,
 		char **line)
 {
 	if (type == SPHERE)

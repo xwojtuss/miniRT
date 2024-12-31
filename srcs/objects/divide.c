@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 19:52:35 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:53:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	add_cap(t_scene *scene, t_objects *reference, bool is_top)
 	copy_cyl_to_plane(reference, new);
 	if (is_top)
 		((t_plane *)new->object)->position = add_v(((t_plane *)new->object)->position,
-				multiply_v(((t_cylinder *)reference->object)->orientation,
+				scale_v(((t_cylinder *)reference->object)->orientation,
 					((t_cylinder *)reference->object)->height));
 	last = get_last_object(scene->objects);
 	if (!last)

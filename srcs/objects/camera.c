@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/06 17:31:54 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:15:16 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	check_camera_values(t_camera *camera, t_scene *scene, char **line)
+static void	check_camera_values(t_camera *camera, t_scene *scene, char **line)
 {
 	if (camera->fov < 0 || camera->fov > 180)
 		err_free_array("Invalid field of view for camera", scene, line);
@@ -22,7 +22,7 @@ void	check_camera_values(t_camera *camera, t_scene *scene, char **line)
 		err_free_array("Invalid orientation for camera", scene, line);
 }
 
-void	split_and_assign_vector_camera(t_camera *camera, char *line,
+static void	split_and_assign_vector_camera(t_camera *camera, char *line,
 		t_object_param type, t_scene *scene)
 {
 	char	**temp;
@@ -32,7 +32,7 @@ void	split_and_assign_vector_camera(t_camera *camera, char *line,
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_array("Incorrect amount of parameters to a value", scene,
 			temp);
-	orientation_multitude = vector_length((t_vector){ft_atof(temp[0]),
+	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1
 			|| 1 - orientation_multitude > 0.001

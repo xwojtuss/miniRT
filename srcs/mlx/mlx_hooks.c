@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:25 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 21:18:39 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	mouse_click_handler(int button, int x, int y, t_scene *scene)
 		return (EXIT_SUCCESS);
 	temp = 0;
 	pixel_center = add_v(scene->viewport_top_left,
-			add_v(multiply_v(scene->viewport_grid_vector_x, x),
-				multiply_v(scene->viewport_grid_vector_y, y)));
+			add_v(scale_v(scene->viewport_grid_vector_x, x),
+				scale_v(scene->viewport_grid_vector_y, y)));
 	ray_direction = subtract_v(pixel_center, scene->camera->position);
 	ray = (t_ray){scene->camera->position, ray_direction};
 	object = get_closest_object(*scene, ray, &temp);

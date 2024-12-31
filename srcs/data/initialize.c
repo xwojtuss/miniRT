@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 17:22:06 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	setup_screen(t_scene *scene)
 	t_vector	*vtl;
 
 	vtl = &scene->viewport_top_left;
-	width_vector = multiply_v(scene->camera->right, scene->viewport_width);
-	height_vector = multiply_v(scene->camera->up, scene->viewport_height);
+	width_vector = scale_v(scene->camera->right, scene->viewport_width);
+	height_vector = scale_v(scene->camera->up, scene->viewport_height);
 	scene->viewport_grid_vector_x = divide_v(width_vector,
 			(double)(scene->image_width));
 	scene->viewport_grid_vector_y = divide_v(height_vector,

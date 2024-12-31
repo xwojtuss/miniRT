@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 13:57:43 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:04:31 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ void	print_plane_parameters(t_plane *plane)
 		plane->position.z);
 	printf("orientation:\tX%f, Y%f, Z%f\n", plane->orientation.x,
 		plane->orientation.y, plane->orientation.z);
-}
-
-void	print_light_parameters(t_lights *light)
-{
-	t_lights	*curr;
-
-	curr = light;
-	while (curr)
-	{
-		printf("Light:\n");
-		printf("position:\tX%f, Y%f, Z%f\n", curr->position.x, curr->position.y,
-			curr->position.z);
-		printf("brightness:\t%f\n", curr->brightness);
-		curr = curr->next;
-	}
 }
 
 void	print_cylinder_parameters(t_cylinder *cylinder)

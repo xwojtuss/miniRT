@@ -6,11 +6,30 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:29:04 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:44:41 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:16:46 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
+
+t_texture	*copy_texture(t_texture *reference)
+{
+	t_texture	*new;
+
+	if (!reference)
+		return (NULL);
+	new = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!new)
+		return (NULL);
+	if (reference->name)
+		new->name = ft_strdup(reference->name);
+	else
+		new->name = NULL;
+	new->img = reference->img;
+	new->width = reference->width;
+	new->height = reference->height;
+	return (new);
+}
 
 unsigned int	get_pixel_color(t_image image, int x, int y)
 {

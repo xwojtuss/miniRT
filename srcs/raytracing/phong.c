@@ -6,20 +6,20 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:27:19 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:25:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 #include "phong_reflection.h"
 
-t_vector	reflect_ray(t_vector incident, t_vector normal)
+static t_vector	reflect_ray(t_vector incident, t_vector normal)
 {
-	return (subtract_v(incident, multiply_v(normal, 2 * dot_product(incident,
+	return (subtract_v(incident, scale_v(normal, 2 * dot_v(incident,
 					normal))));
 }
 
-int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
+static int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 		t_vector light_position)
 {
 	t_ray		shadow_ray;
@@ -28,17 +28,17 @@ int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	float		intersection_distance;
 	double		t;
 
-	shadow_ray.origin = add_v(inter, multiply_v(normal, DBL_EPSILON));
+	shadow_ray.origin = add_v(inter, scale_v(normal, DBL_EPSILON));
 	shadow_ray.direction = normalize_vector(subtract_v(light_position,
 				shadow_ray.origin));
-	light_distance = vector_length(subtract_v(light_position,
+	light_distance = get_length_v(subtract_v(light_position,
 				shadow_ray.origin));
 	if (get_closest_object(*scene, shadow_ray, &t))
 	{
 		shadow_intersection = get_inter(shadow_ray, t);
-		shadow_intersection = add_v(shadow_intersection, multiply_v(normal,
+		shadow_intersection = add_v(shadow_intersection, scale_v(normal,
 					DBL_EPSILON));
-		intersection_distance = vector_length(subtract_v(shadow_intersection,
+		intersection_distance = get_length_v(subtract_v(shadow_intersection,
 					shadow_ray.origin));
 		if (intersection_distance < (light_distance - FLT_EPSILON))
 			return (0);
@@ -46,7 +46,7 @@ int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	return (1);
 }
 
-void	calculate_color(t_vector *total_color, t_lights *curr,
+static void	calculate_color(t_vector *total_color, t_lights *curr,
 		t_raytrace_info info, t_vector light_dir)
 {
 	t_vector	diffuse;
@@ -54,15 +54,15 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 	t_vector	view_vector;
 	t_vector	specular;
 
-	diffuse = multiply_v_color(info.color,
-			multiply_v(color_to_vector(curr->color), info.object->constants.diffuse
-				* fmax(0, dot_product(light_dir, info.normal_vector))
+	diffuse = scale_v_color(info.color,
+			scale_v(color_to_vector(curr->color), info.object->constants.diffuse
+				* fmax(0, dot_v(light_dir, info.normal_vector))
 				* curr->brightness));
 	reflected_ray = reflect_ray(light_dir, info.normal_vector);
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
-	specular = multiply_v(color_to_vector(curr->color),
-			info.object->constants.specular * pow(fmax(0, dot_product(reflected_ray,
+	specular = scale_v(color_to_vector(curr->color),
+			info.object->constants.specular * pow(fmax(0, dot_v(reflected_ray,
 						view_vector)), info.object->constants.shininess)
 			* curr->brightness);
 	*total_color = add_v(*total_color, add_v(specular, diffuse));
@@ -74,10 +74,10 @@ int	phong_reflection(t_raytrace_info info)
 	t_vector	light_dir;
 	t_lights	*curr;
 
-	total_color = multiply_v_color(info.color,
-			multiply_v(color_to_vector(info.scene->ambient->color),
+	total_color = scale_v_color(info.color,
+			scale_v(color_to_vector(info.scene->ambient->color),
 				info.scene->ambient->brightness * info.object->constants.ambient));
-	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector,
+	info.inter = subtract_v(info.inter, scale_v(info.normal_vector,
 				OFFSET_NORMAL));
 	curr = info.scene->light;
 	while (curr)
@@ -85,7 +85,7 @@ int	phong_reflection(t_raytrace_info info)
 		if (is_visible(info.scene, info.inter, info.normal_vector,
 				curr->position))
 		{
-			light_dir = get_direction_vector(curr->position, info.inter);
+			light_dir = get_direction_v(curr->position, info.inter);
 			calculate_color(&total_color, curr, info, light_dir);
 		}
 		curr = curr->next;

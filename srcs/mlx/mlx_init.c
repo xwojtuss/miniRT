@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:41:12 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 21:12:24 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-bool	open_texture_helper(t_texture *texture, t_scene *scene)
+static bool	open_texture_helper(t_texture *texture, t_scene *scene)
 {
 	if (texture)
 	{
