@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:15:54 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 13:58:53 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 10:51:04 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	destroy_texture(t_scene *scene, t_texture *texture)
 			mlx_destroy_image(scene->mlx, texture->img.img);
 		free(texture->name);
 		free(texture);
+		texture = NULL;
 	}
 }
 

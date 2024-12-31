@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:50:21 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 10:35:40 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 		err_free_array("Could not allocate memory for plane", scene, line);
 	new->object = plane;
 	plane->texture = NULL;
+	plane->diam = INFINITY;
 	if (argc > 4 && ft_strcmp(line[4], "-"))
 		plane->texture = new_texture(line[4]);
 	plane->bump = NULL;

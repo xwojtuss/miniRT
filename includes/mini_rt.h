@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/21 15:21:06 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:14:39 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,6 @@ typedef struct t_texture
 	int					height;
 }						t_texture;
 
-typedef enum e_where
-{
-	BOTTOM,
-	TOP,
-	SIDE,
-	NOWHERE
-}						t_where;
-
 typedef enum e_object_param
 {
 	POSITION,
@@ -90,6 +82,7 @@ typedef enum e_object_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	CONE,
 	CAMERA,
 	LIGHT,
 	AMBIENT
@@ -162,6 +155,7 @@ typedef struct s_plane
 {
 	t_vector			position;
 	t_vector			orientation;
+	float				diam;
 	t_color				color;
 	t_texture			*texture;
 	t_texture			*bump;
@@ -178,7 +172,6 @@ typedef struct s_cylinder
 	float				diam;
 	float				height;
 	t_color				color;
-	t_where				inter_where;
 	t_texture			*texture;
 	t_texture			*bump;
 	float				specular;
@@ -186,6 +179,21 @@ typedef struct s_cylinder
 	float				ambient;
 	float				shininess;
 }						t_cylinder;
+
+typedef struct s_cone
+{
+	t_vector			position;
+	t_vector			orientation;
+	float				diam;
+	float				height;
+	t_color				color;
+	t_texture			*texture;
+	t_texture			*bump;
+	float				specular;
+	float				diffuse;
+	float				ambient;
+	float				shininess;
+}						t_cone;
 
 typedef struct s_scene
 {

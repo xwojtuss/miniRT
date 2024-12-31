@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:00 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:14:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:21:29 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 		close(fd);
 		err_free("Invalid identifier", scene);
 	}
-	free_array(instructions);
 }

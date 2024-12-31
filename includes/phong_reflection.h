@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:54:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:21:03 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:48:35 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				is_intersect_sphere(t_ray ray, t_sphere *sphere,
 int				is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t);
 int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 					double *prev_t);
-t_vector		get_nv_cylinder(t_vector intersect, t_cylinder *cylinder);
+t_vector		get_nv_cylinder(t_vector intersect, t_cylinder *cylinder, t_ray ray);
 
 # define SPECULAR_CONST 0.5
 # define DIFFUSE_CONST 0.7

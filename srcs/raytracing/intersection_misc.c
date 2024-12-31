@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_misc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:19:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 19:42:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:41:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,6 @@ double	get_t_cap_top(t_ray ray, t_cylinder *cylinder)
 					multiply_v(cylinder->orientation, cylinder->height)),
 				ray.origin), cylinder->orientation) / dot_product(ray.direction,
 			cylinder->orientation));
-}
-
-double	is_intersect_cylinder_caps(t_ray ray, t_cylinder *cylinder,
-		double *prev_t)
-{
-	double	t_cap_top;
-	double	t_cap_bottom;
-
-	t_cap_bottom = get_t_cap_bottom(ray, cylinder);
-	t_cap_top = get_t_cap_top(ray, cylinder);
-	if (t_cap_bottom > DBL_EPSILON && t_cap_bottom < *prev_t
-		&& (t_cap_bottom < t_cap_top || t_cap_top < 0))
-	{
-		if (vector_length(subtract_v(get_inter(ray, t_cap_bottom),
-					cylinder->position)) <= cylinder->diam / 2)
-			return (cylinder->inter_where = BOTTOM, t_cap_bottom);
-	}
-	if (t_cap_top > DBL_EPSILON && t_cap_top < *prev_t)
-	{
-		if (vector_length(subtract_v(get_inter(ray, t_cap_top),
-					add_v(cylinder->position, multiply_v(cylinder->orientation,
-							cylinder->height)))) <= cylinder->diam / 2)
-			return (cylinder->inter_where = TOP, t_cap_top);
-	}
-	return (0);
 }
 
 void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)

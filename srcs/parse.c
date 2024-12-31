@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/20 16:03:09 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:32:01 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,26 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 	check_values(new->object, new->type, scene, line);
 }
 
+void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top);
+
+void	add_caps(t_scene *scene, char *type)
+{
+	t_objects	*last;
+
+	last = get_last_object(scene->objects);
+	if (!last)
+		return ;
+	if (!ft_strcmp(type, "cy"))
+	{
+		add_cap(scene, (t_cylinder *)last->object, true);
+		add_cap(scene, (t_cylinder *)last->object, false);
+	}
+	// else if (!ft_strcmp(type, "co"))
+	// {
+	// 	add_base(scene, (t_cone *)last->object);
+	// }
+}
+
 int	parse_line(t_scene *scene, int fd)
 {
 	char	*line;
@@ -109,5 +129,7 @@ int	parse_line(t_scene *scene, int fd)
 		err_free("Could not split line", scene);
 	}
 	check_line(instructions, scene, fd);
+	add_caps(scene, instructions[0]);
+	free_array(instructions);
 	return (1);
 }

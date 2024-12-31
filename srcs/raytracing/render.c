@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:45:00 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:48:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 	else if (raytrace.object->type == CYLINDER)
 	{
 		raytrace.normal_vector = get_nv_cylinder(raytrace.inter,
-				raytrace.object->object);
+				raytrace.object->object, ray);
 		raytrace.color = get_color_cylinder(raytrace.object->object, &raytrace);
 	}
 	else if (raytrace.object->type == PLANE)

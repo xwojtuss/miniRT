@@ -6,14 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:18:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:12:50 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-t_vector	get_nv_sphere(t_vector inter, t_vector camera_pos,
-		t_sphere *sphere)
+t_vector	get_nv_sphere(t_vector inter, t_vector camera_pos, t_sphere *sphere)
 {
 	t_vector	result;
 
@@ -37,24 +36,32 @@ t_vector	get_nv_plane(t_ray ray, t_plane *plane)
 	return (plane->orientation);
 }
 
-t_vector	get_nv_cylinder(t_vector intersect,
-		t_cylinder *cylinder)
+bool	is_inside_cylinder(t_vector ray_origin, t_cylinder cylinder)
+{
+	t_vector	to_origin;
+	double		projected_height;
+	double		perpendicular_distance;
+
+	to_origin = subtract_v(ray_origin, cylinder.position);
+	projected_height = dot_product(to_origin, cylinder.orientation);
+	if (projected_height < 0 || projected_height > cylinder.height)
+		return (false);
+	perpendicular_distance = vector_length(subtract_v(to_origin,
+				multiply_v(cylinder.orientation, projected_height)));
+	return (perpendicular_distance < (cylinder.diam / 2));
+}
+
+t_vector	get_nv_cylinder(t_vector intersect, t_cylinder *cylinder, t_ray ray)
 {
 	t_vector	pos_to_inter;
 	t_vector	parallel;
 	t_vector	normal;
 
-	if (cylinder->inter_where == TOP)
-		return (multiply_v(cylinder->orientation, -1));
-	else if (cylinder->inter_where == BOTTOM)
-		return (cylinder->orientation);
-	else if (cylinder->inter_where == SIDE)
-	{
-		pos_to_inter = subtract_v(intersect, cylinder->position);
-		parallel = multiply_v(cylinder->orientation,
-				dot_product(pos_to_inter, cylinder->orientation));
-		normal = subtract_v(pos_to_inter, parallel);
-		return (normalize_vector(multiply_v(normal, -1)));
-	}
-	return ((t_vector){0, 1, 0});
+	pos_to_inter = subtract_v(intersect, cylinder->position);
+	parallel = multiply_v(cylinder->orientation, dot_product(pos_to_inter,
+				cylinder->orientation));
+	normal = subtract_v(pos_to_inter, parallel);
+	if (is_inside_cylinder(ray.origin, *cylinder))
+		normal = multiply_v(normal, -1);
+	return (normalize_vector(multiply_v(normal, -1)));
 }

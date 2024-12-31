@@ -6,32 +6,29 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:16:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 15:17:48 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:41:12 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-bool	check_side(t_ray ray, t_cylinder *cylinder, double *ts[3])
+bool	check_side(t_ray ray, t_cylinder *cylinder, double *ts[2])
 {
 	double	height_pos;
 
 	height_pos = dot_product(subtract_v(get_inter(ray, *ts[0]),
 				cylinder->position), cylinder->orientation);
-	if (height_pos >= 0 && height_pos <= cylinder->height && (*ts[2] == 0
-			|| *ts[0] < *ts[2]))
-		return (*ts[1] = *ts[0], cylinder->inter_where = SIDE, 1);
+	if (height_pos >= 0 && height_pos <= cylinder->height)
+		return (*ts[1] = *ts[0], 1);
 	return (0);
 }
 
 int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 {
-	double	caps_t;
 	double	temp;
 	double	t1;
 	double	t2;
 
-	cylinder->inter_where = NOWHERE;
 	get_t_cylinder(cylinder, ray, &t1, &t2);
 	if (t1 == DBL_MAX && t2 == DBL_MAX)
 		return (0);
@@ -41,15 +38,12 @@ int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 		t1 = t2;
 		t2 = temp;
 	}
-	caps_t = is_intersect_cylinder_caps(ray, cylinder, prev_t);
 	if (t1 > DBL_EPSILON && t1 < *prev_t && check_side(ray, cylinder,
-			(double *[3]){&t1, prev_t, &caps_t}))
+			(double *[2]){&t1, prev_t}))
 		return (1);
 	if (t2 > DBL_EPSILON && t2 < *prev_t && check_side(ray, cylinder,
-			(double *[3]){&t2, prev_t, &caps_t}))
+			(double *[2]){&t2, prev_t}))
 		return (1);
-	if (caps_t > DBL_EPSILON && caps_t - OFFSET_NORMAL < *prev_t)
-		return (*prev_t = caps_t, 1);
 	return (0);
 }
 
@@ -62,7 +56,8 @@ int	is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t)
 	t = dot_product(multiply_v(plane->orientation, -1), subtract_v(ray.origin,
 				plane->position)) / dot_product(plane->orientation,
 			ray.direction);
-	if (t > 0 && *prev_t > t)
+	if (t > 0 && *prev_t > t && vector_length(subtract_v(get_inter(ray, t),
+				plane->position)) < plane->diam / 2 + OFFSET_NORMAL)
 		return (*prev_t = t, 1);
 	return (0);
 }

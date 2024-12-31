@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:50:24 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:34:17 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,70 @@ void	assign_cylinder_values(void *object, char **temp, t_object_param type)
 	else if (type == COLOR)
 		assign_color(&((t_cylinder *)object)->color, ft_atoi(temp[0]),
 			ft_atoi(temp[1]), ft_atoi(temp[2]));
+}
+
+t_texture	*copy_texture(t_texture *reference)
+{
+	t_texture	*new;
+
+	if (!reference)
+		return (NULL);
+	new = (t_texture *)ft_calloc(1, sizeof(t_texture));
+	if (!new)
+		return (NULL);
+	if (reference->name)
+		new->name = ft_strdup(reference->name);
+	else
+		new->name = NULL;
+	new->img = reference->img;
+	new->width = reference->width;
+	new->height = reference->height;
+	return (new);
+}
+
+void	copy_vector(t_vector *dest, t_vector src)
+{
+	dest->x = src.x;
+	dest->y = src.y;
+	dest->z = src.z;
+}
+
+void	copy_color(t_color *dest, t_color src)
+{
+	dest->r = src.r;
+	dest->g = src.g;
+	dest->b = src.b;
+}
+
+void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top)
+{
+	t_objects	*new;
+	t_objects	*last;
+
+	new = (t_objects *)ft_calloc(1, sizeof(t_objects));
+	if (!new)
+		err_free("Could not allocate memory", scene);
+	new->type = PLANE;
+	new->object = new_plane(scene, new, (char *[]){"", "0,0,0", "0,0,0",
+			"0,0,0"}, 4);
+	copy_vector(&((t_plane *)new->object)->position, cylinder->position);
+	copy_vector(&((t_plane *)new->object)->orientation, cylinder->orientation);
+	copy_color(&((t_plane *)new->object)->color, cylinder->color);
+	((t_plane *)new->object)->ambient = cylinder->ambient;
+	((t_plane *)new->object)->diffuse = cylinder->diffuse;
+	((t_plane *)new->object)->specular = cylinder->specular;
+	((t_plane *)new->object)->shininess = cylinder->shininess;
+	((t_plane *)new->object)->diam = cylinder->diam;
+	((t_plane *)new->object)->texture = copy_texture(cylinder->texture);
+	((t_plane *)new->object)->bump = copy_texture(cylinder->bump);
+	if (is_top)
+		((t_plane *)new->object)->position = add_v(((t_plane *)new->object)->position,
+			multiply_v(cylinder->orientation, cylinder->height));
+	last = get_last_object(scene->objects);
+	if (!last)
+		scene->objects = new;
+	else
+		last->next = new;
 }
 
 t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
