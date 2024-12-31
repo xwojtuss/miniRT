@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:25:19 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:31:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 static t_vector	reflect_ray(t_vector incident, t_vector normal)
 {
-	return (subtract_v(incident, scale_v(normal, 2 * dot_v(incident,
-					normal))));
+	return (subtract_v(incident, scale_v(normal, 2 * dot_v(incident, normal))));
 }
 
 static int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
@@ -29,7 +28,7 @@ static int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
 	double		t;
 
 	shadow_ray.origin = add_v(inter, scale_v(normal, DBL_EPSILON));
-	shadow_ray.direction = normalize_vector(subtract_v(light_position,
+	shadow_ray.direction = normalize_v(subtract_v(light_position,
 				shadow_ray.origin));
 	light_distance = get_length_v(subtract_v(light_position,
 				shadow_ray.origin));
@@ -54,12 +53,11 @@ static void	calculate_color(t_vector *total_color, t_lights *curr,
 	t_vector	view_vector;
 	t_vector	specular;
 
-	diffuse = scale_v_color(info.color,
-			scale_v(color_to_vector(curr->color), info.object->constants.diffuse
-				* fmax(0, dot_v(light_dir, info.normal_vector))
-				* curr->brightness));
+	diffuse = scale_v_color(info.color, scale_v(color_to_vector(curr->color),
+				info.object->constants.diffuse * fmax(0, dot_v(light_dir,
+						info.normal_vector)) * curr->brightness));
 	reflected_ray = reflect_ray(light_dir, info.normal_vector);
-	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
+	view_vector = normalize_v(subtract_v(info.scene->camera->position,
 				info.inter));
 	specular = scale_v(color_to_vector(curr->color),
 			info.object->constants.specular * pow(fmax(0, dot_v(reflected_ray,
@@ -76,7 +74,8 @@ int	phong_reflection(t_raytrace_info info)
 
 	total_color = scale_v_color(info.color,
 			scale_v(color_to_vector(info.scene->ambient->color),
-				info.scene->ambient->brightness * info.object->constants.ambient));
+				info.scene->ambient->brightness
+				* info.object->constants.ambient));
 	info.inter = subtract_v(info.inter, scale_v(info.normal_vector,
 				OFFSET_NORMAL));
 	curr = info.scene->light;

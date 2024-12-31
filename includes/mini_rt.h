@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 22:00:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:27:42 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # include "float.h"
 # include "libft.h"
 # include "mlx.h"
+# include "vectors.h"
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -95,20 +96,6 @@ typedef enum e_object_type
 	LIGHT,
 	AMBIENT
 }						t_object_type;
-
-typedef struct s_color
-{
-	int					r;
-	int					g;
-	int					b;
-}						t_color;
-
-typedef struct s_vector
-{
-	float				x;
-	float				y;
-	float				z;
-}						t_vector;
 
 typedef struct s_ray
 {
@@ -227,10 +214,6 @@ void					free_array(char **array);
 void					initialize_viewport(t_scene *scene);
 void					init_scene(t_scene *scene);
 
-//			MISC.C
-
-t_objects				*get_last_object(t_objects *objects);
-
 //			PARSE.C
 
 void					parse_new_object(t_scene *scene, char **line,
@@ -260,40 +243,7 @@ void					print_object_parameters(t_objects *object);
 void					print_objects_parameters(t_scene *scene);
 
 //		MATH
-//			ANGLES.C
-
-float					deg_to_rad(float deg);
-
-//			VECTORS.C
-
-t_vector				scale_v(t_vector vector, float multiplier);
-t_vector				divide_v(t_vector vector, float divider);
-t_vector				subtract_v(t_vector one, t_vector two);
-t_vector				add_v(t_vector one, t_vector two);
-float					dot_v(t_vector one, t_vector two);
-
-//			VECTORS2.C
-
-double					get_length_v(t_vector vector);
-t_vector				normalize_vector(t_vector vector);
-void					assign_vector(t_vector *vector, float x, float y,
-							float z);
-void					assign_color(t_color *color, int r, int g, int b);
-
-//			VECTORS3.C
-
-t_vector				cross_product(t_vector one, t_vector two);
-t_vector				scale_v_color(t_vector v1, t_vector v2);
-t_vector				clamp_vector(t_vector vector, int min, int max);
-t_vector				get_direction_v(t_vector from, t_vector to);
-void					copy_vector(t_vector *dest, t_vector src);
-
-//			COLORS.C
-
-int						vector_to_int(t_vector vector);
-t_vector				color_to_vector(t_color color);
-t_vector				int_color_to_vector(int color);
-void					copy_color(t_color *dest, t_color src);
+//			in vectors.h
 
 //		MLX
 //			MLX_HOOKS.C
@@ -360,6 +310,10 @@ void					add_caps(t_scene *scene, char *type);
 
 void					parse_light(t_scene *scene, char **instructions,
 							size_t argc);
+
+//			MISC.C
+
+t_objects				*get_last_object(t_objects *objects);
 
 //			PLANE.C
 

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:01 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:31:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void	print_array(char **array)
 static void	rotate_camera(t_camera *camera, t_vector rotation, t_vector axis,
 		float angle)
 {
-	rotation = normalize_vector(rotation);
+	rotation = normalize_v(rotation);
 	camera->orientation = add_v(scale_v(camera->orientation, cos(angle)),
 			scale_v(cross_product(axis, camera->orientation), sin(angle)));
-	camera->orientation = normalize_vector(camera->orientation);
-	camera->right = normalize_vector(cross_product((t_vector){0, 1, 0},
+	camera->orientation = normalize_v(camera->orientation);
+	camera->right = normalize_v(cross_product((t_vector){0, 1, 0},
 				camera->orientation));
-	camera->up = normalize_vector(cross_product(camera->orientation,
+	camera->up = normalize_v(cross_product(camera->orientation,
 				camera->right));
 }
 

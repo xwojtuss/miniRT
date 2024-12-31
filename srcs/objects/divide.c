@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 19:52:35 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:30:20 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	copy_cone_to_plane(t_objects *src, t_objects *dest)
 	dest->constants.shininess = src->constants.shininess;
 	dest->texture = copy_texture(src->texture);
 	dest->bump = copy_texture(src->bump);
-	((t_plane *)src->object)->diam = ((t_cone *)src->object)->diam - OFFSET_NORMAL;
+	((t_plane *)src->object)->diam = ((t_cone *)src->object)->diam
+		- OFFSET_NORMAL;
 }
 
 void	add_base(t_scene *scene, t_objects *reference)
@@ -40,9 +41,12 @@ void	add_base(t_scene *scene, t_objects *reference)
 	new->type = PLANE;
 	new->object = new_plane(scene, new, (char *[]){"", "0,0,0", "0,0,0",
 			"0,0,0"}, 4);
-	copy_vector(&((t_plane *)new->object)->position, ((t_cone *)reference->object)->position);
-	copy_vector(&((t_plane *)new->object)->orientation, ((t_cone *)reference->object)->orientation);
-	copy_color(&((t_plane *)new->object)->color, ((t_cone *)reference->object)->color);
+	copy_vector(&((t_plane *)new->object)->position,
+		((t_cone *)reference->object)->position);
+	copy_vector(&((t_plane *)new->object)->orientation,
+		((t_cone *)reference->object)->orientation);
+	copy_color(&((t_plane *)new->object)->color,
+		((t_cone *)reference->object)->color);
 	copy_cone_to_plane(reference, new);
 	last = get_last_object(scene->objects);
 	if (!last)
@@ -73,6 +77,7 @@ void	add_cap(t_scene *scene, t_objects *reference, bool is_top)
 {
 	t_objects	*new;
 	t_objects	*last;
+	t_plane		*new_pl;
 
 	new = (t_objects *)ft_calloc(1, sizeof(t_objects));
 	if (!new)
@@ -80,9 +85,10 @@ void	add_cap(t_scene *scene, t_objects *reference, bool is_top)
 	new->type = PLANE;
 	new->object = new_plane(scene, new, (char *[]){"", "0,0,0", "0,0,0",
 			"0,0,0"}, 4);
+	new_pl = new->object;
 	copy_cyl_to_plane(reference, new);
 	if (is_top)
-		((t_plane *)new->object)->position = add_v(((t_plane *)new->object)->position,
+		new_pl->position = add_v(new_pl->position,
 				scale_v(((t_cylinder *)reference->object)->orientation,
 					((t_cylinder *)reference->object)->height));
 	last = get_last_object(scene->objects);

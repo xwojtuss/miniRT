@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:09 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:21:00 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:21:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	get_t_sphere(t_sphere *sphere, t_ray ray, double *t1, double *t2)
 	origin_to_center = subtract_v(ray.origin, sphere->position);
 	a = dot_v(ray.direction, ray.direction);
 	b = 2 * dot_v(ray.direction, origin_to_center);
-	c = dot_v(origin_to_center, origin_to_center) - pow(sphere->diam / 2,
-			2);
+	c = dot_v(origin_to_center, origin_to_center) - pow(sphere->diam / 2, 2);
 	disc = pow(b, 2) - 4 * a * c;
 	if (disc < 0)
 	{
@@ -56,6 +55,7 @@ void	get_t_sphere(t_sphere *sphere, t_ray ray, double *t1, double *t2)
 	else
 		retrieve_t(a, b, disc, (double *[2]){t1, t2});
 }
+
 void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)
 {
 	t_vector	oc;
@@ -71,8 +71,8 @@ void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)
 					cylinder->orientation)));
 	a = dot_v(d, d);
 	b = 2.0 * dot_v(d, oc);
-	discriminant = b * b - 4.0 * a * (dot_v(oc, oc) - pow(cylinder->diam
-				/ 2.0, 2));
+	discriminant = b * b - 4.0 * a * (dot_v(oc, oc) - pow(cylinder->diam / 2.0,
+				2));
 	if (discriminant >= 0)
 		retrieve_t(a, b, discriminant, (double *[2]){t1, t2});
 }
@@ -82,21 +82,20 @@ void	get_t_cone(t_cone *cone, t_ray ray, double *t1, double *t2)
 	t_vector	origin_to_center;
 	double		tan_theta_squared;
 	double		discriminant;
-	double a;
-	double b;
+	double		a;
+	double		b;
 
 	tan_theta_squared = pow((cone->diam / 2.0) / cone->height, 2);
 	origin_to_center = subtract_v(ray.origin, add_v(cone->position,
 				scale_v(cone->orientation, cone->height)));
 	a = dot_v(ray.direction, ray.direction) - (1 + tan_theta_squared)
 		* pow(dot_v(ray.direction, cone->orientation), 2);
-	b = 2 * (dot_v(ray.direction, origin_to_center) - (1
-				+ tan_theta_squared) * dot_v(ray.direction,
-				cone->orientation) * dot_v(origin_to_center,
+	b = 2 * (dot_v(ray.direction, origin_to_center) - (1 + tan_theta_squared)
+			* dot_v(ray.direction, cone->orientation) * dot_v(origin_to_center,
 				cone->orientation));
-	discriminant = b * b - 4 * a * dot_v(origin_to_center,
-			origin_to_center) - (1 + tan_theta_squared)
-		* pow(dot_v(origin_to_center, cone->orientation), 2);
+	discriminant = b * b - 4 * a * dot_v(origin_to_center, origin_to_center)
+		- (1 + tan_theta_squared) * pow(dot_v(origin_to_center,
+				cone->orientation), 2);
 	if (discriminant < 0)
 		return ;
 	retrieve_t(a, b, discriminant, (double *[2]){t1, t2});

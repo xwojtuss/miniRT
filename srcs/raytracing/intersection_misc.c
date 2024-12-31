@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:19:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:24:01 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:21:51 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_vector	get_inter(t_ray ray, double t)
 {
 	return (add_v(ray.origin, scale_v(ray.direction, t)));
 }
+
 bool	check_side_cylinder(t_ray ray, t_cylinder *cylinder, double *t1,
 		double *prev_t)
 {
@@ -38,6 +39,7 @@ bool	check_side_cone(t_ray ray, t_cone *cone, double *t1, double *prev_t)
 		return (*prev_t = *t1, true);
 	return (false);
 }
+
 bool	is_inside_cylinder(t_vector ray_origin, t_cylinder cylinder)
 {
 	t_vector	to_origin;

@@ -12,11 +12,11 @@ LIBS = ${LIBFT} ${MINILIBX} -lm -lX11 -lXext
 
 NAME = miniRT
 
-S_DATA = check_scene.c errors.c free.c initialize.c misc.c parse.c
+S_DATA = check_scene.c errors.c free.c initialize.c parse.c
 S_DEBUG = debug.c debug2.c debug3.c
-S_MATH = angles.c colors.c vectors.c vectors2.c vectors3.c vectors4.c
+S_MATH = angles.c colors.c vectors.c vectors2.c vectors3.c
 S_MLX = mlx_hooks.c mlx_init.c mlx_misc.c textures.c
-S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c sphere.c
+S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c sphere.c misc.c
 S_RAYTRACING = check_intersections.c constants.c find_t.c intersection_misc.c \
 		normal_vectors.c phong.c render.c uv_translate.c
 

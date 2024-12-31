@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:21:22 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 21:02:59 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:31:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ double	get_length_v(t_vector vector)
 			* vector.z));
 }
 
-t_vector	normalize_vector(t_vector vector)
+t_vector	normalize_v(t_vector vector)
 {
 	t_vector	normalized;
 	float		length;

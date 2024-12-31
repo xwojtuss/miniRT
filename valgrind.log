@@ -1,59 +1,59 @@
-==49164== Memcheck, a memory error detector
-==49164== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==49164== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==49164== Command: ./miniRT scenes/all.rt
-==49164== Parent PID: 3348
-==49164== 
-==49164== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==49164==    at 0x4BD3864: writev (writev.c:26)
-==49164==    by 0x4CCAACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x4CCAC4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x4CCBD7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x499A0B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x499F148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x499F52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x118195: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x117EB5: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x1139D5: initialize_mlx (mlx_init.c:52)
-==49164==    by 0x10FA25: main (main.c:42)
-==49164==  Address 0x4d2fe5c is 28 bytes inside a block of size 16,384 alloc'd
-==49164==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==49164==    by 0x498942D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x117C66: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x1139B3: initialize_mlx (mlx_init.c:49)
-==49164==    by 0x10FA25: main (main.c:42)
-==49164==  Uninitialised value was created by a stack allocation
-==49164==    at 0x1180A0: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
-==49164== 
-==49164== 
-==49164== HEAP SUMMARY:
-==49164==     in use at exit: 0 bytes in 0 blocks
-==49164==   total heap usage: 362 allocs, 362 frees, 114,816 bytes allocated
-==49164== 
-==49164== All heap blocks were freed -- no leaks are possible
-==49164== 
-==49164== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
-==49164== 
-==49164== 2 errors in context 1 of 1:
-==49164== Syscall param writev(vector[0]) points to uninitialised byte(s)
-==49164==    at 0x4BD3864: writev (writev.c:26)
-==49164==    by 0x4CCAACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x4CCAC4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x4CCBD7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
-==49164==    by 0x499A0B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x499F148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x499F52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x118195: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x117EB5: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x1139D5: initialize_mlx (mlx_init.c:52)
-==49164==    by 0x10FA25: main (main.c:42)
-==49164==  Address 0x4d2fe5c is 28 bytes inside a block of size 16,384 alloc'd
-==49164==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==49164==    by 0x498942D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
-==49164==    by 0x117C66: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
-==49164==    by 0x1139B3: initialize_mlx (mlx_init.c:49)
-==49164==    by 0x10FA25: main (main.c:42)
-==49164==  Uninitialised value was created by a stack allocation
-==49164==    at 0x1180A0: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
-==49164== 
-==49164== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==62227== Memcheck, a memory error detector
+==62227== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==62227== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==62227== Command: ./miniRT scenes/sphere.rt
+==62227== Parent PID: 3348
+==62227== 
+==62227== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==62227==    at 0x4BD3864: writev (writev.c:26)
+==62227==    by 0x4CCAACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x4CCAC4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x4CCBD7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x499A0B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x499F148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x499F52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x117A75: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x117795: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x111E3F: initialize_mlx (mlx_init.c:52)
+==62227==    by 0x10FA4C: main (main.c:42)
+==62227==  Address 0x4d2be6c is 28 bytes inside a block of size 16,384 alloc'd
+==62227==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==62227==    by 0x498942D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x117546: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x111E1E: initialize_mlx (mlx_init.c:49)
+==62227==    by 0x10FA4C: main (main.c:42)
+==62227==  Uninitialised value was created by a stack allocation
+==62227==    at 0x117980: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
+==62227== 
+==62227== 
+==62227== HEAP SUMMARY:
+==62227==     in use at exit: 0 bytes in 0 blocks
+==62227==   total heap usage: 269 allocs, 269 frees, 105,251 bytes allocated
+==62227== 
+==62227== All heap blocks were freed -- no leaks are possible
+==62227== 
+==62227== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
+==62227== 
+==62227== 2 errors in context 1 of 1:
+==62227== Syscall param writev(vector[0]) points to uninitialised byte(s)
+==62227==    at 0x4BD3864: writev (writev.c:26)
+==62227==    by 0x4CCAACA: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x4CCAC4E: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x4CCBD7E: xcb_writev (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==62227==    by 0x499A0B8: _XSend (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x499F148: _XReadEvents (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x499F52B: XWindowEvent (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x117A75: mlx_int_wait_first_expose (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x117795: mlx_new_window (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x111E3F: initialize_mlx (mlx_init.c:52)
+==62227==    by 0x10FA4C: main (main.c:42)
+==62227==  Address 0x4d2be6c is 28 bytes inside a block of size 16,384 alloc'd
+==62227==    at 0x484D953: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==62227==    by 0x498942D: XOpenDisplay (in /usr/lib/x86_64-linux-gnu/libX11.so.6.4.0)
+==62227==    by 0x117546: mlx_init (in /home/wkornato/Documents/miniRT/miniRT)
+==62227==    by 0x111E1E: initialize_mlx (mlx_init.c:49)
+==62227==    by 0x10FA4C: main (main.c:42)
+==62227==  Uninitialised value was created by a stack allocation
+==62227==    at 0x117980: mlx_int_anti_resize_win (in /home/wkornato/Documents/miniRT/miniRT)
+==62227== 
+==62227== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:00:31 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:27:30 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ static t_raytrace_info	init_raytrace_info(t_ray ray, t_scene *scene)
 	return (raytrace);
 }
 
+static void	get_normal_vectors(t_scene *scene, t_raytrace_info *raytrace,
+		t_ray ray)
+{
+	if (raytrace->object->type == PLANE)
+		raytrace->normal_vector = get_nv_plane(ray, raytrace->object->object);
+	else if (raytrace->object->type == SPHERE)
+		raytrace->normal_vector = get_nv_sphere(raytrace->inter,
+				scene->camera->position, raytrace->object->object);
+	else if (raytrace->object->type == CYLINDER)
+		raytrace->normal_vector = get_nv_cylinder(raytrace->inter,
+				raytrace->object->object, ray);
+	else if (raytrace->object->type == CONE)
+		raytrace->normal_vector = get_nv_cone(raytrace->inter,
+				raytrace->object->object, ray);
+}
+
 static int	trace_ray(t_ray ray, t_scene *scene)
 {
 	t_raytrace_info	raytrace;
@@ -65,28 +81,15 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 		return (vector_to_int(scale_v(color_to_vector(scene->ambient->color),
 					scene->ambient->brightness)));
 	raytrace.inter = get_inter(ray, raytrace.t);
+	get_normal_vectors(scene, &raytrace, ray);
 	if (raytrace.object->type == SPHERE)
-	{
-		raytrace.normal_vector = get_nv_sphere(raytrace.inter,
-				scene->camera->position, raytrace.object->object);
 		raytrace.color = get_color_sphere(raytrace.object->object, &raytrace);
-	}
 	else if (raytrace.object->type == CYLINDER)
-	{
-		raytrace.normal_vector = get_nv_cylinder(raytrace.inter,
-				raytrace.object->object, ray);
 		raytrace.color = get_color_cylinder(raytrace.object->object, &raytrace);
-	}
 	else if (raytrace.object->type == PLANE)
-	{
-		raytrace.normal_vector = get_nv_plane(ray, raytrace.object->object);
 		raytrace.color = get_color_plane(raytrace.object->object, &raytrace);
-	}
 	else if (raytrace.object->type == CONE)
-	{
-		raytrace.normal_vector = get_nv_cone(raytrace.inter, raytrace.object->object, ray);
 		raytrace.color = get_color_cone(raytrace.object->object, &raytrace);
-	}
 	recalculate_normal_vector(&raytrace);
 	return (phong_reflection(raytrace));
 }

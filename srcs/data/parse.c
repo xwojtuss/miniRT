@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:33:33 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:28:16 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	split_and_assign_vector(t_objects *object, char *line,
 			temp);
 	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
-	if (type == ORIENTATION && (round(orientation_multitude) != 1
-			|| 1 - orientation_multitude > 0.001
+	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
+			- orientation_multitude > 0.001
 			|| 1 - orientation_multitude < -0.001))
 		err_free_array("Orientation vector has to have a length of 1", scene,
 			temp);
@@ -71,11 +71,11 @@ static void	check_values(t_objects *object, t_object_type type, t_scene *scene,
 		check_cylinder_values((t_cylinder *)object->object, scene, line);
 	else if (type == CONE)
 		check_cone_values((t_cone *)object->object, scene, line);
-	if (object->constants.ambient < 0 || object->constants.diffuse < 0 || object->constants.specular < 0
-		|| object->constants.shininess < 0 || object->constants.ambient > 1
-		|| object->constants.diffuse > 1 || object->constants.specular > 1)
-		err_free_array("Phong constants are not correct", scene,
-			line);
+	if (object->constants.ambient < 0 || object->constants.diffuse < 0
+		|| object->constants.specular < 0 || object->constants.shininess < 0
+		|| object->constants.ambient > 1 || object->constants.diffuse > 1
+		|| object->constants.specular > 1)
+		err_free_array("Phong constants are not correct", scene, line);
 }
 
 void	parse_new_object(t_scene *scene, char **line, size_t argc,

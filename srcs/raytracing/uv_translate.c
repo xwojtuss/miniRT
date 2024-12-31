@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_texture.c                                      :+:      :+:    :+:   */
+/*   uv_translate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:02:13 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 22:31:55 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
 	if (raytrace->normal_vector.x == 1)
 		raytrace->tangent = (t_vector){0, 1, 0};
 	else
-		raytrace->tangent = normalize_vector(cross_product((t_vector){1, 0, 0},
+		raytrace->tangent = normalize_v(cross_product((t_vector){1, 0, 0},
 					raytrace->normal_vector));
 	raytrace->bitangent = cross_product(raytrace->tangent,
 			raytrace->normal_vector);
@@ -82,22 +82,21 @@ t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
 		raytrace->tangent = (t_vector){1, 0, 0};
 	else
 		raytrace->tangent = (t_vector){0, 0, 1};
-	raytrace->tangent = normalize_vector(cross_product(cylinder->orientation,
+	raytrace->tangent = normalize_v(cross_product(cylinder->orientation,
 				raytrace->tangent));
 	raytrace->bitangent = cross_product(cylinder->orientation,
 			raytrace->tangent);
-	raytrace->u_val = 8 * (1.0 - atan2(dot_v(p_local,
-					raytrace->bitangent), dot_v(p_local,
-					raytrace->tangent)) / (PI * 2));
+	raytrace->u_val = 8 * (1.0 - atan2(dot_v(p_local, raytrace->bitangent),
+				dot_v(p_local, raytrace->tangent)) / (PI * 2));
 	if (raytrace->u_val < 0)
 		raytrace->u_val += 1;
 	if (raytrace->object->texture == NULL)
 		return (color_to_vector(cylinder->color));
 	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
 				(int)(raytrace->u_val * raytrace->object->texture->height)
-				% raytrace->object->texture->width, (int)(raytrace->v_val
-					* raytrace->object->texture->width)
-				% raytrace->object->texture->height)));
+			% raytrace->object->texture->width, (int)(raytrace->v_val
+			* raytrace->object->texture->width)
+		% raytrace->object->texture->height)));
 }
 
 t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace)
@@ -105,9 +104,9 @@ t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace)
 	double	angle;
 	double	height_proj;
 
-	raytrace->tangent = normalize_vector(cross_product(cone->orientation,
+	raytrace->tangent = normalize_v(cross_product(cone->orientation,
 				raytrace->normal_vector));
-	raytrace->bitangent = normalize_vector(cross_product(raytrace->normal_vector,
+	raytrace->bitangent = normalize_v(cross_product(raytrace->normal_vector,
 				raytrace->tangent));
 	height_proj = dot_v(subtract_v(raytrace->inter, cone->position),
 			cone->orientation);
@@ -124,8 +123,9 @@ t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace)
 		return (color_to_vector(cone->color));
 	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
 				(int)(raytrace->u_val * raytrace->object->texture->width)
-				% raytrace->object->texture->width, (int)(raytrace->v_val
-					* raytrace->object->texture->height) % raytrace->object->texture->height)));
+			% raytrace->object->texture->width, (int)(raytrace->v_val
+			* raytrace->object->texture->height)
+		% raytrace->object->texture->height)));
 }
 
 void	recalculate_normal_vector(t_raytrace_info *raytrace)
@@ -141,12 +141,10 @@ void	recalculate_normal_vector(t_raytrace_info *raytrace)
 	x = (int)(raytrace->u_val * bump->width) % bump->width;
 	y = (int)(raytrace->v_val * bump->height) % bump->height;
 	p = int_color_to_vector(get_pixel_color(bump->img, x, y));
-	p = subtract_v(scale_v(divide_v(p, 255.0), 2.0), (t_vector){1.0, 1.0,
-			1.0});
-	raytrace->normal_vector = normalize_vector((t_vector){p.x
-			* raytrace->tangent.x + p.y * raytrace->bitangent.x + p.z
-			* raytrace->normal_vector.x, p.x * raytrace->tangent.y + p.y
-			* raytrace->bitangent.y + p.z * raytrace->normal_vector.y, p.x
-			* raytrace->tangent.z + p.y * raytrace->bitangent.z + p.z
-			* raytrace->normal_vector.z});
+	p = subtract_v(scale_v(divide_v(p, 255.0), 2.0), (t_vector){1.0, 1.0, 1.0});
+	raytrace->normal_vector = normalize_v((t_vector){p.x * raytrace->tangent.x
+			+ p.y * raytrace->bitangent.x + p.z * raytrace->normal_vector.x, p.x
+			* raytrace->tangent.y + p.y * raytrace->bitangent.y + p.z
+			* raytrace->normal_vector.y, p.x * raytrace->tangent.z + p.y
+			* raytrace->bitangent.z + p.z * raytrace->normal_vector.z});
 }
