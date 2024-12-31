@@ -6,13 +6,13 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 12:27:37 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:41:12 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	open_texture_helper(t_texture *texture, t_scene *scene)
+bool	open_texture_helper(t_texture *texture, t_scene *scene)
 {
 	if (texture)
 	{
@@ -28,6 +28,7 @@ void	open_texture_helper(t_texture *texture, t_scene *scene)
 		if (texture->width <= 0 || texture->height <= 0)
 			err_free("Texture is not correct", scene);
 	}
+	return (true);
 }
 
 void	open_textures(t_scene *scene)
@@ -37,26 +38,8 @@ void	open_textures(t_scene *scene)
 	curr = scene->objects;
 	while (curr)
 	{
-		if (curr->type == PLANE)
-		{
-			open_texture_helper(((t_plane *)curr->object)->texture, scene);
-			open_texture_helper(((t_plane *)curr->object)->bump, scene);
-		}
-		else if (curr->type == SPHERE)
-		{
-			open_texture_helper(((t_sphere *)curr->object)->texture, scene);
-			open_texture_helper(((t_sphere *)curr->object)->bump, scene);
-		}
-		else if (curr->type == CYLINDER)
-		{
-			open_texture_helper(((t_cylinder *)curr->object)->texture, scene);
-			open_texture_helper(((t_cylinder *)curr->object)->bump, scene);
-		}
-		else if (curr->type == CONE)
-		{
-			open_texture_helper(((t_cone *)curr->object)->texture, scene);
-			open_texture_helper(((t_cone *)curr->object)->bump, scene);
-		}
+		open_texture_helper(curr->texture, scene);
+		open_texture_helper(curr->bump, scene);
 		curr = curr->next;
 	}
 }

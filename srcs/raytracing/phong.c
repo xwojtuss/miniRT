@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 18:29:58 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:27:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@ t_vector	reflect_ray(t_vector incident, t_vector normal)
 {
 	return (subtract_v(incident, multiply_v(normal, 2 * dot_product(incident,
 					normal))));
-}
-
-t_vector	clamp_vector(t_vector vector, int min, int max)
-{
-	vector.x = fmin(max, fmax(min, vector.x));
-	vector.y = fmin(max, fmax(min, vector.y));
-	vector.z = fmin(max, fmax(min, vector.z));
-	return (vector);
 }
 
 int	is_visible(t_scene *scene, t_vector inter, t_vector normal,
@@ -63,15 +55,15 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 	t_vector	specular;
 
 	diffuse = multiply_v_color(info.color,
-			multiply_v(color_to_vector(curr->color), get_diffuse(info.object)
+			multiply_v(color_to_vector(curr->color), info.object->constants.diffuse
 				* fmax(0, dot_product(light_dir, info.normal_vector))
 				* curr->brightness));
 	reflected_ray = reflect_ray(light_dir, info.normal_vector);
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
 	specular = multiply_v(color_to_vector(curr->color),
-			get_specular(info.object) * pow(fmax(0, dot_product(reflected_ray,
-						view_vector)), get_shininess(info.object))
+			info.object->constants.specular * pow(fmax(0, dot_product(reflected_ray,
+						view_vector)), info.object->constants.shininess)
 			* curr->brightness);
 	*total_color = add_v(*total_color, add_v(specular, diffuse));
 }
@@ -84,7 +76,7 @@ int	phong_reflection(t_raytrace_info info)
 
 	total_color = multiply_v_color(info.color,
 			multiply_v(color_to_vector(info.scene->ambient->color),
-				info.scene->ambient->brightness * get_ambient(info.object)));
+				info.scene->ambient->brightness * info.object->constants.ambient));
 	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector,
 				OFFSET_NORMAL));
 	curr = info.scene->light;

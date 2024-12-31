@@ -6,45 +6,29 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:15:54 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 12:28:13 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:29:05 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-void	destroy_texture(t_scene *scene, t_texture *texture)
+static void	destroy_images(t_objects *objects, t_scene *scene)
 {
-	if (texture)
+	if (objects->texture)
 	{
-		if (texture->img.img)
-			mlx_destroy_image(scene->mlx, texture->img.img);
-		free(texture->name);
-		free(texture);
-		texture = NULL;
+		if (objects->texture->img.img)
+			mlx_destroy_image(scene->mlx, objects->texture->img.img);
+		free(objects->texture->name);
+		free(objects->texture);
+		objects->texture = NULL;
 	}
-}
-
-void	destroy_images(t_objects *objects, t_scene *scene)
-{
-	if (objects->type == PLANE)
+	if (objects->bump)
 	{
-		destroy_texture(scene, ((t_plane *)objects->object)->texture);
-		destroy_texture(scene, ((t_plane *)objects->object)->bump);
-	}
-	else if (objects->type == SPHERE)
-	{
-		destroy_texture(scene, ((t_sphere *)objects->object)->texture);
-		destroy_texture(scene, ((t_sphere *)objects->object)->bump);
-	}
-	else if (objects->type == CYLINDER)
-	{
-		destroy_texture(scene, ((t_cylinder *)objects->object)->texture);
-		destroy_texture(scene, ((t_cylinder *)objects->object)->bump);
-	}
-	else if (objects->type == CONE)
-	{
-		destroy_texture(scene, ((t_cone *)objects->object)->texture);
-		destroy_texture(scene, ((t_cone *)objects->object)->bump);
+		if (objects->bump->img.img)
+			mlx_destroy_image(scene->mlx, objects->bump->img.img);
+		free(objects->bump->name);
+		free(objects->bump);
+		objects->bump = NULL;
 	}
 }
 

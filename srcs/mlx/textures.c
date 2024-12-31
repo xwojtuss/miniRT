@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:29:04 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:54:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:44:41 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,10 @@ unsigned int	get_pixel_color(t_image image, int x, int y)
 
 void	assign_phong(t_objects *new, char **line, size_t start)
 {
-	if (new->type == PLANE)
-	{
-		((t_plane *)new->object)->ambient = ft_atof(line[start]);
-		((t_plane *)new->object)->diffuse = ft_atof(line[start + 1]);
-		((t_plane *)new->object)->specular = ft_atof(line[start + 2]);
-		((t_plane *)new->object)->shininess = ft_atof(line[start + 3]);
-	}
-	else if (new->type == SPHERE)
-	{
-		((t_sphere *)new->object)->ambient = ft_atof(line[start]);
-		((t_sphere *)new->object)->diffuse = ft_atof(line[start + 1]);
-		((t_sphere *)new->object)->specular = ft_atof(line[start + 2]);
-		((t_sphere *)new->object)->shininess = ft_atof(line[start + 3]);
-	}
-	else if (new->type == CYLINDER)
-	{
-		((t_cylinder *)new->object)->ambient = ft_atof(line[start]);
-		((t_cylinder *)new->object)->diffuse = ft_atof(line[start + 1]);
-		((t_cylinder *)new->object)->specular = ft_atof(line[start + 2]);
-		((t_cylinder *)new->object)->shininess = ft_atof(line[start + 3]);
-	}
+	new->constants.ambient = ft_atof(line[start]);
+	new->constants.diffuse = ft_atof(line[start + 1]);
+	new->constants.specular = ft_atof(line[start + 2]);
+	new->constants.shininess = ft_atof(line[start + 3]);
 }
 
 t_texture	*new_texture(char *name)

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 17:40:05 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 18:35:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_vector	get_nv_cone(t_vector intersect, t_cone *cone, t_ray ray)
 	t_vector axis_point;
 	t_vector radial;
 	double cos_angle;
-	
+
 	axis_point = add_v(cone->position, multiply_v(cone->orientation,
 				dot_product(subtract_v(intersect, cone->position),
 					cone->orientation)));

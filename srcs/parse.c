@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:39:56 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:17:34 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,22 @@ void	split_and_assign_vector(t_objects *object, char *line,
 	free_array(temp);
 }
 
-void	check_values(void *object, t_object_type type, t_scene *scene,
+void	check_values(t_objects *object, t_object_type type, t_scene *scene,
 		char **line)
 {
 	if (type == SPHERE)
-		check_sphere_values((t_sphere *)object, scene, line);
+		check_sphere_values((t_sphere *)object->object, scene, line);
 	else if (type == PLANE)
-		check_plane_values((t_plane *)object, scene, line);
+		check_plane_values((t_plane *)object->object, scene, line);
 	else if (type == CYLINDER)
-		check_cylinder_values((t_cylinder *)object, scene, line);
+		check_cylinder_values((t_cylinder *)object->object, scene, line);
 	else if (type == CONE)
-		check_cone_values((t_cone *)object, scene, line);
+		check_cone_values((t_cone *)object->object, scene, line);
+	if (object->constants.ambient < 0 || object->constants.diffuse < 0 || object->constants.specular < 0
+		|| object->constants.shininess < 0 || object->constants.ambient > 1
+		|| object->constants.diffuse > 1 || object->constants.specular > 1)
+		err_free_array("Phong constants are not correct", scene,
+			line);
 }
 
 void	parse_new_object(t_scene *scene, char **line, size_t argc,
@@ -94,25 +99,7 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 		split_and_assign_vector(new, line[3], COLOR, scene);
 	if (new->type == PLANE || new->type == CYLINDER || new->type == CONE)
 		split_and_assign_vector(new, line[2], ORIENTATION, scene);
-	check_values(new->object, new->type, scene, line);
-}
-
-void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top);
-
-void	add_caps(t_scene *scene, char *type)
-{
-	t_objects	*last;
-
-	last = get_last_object(scene->objects);
-	if (!last)
-		return ;
-	if (!ft_strcmp(type, "cy"))
-	{
-		add_cap(scene, (t_cylinder *)last->object, true);
-		add_cap(scene, (t_cylinder *)last->object, false);
-	}
-	else if (!ft_strcmp(type, "co"))
-		add_base(scene, (t_cone *)last->object);
+	check_values(new, new->type, scene, line);
 }
 
 int	parse_line(t_scene *scene, int fd)

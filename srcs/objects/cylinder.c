@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:51:12 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:18:30 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ void	check_cylinder_values(t_cylinder *cylinder, t_scene *scene, char **line)
 		err_free_array("Invalid height for cylinder", scene, line);
 	if (cylinder->color.r < 0 || cylinder->color.g < 0 || cylinder->color.b < 0)
 		err_free_array("Color of cylinder is not correct", scene, line);
-	if (cylinder->ambient < 0 || cylinder->diffuse < 0 || cylinder->specular < 0
-		|| cylinder->shininess < 0 || cylinder->ambient > 1
-		|| cylinder->diffuse > 1 || cylinder->specular > 1)
-		err_free_array("Phong values for cylinder are not correct", scene,
-			line);
 }
 
 void	assign_cylinder_values(void *object, char **temp, t_object_param type)
@@ -78,37 +73,6 @@ void	copy_color(t_color *dest, t_color src)
 	dest->b = src.b;
 }
 
-void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top)
-{
-	t_objects	*new;
-	t_objects	*last;
-
-	new = (t_objects *)ft_calloc(1, sizeof(t_objects));
-	if (!new)
-		err_free("Could not allocate memory", scene);
-	new->type = PLANE;
-	new->object = new_plane(scene, new, (char *[]){"", "0,0,0", "0,0,0",
-			"0,0,0"}, 4);
-	copy_vector(&((t_plane *)new->object)->position, cylinder->position);
-	copy_vector(&((t_plane *)new->object)->orientation, cylinder->orientation);
-	copy_color(&((t_plane *)new->object)->color, cylinder->color);
-	((t_plane *)new->object)->ambient = cylinder->ambient;
-	((t_plane *)new->object)->diffuse = cylinder->diffuse;
-	((t_plane *)new->object)->specular = cylinder->specular;
-	((t_plane *)new->object)->shininess = cylinder->shininess;
-	((t_plane *)new->object)->diam = cylinder->diam - OFFSET_NORMAL;
-	((t_plane *)new->object)->texture = copy_texture(cylinder->texture);
-	((t_plane *)new->object)->bump = copy_texture(cylinder->bump);
-	if (is_top)
-		((t_plane *)new->object)->position = add_v(((t_plane *)new->object)->position,
-			multiply_v(cylinder->orientation, cylinder->height));
-	last = get_last_object(scene->objects);
-	if (!last)
-		scene->objects = new;
-	else
-		last->next = new;
-}
-
 t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 		size_t argc)
 {
@@ -122,12 +86,12 @@ t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 	new->object = cylinder;
 	cylinder->diam = ft_atof(line[3]);
 	cylinder->height = ft_atof(line[4]);
-	cylinder->texture = NULL;
+	new->texture = NULL;
 	if (argc > 6 && ft_strcmp(line[6], "-"))
-		cylinder->texture = new_texture(line[6]);
-	cylinder->bump = NULL;
+		new->texture = new_texture(line[6]);
+	new->bump = NULL;
 	if (argc > 7 && ft_strcmp(line[7], "-"))
-		cylinder->bump = new_texture(line[7]);
+		new->bump = new_texture(line[7]);
 	if (argc == 12)
 		assign_phong(new, line, 8);
 	else

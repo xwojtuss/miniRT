@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 16:52:14 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:52:14 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct s_constants
+{
+	float				ambient;
+	float				diffuse;
+	float				specular;
+	float				shininess;
+}						t_constants;
 
 typedef struct s_image
 {
@@ -126,6 +134,9 @@ typedef struct s_objects
 {
 	void				*object;
 	t_object_type		type;
+	t_constants			constants;
+	t_texture			*texture;
+	t_texture			*bump;
 	struct s_objects	*next;
 }						t_objects;
 
@@ -143,12 +154,6 @@ typedef struct s_sphere
 	t_vector			position;
 	float				diam;
 	t_color				color;
-	t_texture			*texture;
-	t_texture			*bump;
-	float				specular;
-	float				diffuse;
-	float				ambient;
-	float				shininess;
 }						t_sphere;
 
 typedef struct s_plane
@@ -157,12 +162,6 @@ typedef struct s_plane
 	t_vector			orientation;
 	float				diam;
 	t_color				color;
-	t_texture			*texture;
-	t_texture			*bump;
-	float				specular;
-	float				diffuse;
-	float				ambient;
-	float				shininess;
 }						t_plane;
 
 typedef struct s_cylinder
@@ -172,12 +171,6 @@ typedef struct s_cylinder
 	float				diam;
 	float				height;
 	t_color				color;
-	t_texture			*texture;
-	t_texture			*bump;
-	float				specular;
-	float				diffuse;
-	float				ambient;
-	float				shininess;
 }						t_cylinder;
 
 typedef struct s_cone
@@ -187,12 +180,6 @@ typedef struct s_cone
 	float				diam;
 	float				height;
 	t_color				color;
-	t_texture			*texture;
-	t_texture			*bump;
-	float				specular;
-	float				diffuse;
-	float				ambient;
-	float				shininess;
 }						t_cone;
 
 typedef struct s_scene
@@ -216,14 +203,16 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
-void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top);
-void	add_base(t_scene *scene, t_cone *cone);
+void					add_cap(t_scene *scene, t_objects *reference,
+							bool is_top);
+void					add_base(t_scene *scene, t_objects *reference);
 
-void	assign_default_phong(t_objects *object, float ambient_const);
+void					assign_default_phong(t_objects *object,
+							float ambient_const);
 t_vector				int_color_to_vector(int color);
 unsigned int			get_pixel_color(t_image image, int x, int y);
 
-t_texture	*copy_texture(t_texture *reference);
+t_texture				*copy_texture(t_texture *reference);
 t_texture				*new_texture(char *name);
 void					assign_phong(t_objects *new, char **line, size_t start);
 
@@ -263,21 +252,27 @@ void					assign_cylinder_values(void *object, char **temp,
 t_cylinder				*new_cylinder(t_scene *scene, t_objects *new,
 							char **line, size_t argc);
 
-void	check_cone_values(t_cone *cone, t_scene *scene, char **line);
-void	assign_cone_values(void *object, char **temp, t_object_param type);
-t_cone	*new_cone(t_scene *scene, t_objects *new, char **line,
-		size_t argc);
-
-
-
+void					check_cone_values(t_cone *cone, t_scene *scene,
+							char **line);
+void					assign_cone_values(void *object, char **temp,
+							t_object_param type);
+t_cone					*new_cone(t_scene *scene, t_objects *new, char **line,
+							size_t argc);
+bool					check_side_cylinder(t_ray ray, t_cylinder *cylinder,
+							double *t1, double *prev_t);
+bool					check_side_cone(t_ray ray, t_cone *cone, double *t1,
+							double *prev_t);
+void	get_t_sphere(t_sphere *sphere, t_ray ray, double *t1, double *t2);
+void	get_t_cone(t_cone *cone, t_ray ray, double *t1, double *t2);
 void					check_scene(t_scene *scene);
 void					parse_ambient_light(t_scene *scene, char **instructions,
 							size_t argc);
 void					check_line(char **instructions, t_scene *scene, int fd);
-
+void					add_caps(t_scene *scene, char *type);
+t_vector				clamp_vector(t_vector vector, int min, int max);
 void					split_and_assign_vector(t_objects *object, char *line,
 							t_object_param type, t_scene *scene);
-void					check_values(void *object, t_object_type type,
+void					check_values(t_objects *object, t_object_type type,
 							t_scene *scene, char **line);
 void					parse_new_object(t_scene *scene, char **line,
 							size_t argc, t_object_type type);
@@ -337,8 +332,8 @@ void					initialize_viewport(t_scene *scene);
 t_vector				color_to_vector_cylinder(void *object);
 t_vector				color_to_vector_sphere(void *object);
 t_vector				color_to_vector_plane(void *object);
-void	copy_vector(t_vector *dest, t_vector src);
-void	copy_color(t_color *dest, t_color src);
+void					copy_vector(t_vector *dest, t_vector src);
+void					copy_color(t_color *dest, t_color src);
 
 bool					check_debug_tools(int keycode, t_scene *scene);
 
@@ -347,7 +342,7 @@ void					print_sphere_parameters(t_sphere *sphere);
 void					print_plane_parameters(t_plane *plane);
 void					print_light_parameters(t_lights *light);
 void					print_cylinder_parameters(t_cylinder *cylinder);
-void	print_cone_parameters(t_cone *cone);
+void					print_cone_parameters(t_cone *cone);
 void					print_camera_parameters(t_camera *camera);
 
 // debug3.c

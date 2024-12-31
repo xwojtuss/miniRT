@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:59 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:51:18 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:19:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ void	check_sphere_values(t_sphere *sphere, t_scene *scene, char **line)
 		err_free_array("Invalid diameter for sphere", scene, line);
 	if (sphere->color.r < 0 || sphere->color.g < 0 || sphere->color.b < 0)
 		err_free_array("Color of sphere is not correct", scene, line);
-	if (sphere->ambient < 0 || sphere->diffuse < 0 || sphere->specular < 0
-		|| sphere->shininess < 0 || sphere->ambient > 1
-		|| sphere->diffuse > 1 || sphere->specular > 1)
-		err_free_array("Phong values for sphere are not correct", scene,
-			line);
 }
 
 void	assign_sphere_values(void *object, char **temp, t_object_param type)
@@ -47,12 +42,12 @@ t_sphere	*new_sphere(t_scene *scene, t_objects *new, char **line,
 		err_free_array("Could not allocate memory for sphere", scene, line);
 	new->object = sphere;
 	sphere->diam = ft_atof(line[2]);
-	sphere->texture = NULL;
+	new->texture = NULL;
 	if (argc > 4 && ft_strcmp(line[4], "-"))
-		sphere->texture = new_texture(line[4]);
-	sphere->bump = NULL;
+		new->texture = new_texture(line[4]);
+	new->bump = NULL;
 	if (argc > 5 && ft_strcmp(line[5], "-"))
-		sphere->bump = new_texture(line[5]);
+		new->bump = new_texture(line[5]);
 	if (argc == 10)
 		assign_phong(new, line, 6);
 	else

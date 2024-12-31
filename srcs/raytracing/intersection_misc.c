@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:19:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 12:30:05 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:09:56 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,25 @@ t_vector	get_inter(t_ray ray, double t)
 {
 	return (add_v(ray.origin, multiply_v(ray.direction, t)));
 }
-
-void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)
+bool	check_side_cylinder(t_ray ray, t_cylinder *cylinder, double *t1,
+		double *prev_t)
 {
-	t_vector	oc;
-	t_vector	d;
-	double		a;
-	double		b;
-	double		discriminant;
+	double	height_pos;
 
-	oc = subtract_v(ray.origin, cylinder->position);
-	d = subtract_v(ray.direction, multiply_v(cylinder->orientation,
-				dot_product(ray.direction, cylinder->orientation)));
-	oc = subtract_v(oc, multiply_v(cylinder->orientation, dot_product(oc,
-					cylinder->orientation)));
-	a = dot_product(d, d);
-	b = 2.0 * dot_product(d, oc);
-	discriminant = b * b - 4.0 * a * (dot_product(oc, oc) - pow(cylinder->diam
-				/ 2.0, 2));
-	*t1 = DBL_MAX;
-	*t2 = DBL_MAX;
-	if (discriminant >= 0)
-		retrieve_t(a, b, discriminant, (double *[2]){t1, t2});
+	height_pos = dot_product(subtract_v(get_inter(ray, *t1),
+				cylinder->position), cylinder->orientation);
+	if (height_pos >= 0 && height_pos <= cylinder->height)
+		return (*prev_t = *t1, true);
+	return (false);
+}
+
+bool	check_side_cone(t_ray ray, t_cone *cone, double *t1, double *prev_t)
+{
+	double	height_pos;
+
+	height_pos = dot_product(subtract_v(get_inter(ray, *t1), cone->position),
+			cone->orientation);
+	if (height_pos >= -cone->height / 2 && height_pos <= cone->height / 2)
+		return (*prev_t = *t1, true);
+	return (false);
 }

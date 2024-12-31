@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vectors3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:12:33 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/19 17:29:18 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:27:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ t_vector	multiply_v_color(t_vector v1, t_vector v2)
 	result.y = fmin(255.0f, v1.y * v2.y / 255.0f);
 	result.z = fmin(255.0f, v1.z * v2.z / 255.0f);
 	return (result);
+}
+t_vector	clamp_vector(t_vector vector, int min, int max)
+{
+	vector.x = fmin(max, fmax(min, vector.x));
+	vector.y = fmin(max, fmax(min, vector.y));
+	vector.z = fmin(max, fmax(min, vector.z));
+	return (vector);
 }

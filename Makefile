@@ -11,7 +11,6 @@ MINILIBX = libs/mlx_linux/libmlx.a
 LIBS = ${LIBFT} ${MINILIBX} -lm -lX11 -lXext
 
 NAME = miniRT
-#NAME_BONUS = miniRT_bonus
 
 SRCS = main.c misc.c math/vectors.c math/vectors2.c objects/cylinder.c \
 	objects/plane.c objects/sphere.c objects/camera.c \
@@ -21,22 +20,16 @@ SRCS = main.c misc.c math/vectors.c math/vectors2.c objects/cylinder.c \
 	mlx/mlx_init.c math/vectors3.c math/vectors4.c raytracing/normal_vectors.c \
 	raytracing/phong.c raytracing/check_intersections.c raytracing/intersection_misc.c \
 	colors.c raytracing/find_t.c mlx/textures.c raytracing/constants.c \
-	raytracing/get_texture.c objects/cone.c
+	raytracing/get_texture.c objects/cone.c objects/divide.c
 
 SRCS_FILES = $(addprefix srcs/, ${SRCS})
 
 OBJS = ${SRCS_FILES:.c=.o}
-# OBJSB = ${SRCSB_FILES:.c=.o}
 
 all: ${NAME} ${NAME_BONUS}
 
-# bonus: ${NAME_BONUS}
-
 ${NAME}: ${LIBFT} ${MINILIBX} ${OBJS}
 	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIBS} ${INCLUDES}
-
-# ${NAME_BONUS}: ${LIBFT} ${MINILIBX} ${OBJSB}
-# 	${CC} ${CFLAGS} -o ${NAME_BONUS} ${OBJSB} ${LIBS} ${INCLUDES}
 
 %.o: %.c ${HEADERS}
 	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDES}
@@ -76,4 +69,4 @@ remove_objects:
 
 again: remove_objects all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re again remove_objects

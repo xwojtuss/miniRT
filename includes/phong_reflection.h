@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:54:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:36:45 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:42:42 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_vector		get_color_plane(t_plane *plane, t_raytrace_info *raytrace);
 t_vector		get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace);
 t_vector		get_color_cylinder(t_cylinder *cylinder,
 					t_raytrace_info *raytrace);
-t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace);
+t_vector		get_color_cone(t_cone *cone, t_raytrace_info *raytrace);
 void			recalculate_normal_vector(t_raytrace_info *raytrace);
 
 int				phong_reflection(t_raytrace_info info);
@@ -52,15 +52,16 @@ t_vector		get_nv_plane(t_ray ray, t_plane *plane);
 t_vector		get_normal_vector_sphere(t_vector inter, t_vector center);
 t_vector		get_nv_sphere(t_vector inter, t_vector camera_pos,
 					t_sphere *sphere);
-t_vector	get_nv_cone(t_vector intersect, t_cone *cone, t_ray ray);
+t_vector		get_nv_cone(t_vector intersect, t_cone *cone, t_ray ray);
 
 int				is_intersect_sphere(t_ray ray, t_sphere *sphere,
 					double *prev_t);
 int				is_intersect_plane(t_ray ray, t_plane *plane, double *prev_t);
 int				is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder,
 					double *prev_t);
-bool	is_intersect_cone(t_ray ray, t_cone *cone, double *t);
-t_vector		get_nv_cylinder(t_vector intersect, t_cylinder *cylinder, t_ray ray);
+bool			is_intersect_cone(t_ray ray, t_cone *cone, double *t);
+t_vector		get_nv_cylinder(t_vector intersect, t_cylinder *cylinder,
+					t_ray ray);
 
 # define SPECULAR_CONST 0.5
 # define DIFFUSE_CONST 0.7

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 17:55:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 20:48:21 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ t_vector	get_color_plane(t_plane *plane, t_raytrace_info *raytrace)
 	raytrace->v_val = dot_product(p_local, raytrace->bitangent);
 	raytrace->u_val = raytrace->u_val - floor(raytrace->u_val);
 	raytrace->v_val = raytrace->v_val - floor(raytrace->v_val);
-	if (!plane->texture)
+	if (!raytrace->object->texture)
 		return (color_to_vector(plane->color));
-	x = (int)(raytrace->u_val * plane->texture->width) % plane->texture->width;
-	y = (int)(raytrace->v_val * plane->texture->height)
-		% plane->texture->height;
-	return (int_color_to_vector(get_pixel_color(plane->texture->img, x, y)));
+	x = (int)(raytrace->u_val * raytrace->object->texture->width)
+		% raytrace->object->texture->width;
+	y = (int)(raytrace->v_val * raytrace->object->texture->height)
+		% raytrace->object->texture->height;
+	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
+				x, y)));
 }
 
 t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
@@ -55,17 +57,18 @@ t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
 					raytrace->normal_vector));
 	raytrace->bitangent = cross_product(raytrace->tangent,
 			raytrace->normal_vector);
-	if (!sphere->texture)
+	if (!raytrace->object->texture)
 		return (color_to_vector(sphere->color));
-	x = (int)(raytrace->u_val * sphere->texture->width)
-		% sphere->texture->width;
-	y = (int)(raytrace->v_val * sphere->texture->height)
-		% sphere->texture->height;
+	x = (int)(raytrace->u_val * raytrace->object->texture->width)
+		% raytrace->object->texture->width;
+	y = (int)(raytrace->v_val * raytrace->object->texture->height)
+		% raytrace->object->texture->height;
 	if (x < 0)
-		x += sphere->texture->width;
+		x += raytrace->object->texture->width;
 	if (y < 0)
-		y += sphere->texture->height;
-	return (int_color_to_vector(get_pixel_color(sphere->texture->img, x, y)));
+		y += raytrace->object->texture->height;
+	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
+				x, y)));
 }
 
 t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
@@ -83,40 +86,46 @@ t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
 				raytrace->tangent));
 	raytrace->bitangent = cross_product(cylinder->orientation,
 			raytrace->tangent);
-	raytrace->u_val = 8 * (1.0 - atan2(dot_product(p_local, raytrace->bitangent),
-			dot_product(p_local, raytrace->tangent)) / (PI * 2));
+	raytrace->u_val = 8 * (1.0 - atan2(dot_product(p_local,
+					raytrace->bitangent), dot_product(p_local,
+					raytrace->tangent)) / (PI * 2));
 	if (raytrace->u_val < 0)
 		raytrace->u_val += 1;
-	if (cylinder->texture == NULL)
+	if (raytrace->object->texture == NULL)
 		return (color_to_vector(cylinder->color));
-	return (int_color_to_vector(get_pixel_color(cylinder->texture->img,
-				(int)(raytrace->u_val * cylinder->texture->height)
-			% cylinder->texture->width, (int)(raytrace->v_val
-			* cylinder->texture->width) % cylinder->texture->height)));
+	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
+				(int)(raytrace->u_val * raytrace->object->texture->height)
+				% raytrace->object->texture->width, (int)(raytrace->v_val
+					* raytrace->object->texture->width)
+				% raytrace->object->texture->height)));
 }
 
 t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace)
 {
-    double angle;
-    double height_proj;
+	double	angle;
+	double	height_proj;
 
-    raytrace->tangent = normalize_vector(cross_product(cone->orientation, raytrace->normal_vector));
-    raytrace->bitangent = normalize_vector(cross_product(raytrace->normal_vector, raytrace->tangent));
-    height_proj = dot_product(subtract_v(raytrace->inter, cone->position), cone->orientation);
-    angle = atan2(dot_product(raytrace->inter, raytrace->bitangent), dot_product(raytrace->inter, raytrace->tangent));
-    raytrace->u_val = 8 * (1.0 - (angle + PI) / (2.0 * PI));
-    raytrace->v_val = 8 * height_proj / cone->height;
+	raytrace->tangent = normalize_vector(cross_product(cone->orientation,
+				raytrace->normal_vector));
+	raytrace->bitangent = normalize_vector(cross_product(raytrace->normal_vector,
+				raytrace->tangent));
+	height_proj = dot_product(subtract_v(raytrace->inter, cone->position),
+			cone->orientation);
+	angle = atan2(dot_product(raytrace->inter, raytrace->bitangent),
+			dot_product(raytrace->inter, raytrace->tangent));
+	raytrace->u_val = 8 * (1.0 - (angle + PI) / (2.0 * PI));
+	raytrace->v_val = 8 * height_proj / cone->height;
 	if (height_proj < 0 || height_proj > cone->height)
-    {
-        raytrace->u_val = 0;
-        raytrace->v_val = 0;
-    }
-	if (cone->texture == NULL)
+	{
+		raytrace->u_val = 0;
+		raytrace->v_val = 0;
+	}
+	if (raytrace->object->texture == NULL)
 		return (color_to_vector(cone->color));
-	return (int_color_to_vector(get_pixel_color(cone->texture->img,
-				(int)(raytrace->u_val * cone->texture->width)
-			% cone->texture->width, (int)(raytrace->v_val
-			* cone->texture->height) % cone->texture->height)));
+	return (int_color_to_vector(get_pixel_color(raytrace->object->texture->img,
+				(int)(raytrace->u_val * raytrace->object->texture->width)
+				% raytrace->object->texture->width, (int)(raytrace->v_val
+					* raytrace->object->texture->height) % raytrace->object->texture->height)));
 }
 
 void	recalculate_normal_vector(t_raytrace_info *raytrace)
@@ -126,15 +135,7 @@ void	recalculate_normal_vector(t_raytrace_info *raytrace)
 	t_texture	*bump;
 	t_vector	p;
 
-	bump = NULL;
-	if (raytrace->object->type == PLANE)
-		bump = ((t_plane *)raytrace->object->object)->bump;
-	else if (raytrace->object->type == SPHERE)
-		bump = ((t_sphere *)raytrace->object->object)->bump;
-	else if (raytrace->object->type == CYLINDER)
-		bump = ((t_cylinder *)raytrace->object->object)->bump;
-	else if (raytrace->object->type == CONE)
-		bump = ((t_cone *)raytrace->object->object)->bump;
+	bump = raytrace->object->bump;
 	if (!bump)
 		return ;
 	x = (int)(raytrace->u_val * bump->width) % bump->width;
