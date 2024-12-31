@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:32:01 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:39:56 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	split_and_assign_vector(t_objects *object, char *line,
 		assign_plane_values(object->object, temp, type);
 	else if (object->type == CYLINDER)
 		assign_cylinder_values(object->object, temp, type);
+	else if (object->type == CONE)
+		assign_cone_values(object->object, temp, type);
 	free_array(temp);
 }
 
@@ -67,6 +69,8 @@ void	check_values(void *object, t_object_type type, t_scene *scene,
 		check_plane_values((t_plane *)object, scene, line);
 	else if (type == CYLINDER)
 		check_cylinder_values((t_cylinder *)object, scene, line);
+	else if (type == CONE)
+		check_cone_values((t_cone *)object, scene, line);
 }
 
 void	parse_new_object(t_scene *scene, char **line, size_t argc,
@@ -81,12 +85,14 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 		new->object = new_plane(scene, new, line, argc);
 	else if (new->type == CYLINDER)
 		new->object = new_cylinder(scene, new, line, argc);
+	else if (new->type == CONE)
+		new->object = new_cone(scene, new, line, argc);
 	split_and_assign_vector(new, line[1], POSITION, scene);
-	if (new->type == CYLINDER)
+	if (new->type == CYLINDER || new->type == CONE)
 		split_and_assign_vector(new, line[5], COLOR, scene);
 	else
 		split_and_assign_vector(new, line[3], COLOR, scene);
-	if (new->type == PLANE || new->type == CYLINDER)
+	if (new->type == PLANE || new->type == CYLINDER || new->type == CONE)
 		split_and_assign_vector(new, line[2], ORIENTATION, scene);
 	check_values(new->object, new->type, scene, line);
 }
@@ -105,10 +111,8 @@ void	add_caps(t_scene *scene, char *type)
 		add_cap(scene, (t_cylinder *)last->object, true);
 		add_cap(scene, (t_cylinder *)last->object, false);
 	}
-	// else if (!ft_strcmp(type, "co"))
-	// {
-	// 	add_base(scene, (t_cone *)last->object);
-	// }
+	else if (!ft_strcmp(type, "co"))
+		add_base(scene, (t_cone *)last->object);
 }
 
 int	parse_line(t_scene *scene, int fd)
@@ -129,7 +133,8 @@ int	parse_line(t_scene *scene, int fd)
 		err_free("Could not split line", scene);
 	}
 	check_line(instructions, scene, fd);
-	add_caps(scene, instructions[0]);
+	if (instructions && instructions[0])
+		add_caps(scene, instructions[0]);
 	free_array(instructions);
 	return (1);
 }

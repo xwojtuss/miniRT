@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:34:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:51:12 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_cylinder_values(t_cylinder *cylinder, t_scene *scene, char **line)
 	if (cylinder->orientation.x < -1 || cylinder->orientation.x > 1
 		|| cylinder->orientation.y < -1 || cylinder->orientation.y > 1
 		|| cylinder->orientation.z < -1 || cylinder->orientation.z > 1)
-		err_free_array("Invalid orientation for plane", scene, line);
+		err_free_array("Invalid orientation for cylinder", scene, line);
 	if (cylinder->diam <= 0)
 		err_free_array("Invalid diameter for cylinder", scene, line);
 	if (cylinder->height <= 0)
@@ -96,7 +96,7 @@ void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top)
 	((t_plane *)new->object)->diffuse = cylinder->diffuse;
 	((t_plane *)new->object)->specular = cylinder->specular;
 	((t_plane *)new->object)->shininess = cylinder->shininess;
-	((t_plane *)new->object)->diam = cylinder->diam;
+	((t_plane *)new->object)->diam = cylinder->diam - OFFSET_NORMAL;
 	((t_plane *)new->object)->texture = copy_texture(cylinder->texture);
 	((t_plane *)new->object)->bump = copy_texture(cylinder->bump);
 	if (is_top)
@@ -131,6 +131,6 @@ t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 	if (argc == 12)
 		assign_phong(new, line, 8);
 	else
-		assign_default_phong(new);
+		assign_default_phong(new, scene->ambient->brightness);
 	return (cylinder);
 }

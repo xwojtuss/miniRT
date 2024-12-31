@@ -13,7 +13,8 @@
         "stdbool.h": "c",
         "math.h": "c",
         "textures.h": "c",
-        "mlx.h": "c"
+        "mlx.h": "c",
+        "cstdlib": "c"
     },
     "makefile.configureOnOpen": false
 }

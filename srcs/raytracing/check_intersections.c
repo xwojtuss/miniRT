@@ -6,43 +6,47 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:16:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:41:12 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:25:35 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_rt.h"
 
-bool	check_side(t_ray ray, t_cylinder *cylinder, double *ts[2])
+bool	check_side_cylinder(t_ray ray, t_cylinder *cylinder, double *t1, double *prev_t)
 {
 	double	height_pos;
 
-	height_pos = dot_product(subtract_v(get_inter(ray, *ts[0]),
+	height_pos = dot_product(subtract_v(get_inter(ray, *t1),
 				cylinder->position), cylinder->orientation);
 	if (height_pos >= 0 && height_pos <= cylinder->height)
-		return (*ts[1] = *ts[0], 1);
+		return (*prev_t = *t1, 1);
+	return (0);
+}
+
+bool	check_side_cone(t_ray ray, t_cone *cone, double *t1, double *prev_t)
+{
+	double	height_pos;
+
+	height_pos = dot_product(subtract_v(get_inter(ray, *t1), cone->position), cone->orientation);
+
+	if (height_pos >= -cone->height/2 && height_pos <= cone->height/2)
+		return (*prev_t = *t1, 1);
 	return (0);
 }
 
 int	is_intersect_ray_cylinder(t_ray ray, t_cylinder *cylinder, double *prev_t)
 {
-	double	temp;
 	double	t1;
 	double	t2;
 
 	get_t_cylinder(cylinder, ray, &t1, &t2);
 	if (t1 == DBL_MAX && t2 == DBL_MAX)
 		return (0);
-	if (t1 > t2)
-	{
-		temp = t1;
-		t1 = t2;
-		t2 = temp;
-	}
-	if (t1 > DBL_EPSILON && t1 < *prev_t && check_side(ray, cylinder,
-			(double *[2]){&t1, prev_t}))
+	if (t1 > DBL_EPSILON && t1 < *prev_t && check_side_cylinder(ray, cylinder,
+			&t1, prev_t))
 		return (1);
-	if (t2 > DBL_EPSILON && t2 < *prev_t && check_side(ray, cylinder,
-			(double *[2]){&t2, prev_t}))
+	if (t2 > DBL_EPSILON && t2 < *prev_t && check_side_cylinder(ray, cylinder,
+			&t2, prev_t))
 		return (1);
 	return (0);
 }
@@ -108,4 +112,57 @@ int	is_intersect_sphere(t_ray ray, t_sphere *sphere, double *prev_t)
 	else if (t1 > 0 && *prev_t > t1)
 		return (*prev_t = t1, 1);
 	return (0);
+}
+
+bool	is_intersect_cone(t_ray ray, t_cone *cone, double *t)
+{
+	t_vector	origin_to_center;
+	double		tan_theta_squared;
+	double		a, b, c;
+	double		discriminant;
+	double		t1, t2;
+	t_vector	intersect_point;
+	double		height_proj;
+
+	tan_theta_squared = pow((cone->diam / 2.0) / cone->height, 2);
+	origin_to_center = subtract_v(ray.origin, add_v(cone->position, multiply_v(cone->orientation, cone->height)));
+
+	a = dot_product(ray.direction, ray.direction) - 
+        (1 + tan_theta_squared) * pow(dot_product(ray.direction, cone->orientation), 2);
+    
+    b = 2 * (dot_product(ray.direction, origin_to_center) - 
+        (1 + tan_theta_squared) * dot_product(ray.direction, cone->orientation) * 
+        dot_product(origin_to_center, cone->orientation));
+    
+    c = dot_product(origin_to_center, origin_to_center) - 
+        (1 + tan_theta_squared) * pow(dot_product(origin_to_center, cone->orientation), 2);
+	discriminant = b * b - 4 * a * c;
+	if (discriminant < 0)
+		return (false);
+	retrieve_t(a, b, discriminant, (double *[2]){&t1, &t2});
+
+	if (t1 > t2)
+	{
+		double temp = t1;
+		t1 = t2;
+		t2 = temp;
+	}
+
+	if (t1 > 0 && t1 < *t)
+	{
+		intersect_point = get_inter(ray, t1);
+		height_proj = dot_product(subtract_v(intersect_point, cone->position), cone->orientation);
+		if (height_proj >= 0 && height_proj <= cone->height)
+			return (*t = t1, 1);
+	}
+
+	if (t2 > 0 && t2 < *t)
+	{
+		intersect_point = get_inter(ray, t2);
+		height_proj = dot_product(subtract_v(intersect_point, cone->position), cone->orientation);
+		if (height_proj >= 0 && height_proj <= cone->height)
+			return (*t = t2, 1);
+	}
+
+	return (false);
 }

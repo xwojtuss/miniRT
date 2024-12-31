@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:00 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:21:29 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:41:48 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 
 	argc = ft_arrlen(instructions);
 	if (argc == 0)
-		return (free_array(instructions));
+		return ;
 	if (!ft_strcmp(instructions[0], "A"))
 		parse_ambient_light(scene, instructions, argc);
 	else if (!ft_strcmp(instructions[0], "C"))
@@ -41,6 +41,8 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 		parse_new_object(scene, instructions, argc, PLANE);
 	else if (!ft_strcmp(instructions[0], "cy"))
 		parse_new_object(scene, instructions, argc, CYLINDER);
+	else if (!ft_strcmp(instructions[0], "co"))
+		parse_new_object(scene, instructions, argc, CONE);
 	else
 	{
 		free_array(instructions);

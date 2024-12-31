@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:19:27 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:41:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:30:05 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 t_vector	get_inter(t_ray ray, double t)
 {
 	return (add_v(ray.origin, multiply_v(ray.direction, t)));
-}
-
-double	get_t_cap_bottom(t_ray ray, t_cylinder *cylinder)
-{
-	return (dot_product(subtract_v(cylinder->position, ray.origin),
-			cylinder->orientation) / dot_product(ray.direction,
-			cylinder->orientation));
-}
-
-double	get_t_cap_top(t_ray ray, t_cylinder *cylinder)
-{
-	return (dot_product(subtract_v(add_v(cylinder->position,
-					multiply_v(cylinder->orientation, cylinder->height)),
-				ray.origin), cylinder->orientation) / dot_product(ray.direction,
-			cylinder->orientation));
 }
 
 void	get_t_cylinder(t_cylinder *cylinder, t_ray ray, double *t1, double *t2)

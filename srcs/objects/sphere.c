@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:59 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:50:17 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:51:18 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ t_sphere	*new_sphere(t_scene *scene, t_objects *new, char **line,
 	if (argc == 10)
 		assign_phong(new, line, 6);
 	else
-		assign_default_phong(new);
+		assign_default_phong(new, scene->ambient->brightness);
 	return (sphere);
 }

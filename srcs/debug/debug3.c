@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:17:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/19 20:45:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:57:04 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	print_object_parameters(t_objects *object)
 		print_plane_parameters(object->object);
 	else if (object->type == CYLINDER)
 		print_cylinder_parameters(object->object);
+	else if (object->type == CONE)
+		print_cone_parameters(object->object);
 }
 
 void	print_objects_parameters(t_scene *scene)

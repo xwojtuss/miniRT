@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 12:14:39 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:52:14 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,14 @@ typedef struct s_scene
 	t_camera			*camera;
 }						t_scene;
 
-void					assign_default_phong(t_objects *object);
+void	add_cap(t_scene *scene, t_cylinder *cylinder, bool is_top);
+void	add_base(t_scene *scene, t_cone *cone);
+
+void	assign_default_phong(t_objects *object, float ambient_const);
 t_vector				int_color_to_vector(int color);
 unsigned int			get_pixel_color(t_image image, int x, int y);
+
+t_texture	*copy_texture(t_texture *reference);
 t_texture				*new_texture(char *name);
 void					assign_phong(t_objects *new, char **line, size_t start);
 
@@ -257,6 +262,13 @@ void					assign_cylinder_values(void *object, char **temp,
 							t_object_param type);
 t_cylinder				*new_cylinder(t_scene *scene, t_objects *new,
 							char **line, size_t argc);
+
+void	check_cone_values(t_cone *cone, t_scene *scene, char **line);
+void	assign_cone_values(void *object, char **temp, t_object_param type);
+t_cone	*new_cone(t_scene *scene, t_objects *new, char **line,
+		size_t argc);
+
+
 
 void					check_scene(t_scene *scene);
 void					parse_ambient_light(t_scene *scene, char **instructions,
@@ -325,6 +337,8 @@ void					initialize_viewport(t_scene *scene);
 t_vector				color_to_vector_cylinder(void *object);
 t_vector				color_to_vector_sphere(void *object);
 t_vector				color_to_vector_plane(void *object);
+void	copy_vector(t_vector *dest, t_vector src);
+void	copy_color(t_color *dest, t_color src);
 
 bool					check_debug_tools(int keycode, t_scene *scene);
 
@@ -333,6 +347,7 @@ void					print_sphere_parameters(t_sphere *sphere);
 void					print_plane_parameters(t_plane *plane);
 void					print_light_parameters(t_lights *light);
 void					print_cylinder_parameters(t_cylinder *cylinder);
+void	print_cone_parameters(t_cone *cone);
 void					print_camera_parameters(t_camera *camera);
 
 // debug3.c

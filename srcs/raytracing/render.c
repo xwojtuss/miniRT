@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 11:48:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:48:52 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_objects	*get_closest_object(t_scene scene, t_ray ray, double *new_t)
 				&& t < *new_t) || (curr->type == PLANE
 				&& is_intersect_plane(ray, curr->object, &t) && t < *new_t)
 			|| (curr->type == CYLINDER && is_intersect_ray_cylinder(ray,
-					curr->object, &t) && t < *new_t))
+					curr->object, &t) && t < *new_t) || (curr->type == CONE
+				&& is_intersect_cone(ray, curr->object, &t) && t < *new_t))
 		{
 			*new_t = t;
 			result = curr;
@@ -61,7 +62,8 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 
 	raytrace = init_raytrace_info(ray, scene);
 	if (raytrace.object == NULL || raytrace.t == INFINITY)
-		return (DEFAULT_BACKGROUND_COLOR);
+		return (vector_to_int(multiply_v(color_to_vector(scene->ambient->color),
+					scene->ambient->brightness)));
 	raytrace.inter = get_inter(ray, raytrace.t);
 	if (raytrace.object->type == SPHERE)
 	{
@@ -79,6 +81,11 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 	{
 		raytrace.normal_vector = get_nv_plane(ray, raytrace.object->object);
 		raytrace.color = get_color_plane(raytrace.object->object, &raytrace);
+	}
+	else if (raytrace.object->type == CONE)
+	{
+		raytrace.normal_vector = get_nv_cone(raytrace.inter, raytrace.object->object, ray);
+		raytrace.color = get_color_cone(raytrace.object->object, &raytrace);
 	}
 	recalculate_normal_vector(&raytrace);
 	return (phong_reflection(raytrace));

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:26 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/21 14:57:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:27:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	open_textures(t_scene *scene)
 		{
 			open_texture_helper(((t_cylinder *)curr->object)->texture, scene);
 			open_texture_helper(((t_cylinder *)curr->object)->bump, scene);
+		}
+		else if (curr->type == CONE)
+		{
+			open_texture_helper(((t_cone *)curr->object)->texture, scene);
+			open_texture_helper(((t_cone *)curr->object)->bump, scene);
 		}
 		curr = curr->next;
 	}

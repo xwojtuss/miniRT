@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:15:54 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 10:51:04 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 12:28:13 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	destroy_images(t_objects *objects, t_scene *scene)
 	{
 		destroy_texture(scene, ((t_cylinder *)objects->object)->texture);
 		destroy_texture(scene, ((t_cylinder *)objects->object)->bump);
+	}
+	else if (objects->type == CONE)
+	{
+		destroy_texture(scene, ((t_cone *)objects->object)->texture);
+		destroy_texture(scene, ((t_cone *)objects->object)->bump);
 	}
 }
 

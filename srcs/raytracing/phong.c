@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 00:41:25 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 18:29:58 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,14 @@ void	calculate_color(t_vector *total_color, t_lights *curr,
 			multiply_v(color_to_vector(curr->color), get_diffuse(info.object)
 				* fmax(0, dot_product(light_dir, info.normal_vector))
 				* curr->brightness));
-	reflected_ray = reflect_ray(multiply_v(light_dir, -1), info.normal_vector);
+	reflected_ray = reflect_ray(light_dir, info.normal_vector);
 	view_vector = normalize_vector(subtract_v(info.scene->camera->position,
 				info.inter));
 	specular = multiply_v(color_to_vector(curr->color),
-			get_specular(info.object) * pow(dot_product(reflected_ray,
-					view_vector) * -1, get_shininess(info.object) * 2)
-			* sqrt(fmax(0.0, dot_product(info.normal_vector,
-						light_dir))) * curr->brightness);
-	*total_color = add_v(*total_color, add_v(diffuse, specular));
+			get_specular(info.object) * pow(fmax(0, dot_product(reflected_ray,
+						view_vector)), get_shininess(info.object))
+			* curr->brightness);
+	*total_color = add_v(*total_color, add_v(specular, diffuse));
 }
 
 int	phong_reflection(t_raytrace_info info)
@@ -83,7 +82,9 @@ int	phong_reflection(t_raytrace_info info)
 	t_vector	light_dir;
 	t_lights	*curr;
 
-	total_color = (t_vector){0, 0, 0};
+	total_color = multiply_v_color(info.color,
+			multiply_v(color_to_vector(info.scene->ambient->color),
+				info.scene->ambient->brightness * get_ambient(info.object)));
 	info.inter = subtract_v(info.inter, multiply_v(info.normal_vector,
 				OFFSET_NORMAL));
 	curr = info.scene->light;
@@ -97,10 +98,6 @@ int	phong_reflection(t_raytrace_info info)
 		}
 		curr = curr->next;
 	}
-	total_color = add_v(multiply_v_color(info.color,
-				multiply_v(color_to_vector(info.scene->ambient->color),
-					info.scene->ambient->brightness
-					* get_ambient(info.object))), total_color);
 	total_color = clamp_vector(total_color, 0, 255);
 	return (vector_to_int(total_color));
 }

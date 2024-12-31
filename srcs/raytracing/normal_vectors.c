@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:16 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 12:12:50 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:40:05 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,21 @@ t_vector	get_nv_cylinder(t_vector intersect, t_cylinder *cylinder, t_ray ray)
 	if (is_inside_cylinder(ray.origin, *cylinder))
 		normal = multiply_v(normal, -1);
 	return (normalize_vector(multiply_v(normal, -1)));
+}
+
+t_vector	get_nv_cone(t_vector intersect, t_cone *cone, t_ray ray)
+{
+	t_vector axis_point;
+	t_vector radial;
+	double cos_angle;
+	
+	axis_point = add_v(cone->position, multiply_v(cone->orientation,
+				dot_product(subtract_v(intersect, cone->position),
+					cone->orientation)));
+	radial = normalize_vector(subtract_v(intersect, axis_point));
+	cos_angle = cone->height / sqrt(pow(cone->height, 2) + pow(cone->diam / 2,
+				2));
+	(void)ray;
+	radial = add_v(radial, multiply_v(cone->orientation, -cos_angle));
+	return (multiply_v(normalize_vector(radial), -1));
 }

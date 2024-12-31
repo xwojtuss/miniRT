@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 10:35:40 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 16:51:15 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 	if (argc == 10)
 		assign_phong(new, line, 6);
 	else
-		assign_default_phong(new);
+		assign_default_phong(new, scene->ambient->brightness);
 	return (plane);
 }

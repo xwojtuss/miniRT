@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/30 04:54:06 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:55:44 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
 	t_vector	p_local;
 
 	p_local = subtract_v(raytrace->inter, cylinder->position);
-	raytrace->v_val = dot_product(p_local, cylinder->orientation)
+	raytrace->v_val = 8 * dot_product(p_local, cylinder->orientation)
 		/ cylinder->height;
 	if (cylinder->orientation.x == 0 && cylinder->orientation.y == 0)
 		raytrace->tangent = (t_vector){1, 0, 0};
@@ -83,16 +83,40 @@ t_vector	get_color_cylinder(t_cylinder *cylinder, t_raytrace_info *raytrace)
 				raytrace->tangent));
 	raytrace->bitangent = cross_product(cylinder->orientation,
 			raytrace->tangent);
-	raytrace->u_val = 1.0 - atan2(dot_product(p_local, raytrace->bitangent),
-			dot_product(p_local, raytrace->tangent)) / (PI * 2);
+	raytrace->u_val = 8 * (1.0 - atan2(dot_product(p_local, raytrace->bitangent),
+			dot_product(p_local, raytrace->tangent)) / (PI * 2));
 	if (raytrace->u_val < 0)
 		raytrace->u_val += 1;
 	if (cylinder->texture == NULL)
 		return (color_to_vector(cylinder->color));
 	return (int_color_to_vector(get_pixel_color(cylinder->texture->img,
-				(int)(raytrace->u_val * cylinder->texture->width)
+				(int)(raytrace->u_val * cylinder->texture->height)
 			% cylinder->texture->width, (int)(raytrace->v_val
-			* cylinder->texture->height) % cylinder->texture->height)));
+			* cylinder->texture->width) % cylinder->texture->height)));
+}
+
+t_vector	get_color_cone(t_cone *cone, t_raytrace_info *raytrace)
+{
+    double angle;
+    double height_proj;
+
+    raytrace->tangent = normalize_vector(cross_product(cone->orientation, raytrace->normal_vector));
+    raytrace->bitangent = normalize_vector(cross_product(raytrace->normal_vector, raytrace->tangent));
+    height_proj = dot_product(subtract_v(raytrace->inter, cone->position), cone->orientation);
+    angle = atan2(dot_product(raytrace->inter, raytrace->bitangent), dot_product(raytrace->inter, raytrace->tangent));
+    raytrace->u_val = 8 * (1.0 - (angle + PI) / (2.0 * PI));
+    raytrace->v_val = 8 * height_proj / cone->height;
+	if (height_proj < 0 || height_proj > cone->height)
+    {
+        raytrace->u_val = 0;
+        raytrace->v_val = 0;
+    }
+	if (cone->texture == NULL)
+		return (color_to_vector(cone->color));
+	return (int_color_to_vector(get_pixel_color(cone->texture->img,
+				(int)(raytrace->u_val * cone->texture->width)
+			% cone->texture->width, (int)(raytrace->v_val
+			* cone->texture->height) % cone->texture->height)));
 }
 
 void	recalculate_normal_vector(t_raytrace_info *raytrace)
@@ -109,6 +133,8 @@ void	recalculate_normal_vector(t_raytrace_info *raytrace)
 		bump = ((t_sphere *)raytrace->object->object)->bump;
 	else if (raytrace->object->type == CYLINDER)
 		bump = ((t_cylinder *)raytrace->object->object)->bump;
+	else if (raytrace->object->type == CONE)
+		bump = ((t_cone *)raytrace->object->object)->bump;
 	if (!bump)
 		return ;
 	x = (int)(raytrace->u_val * bump->width) % bump->width;

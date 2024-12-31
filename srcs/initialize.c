@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wkornato <wkornato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:37 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/30 04:37:47 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:22:06 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	init_scene(t_scene *scene)
 {
 	scene->win_height = WIN_HEIGHT_DEFAULT;
 	scene->win_width = WIN_WIDTH_DEFAULT;
+	scene->img.img = NULL;
 	scene->mlx = NULL;
 	scene->win = NULL;
 	scene->objects = NULL;

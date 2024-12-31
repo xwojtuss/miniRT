@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:40:10 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/07 16:53:04 by wkornato         ###   ########.fr       */
+/*   Updated: 2024/12/31 13:57:43 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,19 @@ void	print_cylinder_parameters(t_cylinder *cylinder)
 		cylinder->orientation.y, cylinder->orientation.z);
 	printf("diameter:\t%f\n", cylinder->diam);
 	printf("height:\t\t%f\n", cylinder->height);
+}
+
+void	print_cone_parameters(t_cone *cone)
+{
+	printf("Cone:\n");
+	printf("color:\t\tR%i, G%i, B%i\n", cone->color.r, cone->color.g,
+		cone->color.b);
+	printf("position:\tX%f, Y%f, Z%f\n", cone->position.x,
+		cone->position.y, cone->position.z);
+	printf("orientation:\tX%f, Y%f, Z%f\n", cone->orientation.x,
+		cone->orientation.y, cone->orientation.z);
+	printf("diameter:\t%f\n", cone->diam);
+	printf("height:\t\t%f\n", cone->height);
 }
 
 void	print_camera_parameters(t_camera *camera)
