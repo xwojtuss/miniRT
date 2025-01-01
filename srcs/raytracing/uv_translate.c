@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 22:31:55 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 21:08:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
 	int	x;
 	int	y;
 
-	raytrace->u_val = 1.0 - (atan2(raytrace->normal_vector.z,
-				raytrace->normal_vector.x) + PI) / PI;
-	raytrace->v_val = acos(raytrace->normal_vector.y) / PI;
+	raytrace->u_val = 0.5 + (atan2(raytrace->normal_vector.z, raytrace->normal_vector.x) / (2 * PI));
+
+	raytrace->v_val = 0.5 + (asin(raytrace->normal_vector.y) / PI);
+
 	if (raytrace->normal_vector.x == 1)
 		raytrace->tangent = (t_vector){0, 1, 0};
 	else
@@ -140,6 +141,10 @@ void	recalculate_normal_vector(t_raytrace_info *raytrace)
 		return ;
 	x = (int)(raytrace->u_val * bump->width) % bump->width;
 	y = (int)(raytrace->v_val * bump->height) % bump->height;
+	if (x < 0)
+		x += raytrace->object->texture->width;
+	if (y < 0)
+		y += raytrace->object->texture->height;
 	p = int_color_to_vector(get_pixel_color(bump->img, x, y));
 	p = subtract_v(scale_v(divide_v(p, 255.0), 2.0), (t_vector){1.0, 1.0, 1.0});
 	raytrace->normal_vector = normalize_v((t_vector){p.x * raytrace->tangent.x

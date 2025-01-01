@@ -1,4 +1,4 @@
-C 0,0,0 1,0,0 70
+C -4.88,-4.74,0 0.8191,-0.5735,0 50
 A 0.4 255,255,255
 L 6,0,50 1 255,255,255
-co -10,0,0 0,1,0 5 5 100,100,100 textures/parquet.xpm bump_maps/parquet.xpm
+co -10,-3,0 0,1,0 5 5 100,100,100 textures/parquet.xpm bump_maps/parquet.xpm

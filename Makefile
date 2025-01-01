@@ -20,6 +20,8 @@ S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c sphere
 S_RAYTRACING = check_intersections.c constants.c find_t.c intersection_misc.c \
 		normal_vectors.c phong.c render.c uv_translate.c
 
+VALID_SCENES = ${wildcard scenes/*.rt}
+
 SRCS = main.c $(addprefix data/, ${S_DATA}) \
 		$(addprefix debug/, ${S_DEBUG}) \
 		$(addprefix math/, ${S_MATH}) \
@@ -67,6 +69,10 @@ fclean:
 	rm -dfr libs/mlx_linux
 	rm -dfr libs/libft
 
+test: all
+	@$(foreach SCENE, ${VALID_SCENES}, \
+		clear && cat ${SCENE} && ./${NAME} ${SCENE};)
+
 re: fclean all
 
 remove_objects:
@@ -74,4 +80,4 @@ remove_objects:
 
 again: remove_objects all
 
-.PHONY: all clean fclean re again remove_objects
+.PHONY: all clean fclean test re again remove_objects
