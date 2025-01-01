@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 19:52:35 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 22:30:20 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 16:16:11 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	copy_cone_to_plane(t_objects *src, t_objects *dest)
 	dest->constants.shininess = src->constants.shininess;
 	dest->texture = copy_texture(src->texture);
 	dest->bump = copy_texture(src->bump);
-	((t_plane *)src->object)->diam = ((t_cone *)src->object)->diam
+	((t_plane *)dest->object)->diam = ((t_cone *)src->object)->diam
 		- OFFSET_NORMAL;
 }
 
@@ -41,12 +41,6 @@ void	add_base(t_scene *scene, t_objects *reference)
 	new->type = PLANE;
 	new->object = new_plane(scene, new, (char *[]){"", "0,0,0", "0,0,0",
 			"0,0,0"}, 4);
-	copy_vector(&((t_plane *)new->object)->position,
-		((t_cone *)reference->object)->position);
-	copy_vector(&((t_plane *)new->object)->orientation,
-		((t_cone *)reference->object)->orientation);
-	copy_color(&((t_plane *)new->object)->color,
-		((t_cone *)reference->object)->color);
 	copy_cone_to_plane(reference, new);
 	last = get_last_object(scene->objects);
 	if (!last)

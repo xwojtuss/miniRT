@@ -6,11 +6,17 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:17:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 21:04:35 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:42:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mini_rt.h>
+
+void	print_color(t_color color)
+{
+	printf("color:\t\t\x1b[38;2;%i;%i;%imR%i, G%i, B%i\x1b[0m\n", color.r,
+		color.g, color.b, color.r, color.g, color.b);
+}
 
 void	print_light_parameters(t_lights *light)
 {
@@ -22,6 +28,7 @@ void	print_light_parameters(t_lights *light)
 		printf("Light:\n");
 		printf("position:\tX%f, Y%f, Z%f\n", curr->position.x, curr->position.y,
 			curr->position.z);
+		print_color(curr->color);
 		printf("brightness:\t%f\n", curr->brightness);
 		curr = curr->next;
 	}
@@ -30,8 +37,7 @@ void	print_light_parameters(t_lights *light)
 void	print_ambient_parameters(t_ambient *ambient)
 {
 	printf("Ambient:\n");
-	printf("color:\t\tR%i, G%i, B%i\n", ambient->color.r, ambient->color.g,
-		ambient->color.b);
+	print_color(ambient->color);
 	printf("brightness:\t%f\n", ambient->brightness);
 }
 

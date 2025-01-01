@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 22:28:16 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:32:42 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,33 @@ static t_objects	*add_object(t_scene *scene, t_object_type type, char **line)
 	return (new);
 }
 
-static void	split_and_assign_vector(t_objects *object, char *line,
+static void	split_and_assign_vector(char **line, int index,
 		t_object_param type, t_scene *scene)
 {
 	char	**temp;
 	float	orientation_multitude;
+	t_objects *last;
 
-	temp = ft_split(line, ',');
+	last = get_last_object(scene->objects);
+	temp = ft_split(line[index], ',');
 	if (!temp || ft_arrlen(temp) != 3)
-		err_free_array("Incorrect amount of parameters to a value", scene,
-			temp);
+		err_free_arrays("Incorrect amount of parameters to a value", scene,
+			temp, line);
 	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
 			- orientation_multitude > 0.001
 			|| 1 - orientation_multitude < -0.001))
-		err_free_array("Orientation vector has to have a length of 1", scene,
-			temp);
-	if (object->type == SPHERE)
-		assign_sphere_values(object->object, temp, type);
-	else if (object->type == PLANE)
-		assign_plane_values(object->object, temp, type);
-	else if (object->type == CYLINDER)
-		assign_cylinder_values(object->object, temp, type);
-	else if (object->type == CONE)
-		assign_cone_values(object->object, temp, type);
+		err_free_arrays("Orientation vector has to have a length of 1", scene,
+			temp, line);
+	if (last->type == SPHERE)
+		assign_sphere_values(last->object, temp, type);
+	else if (last->type == PLANE)
+		assign_plane_values(last->object, temp, type);
+	else if (last->type == CYLINDER)
+		assign_cylinder_values(last->object, temp, type);
+	else if (last->type == CONE)
+		assign_cone_values(last->object, temp, type);
 	free_array(temp);
 }
 
@@ -92,13 +94,13 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 		new->object = new_cylinder(scene, new, line, argc);
 	else if (new->type == CONE)
 		new->object = new_cone(scene, new, line, argc);
-	split_and_assign_vector(new, line[1], POSITION, scene);
+	split_and_assign_vector(line, 1, POSITION, scene);
 	if (new->type == CYLINDER || new->type == CONE)
-		split_and_assign_vector(new, line[5], COLOR, scene);
+		split_and_assign_vector(line, 5, COLOR, scene);
 	else
-		split_and_assign_vector(new, line[3], COLOR, scene);
+		split_and_assign_vector(line, 3, COLOR, scene);
 	if (new->type == PLANE || new->type == CYLINDER || new->type == CONE)
-		split_and_assign_vector(new, line[2], ORIENTATION, scene);
+		split_and_assign_vector(line, 2, ORIENTATION, scene);
 	check_values(new, new->type, scene, line);
 }
 

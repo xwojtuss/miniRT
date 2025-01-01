@@ -1,6 +1,6 @@
 # MINIRT
 
-miniRT - a raytracer written in C that simulates the light path using the full Phong reflection model. It is able to render textures and normal maps on three different shapes - plane, sphere and cylinder.
+miniRT - a raytracer written in C that simulates the light path using the full Phong reflection model. It is able to render textures and normal maps on four different figures - plane, sphere, cylinder and cone.
 This project uses minilibx, which is an X11 library designed for 42 students. The library is automatically cloned from github, configured and compiled.
 
 ![all](https://github.com/xwojtuss/miniRT/blob/main/renders/all.png)
@@ -23,15 +23,19 @@ L [position] [brightness 0-1] [color in rgb]
 Optional:
 Plane:
 ```
-pl [position] [orientation] [color in rgb] [texture path (optional)] [normal map path (optional)] [ambient const 0-1 (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
+pl [position] [orientation] [color in rgb] [texture path (optional)] [normal map path (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
 ```
 Sphere:
 ```
-sp [position] [diameter] [color in rgb] [texture path (optional)] [normal map path (optional)] [ambient const 0-1 (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
+sp [position] [diameter] [color in rgb] [texture path (optional)] [normal map path (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
 ```
 Cylinder:
 ```
-cy [position] [orientation] [diameter] [height] [color in rgb] [texture path (optional)] [normal map path (optional)] [ambient const 0-1 (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
+cy [position] [orientation] [diameter] [height] [color in rgb] [texture path (optional)] [normal map path (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
+```
+Cone:
+```
+co [position] [orientation] [diameter] [height] [color in rgb] [texture path (optional)] [normal map path (optional)] [diffuse const 0-1 (optional)] [specular const 0-1 (optional)] [shininess const (optional)]
 ```
 
 ## Getting Started

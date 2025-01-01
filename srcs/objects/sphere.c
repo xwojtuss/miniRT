@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:59 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:19:13 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:57:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_sphere	*new_sphere(t_scene *scene, t_objects *new, char **line,
 {
 	t_sphere	*sphere;
 
-	if (argc < 4 || argc > 10)
+	if (argc < 4 || argc > 9)
 		err_free_array("Invalid number of arguments for sphere", scene, line);
 	sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
@@ -48,9 +48,9 @@ t_sphere	*new_sphere(t_scene *scene, t_objects *new, char **line,
 	new->bump = NULL;
 	if (argc > 5 && ft_strcmp(line[5], "-"))
 		new->bump = new_texture(line[5]);
-	if (argc == 10)
+	if (argc == 9)
 		assign_phong(new, line, 6);
 	else
-		assign_default_phong(new, scene->ambient->brightness);
+		assign_default_phong(new);
 	return (sphere);
 }

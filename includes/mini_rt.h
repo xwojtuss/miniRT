@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2024/12/31 22:27:42 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:41:00 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,9 @@ void					err_free(char *message, t_scene *scene);
 void					err_free_array(char *message, t_scene *scene,
 							char **array);
 
+void					err_free_arrays(char *message, t_scene *scene,
+							char **array, char **array2);
+
 //			FREE.C
 
 void					free_scene(t_scene *scene);
@@ -237,6 +240,7 @@ void					print_camera_parameters(t_camera *camera);
 
 //			DEBUG3.C
 
+void					print_color(t_color color);
 void					print_light_parameters(t_lights *light);
 void					print_ambient_parameters(t_ambient *ambient);
 void					print_object_parameters(t_objects *object);
@@ -347,8 +351,7 @@ bool					is_intersect_cone(t_ray ray, t_cone *cone,
 
 //			CONSTANTS.C
 
-void					assign_default_phong(t_objects *object,
-							float ambient_const);
+void					assign_default_phong(t_objects *object);
 
 //			FIND_T.C
 

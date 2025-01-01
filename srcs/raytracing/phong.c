@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:56:12 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 22:31:06 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:54:38 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	phong_reflection(t_raytrace_info info)
 	t_vector	light_dir;
 	t_lights	*curr;
 
+	info.object->constants.ambient = info.scene->ambient->brightness;
 	total_color = scale_v_color(info.color,
 			scale_v(color_to_vector(info.scene->ambient->color),
 				info.scene->ambient->brightness

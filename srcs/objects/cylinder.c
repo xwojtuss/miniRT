@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:56 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:17:44 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:57:04 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 {
 	t_cylinder	*cylinder;
 
-	if (argc < 6 || argc > 12)
+	if (argc < 6 || argc > 11)
 		err_free_array("Invalid number of arguments for cylinder", scene, line);
 	cylinder = (t_cylinder *)ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
@@ -59,9 +59,9 @@ t_cylinder	*new_cylinder(t_scene *scene, t_objects *new, char **line,
 	new->bump = NULL;
 	if (argc > 7 && ft_strcmp(line[7], "-"))
 		new->bump = new_texture(line[7]);
-	if (argc == 12)
+	if (argc == 11)
 		assign_phong(new, line, 8);
 	else
-		assign_default_phong(new, scene->ambient->brightness);
+		assign_default_phong(new);
 	return (cylinder);
 }

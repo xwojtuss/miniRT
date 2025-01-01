@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 13:29:04 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 21:16:46 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:01:30 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ unsigned int	get_pixel_color(t_image image, int x, int y)
 
 void	assign_phong(t_objects *new, char **line, size_t start)
 {
-	new->constants.ambient = ft_atof(line[start]);
-	new->constants.diffuse = ft_atof(line[start + 1]);
-	new->constants.specular = ft_atof(line[start + 2]);
-	new->constants.shininess = ft_atof(line[start + 3]);
+	new->constants.ambient = 0;
+	new->constants.diffuse = ft_atof(line[start]);
+	new->constants.specular = ft_atof(line[start + 1]);
+	new->constants.shininess = ft_atof(line[start + 2]);
 }
 
 t_texture	*new_texture(char *name)

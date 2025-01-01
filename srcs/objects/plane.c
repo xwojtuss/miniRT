@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:58 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 20:19:00 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:57:14 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 {
 	t_plane	*plane;
 
-	if (argc < 4 || argc > 10)
+	if (argc < 4 || argc > 9)
 		err_free_array("Invalid number of arguments for plane", scene, line);
 	plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
 	if (!plane)
@@ -52,9 +52,9 @@ t_plane	*new_plane(t_scene *scene, t_objects *new, char **line, size_t argc)
 	new->bump = NULL;
 	if (argc > 5 && ft_strcmp(line[5], "-"))
 		new->bump = new_texture(line[5]);
-	if (argc == 10)
+	if (argc == 9)
 		assign_phong(new, line, 6);
 	else
-		assign_default_phong(new, scene->ambient->brightness);
+		assign_default_phong(new);
 	return (plane);
 }
