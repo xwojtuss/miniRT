@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2025/01/01 18:32:42 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 22:27:23 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static t_objects	*add_object(t_scene *scene, t_object_type type, char **line)
 	return (new);
 }
 
-static void	split_and_assign_vector(char **line, int index,
-		t_object_param type, t_scene *scene)
+static void	split_and_assign_vector(char **line, int index, t_object_param type,
+		t_scene *scene)
 {
-	char	**temp;
-	float	orientation_multitude;
-	t_objects *last;
+	char		**temp;
+	float		orientation_multitude;
+	t_objects	*last;
 
 	last = get_last_object(scene->objects);
 	temp = ft_split(line[index], ',');
@@ -47,8 +47,8 @@ static void	split_and_assign_vector(char **line, int index,
 	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
-			- orientation_multitude > 0.001
-			|| 1 - orientation_multitude < -0.001))
+			- orientation_multitude > 0.001 || 1 - orientation_multitude
+			< -0.001))
 		err_free_arrays("Orientation vector has to have a length of 1", scene,
 			temp, line);
 	if (last->type == SPHERE)

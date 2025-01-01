@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:27:09 by wkornato          #+#    #+#             */
-/*   Updated: 2025/01/01 16:23:11 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 22:27:09 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	get_t_cone(t_cone *cone, t_ray ray, double *t1, double *t2)
 			* dot_v(ray.direction, cone->orientation) * dot_v(origin_to_center,
 				cone->orientation));
 	discriminant = b * b - 4 * a * (dot_v(origin_to_center, origin_to_center)
-		- (1 + tan_theta_squared) * pow(dot_v(origin_to_center,
-				cone->orientation), 2));
+			- (1 + tan_theta_squared) * pow(dot_v(origin_to_center,
+					cone->orientation), 2));
 	if (discriminant < 0)
 		return ;
 	retrieve_t(a, b, discriminant, (double *[2]){t1, t2});

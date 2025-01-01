@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:53:55 by wkornato          #+#    #+#             */
-/*   Updated: 2025/01/01 18:18:27 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 22:26:48 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	split_and_assign_vector_camera(char **line, int index,
 	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
-			- orientation_multitude > 0.001 || 1 - orientation_multitude <
-			-0.001))
+			- orientation_multitude > 0.001 || 1 - orientation_multitude
+			< -0.001))
 		err_free_arrays("Orientation vector has to have a length of 1", scene,
 			temp, line);
 	if (type == POSITION)
@@ -55,8 +55,7 @@ void	parse_camera(t_scene *scene, char **line, size_t argc)
 	if (argc != 4)
 		err_free_array("Invalid number of arguments for camera", scene, line);
 	if (scene->camera)
-		err_free_array("Too many cameras", scene,
-			line);
+		err_free_array("Too many cameras", scene, line);
 	camera = (t_camera *)ft_calloc(1, sizeof(t_camera));
 	if (!camera)
 		err_free_array("Could not allocate memory for camera", scene, line);

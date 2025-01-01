@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 14:59:40 by wkornato          #+#    #+#             */
-/*   Updated: 2025/01/01 21:08:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/01 22:27:37 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ t_vector	get_color_sphere(t_sphere *sphere, t_raytrace_info *raytrace)
 	int	x;
 	int	y;
 
-	raytrace->u_val = 0.5 + (atan2(raytrace->normal_vector.z, raytrace->normal_vector.x) / (2 * PI));
-
+	raytrace->u_val = 0.5 + (atan2(raytrace->normal_vector.z,
+				raytrace->normal_vector.x) / (2 * PI));
 	raytrace->v_val = 0.5 + (asin(raytrace->normal_vector.y) / PI);
-
 	if (raytrace->normal_vector.x == 1)
 		raytrace->tangent = (t_vector){0, 1, 0};
 	else
