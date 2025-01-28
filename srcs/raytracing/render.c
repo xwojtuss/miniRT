@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:57:43 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 22:27:30 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:52:10 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ t_objects	*get_closest_object(t_scene scene, t_ray ray, double *new_t)
 	while (curr)
 	{
 		if ((curr->type == SPHERE && is_intersect_sphere(ray, curr->object, &t)
-				&& t < *new_t) || (curr->type == PLANE
-				&& is_intersect_plane(ray, curr->object, &t) && t < *new_t)
+				&& t <= *new_t) || (curr->type == PLANE
+				&& is_intersect_plane(ray, curr->object, &t) && t <= *new_t)
 			|| (curr->type == CYLINDER && is_intersect_ray_cylinder(ray,
-					curr->object, &t) && t < *new_t) || (curr->type == CONE
-				&& is_intersect_cone(ray, curr->object, &t) && t < *new_t))
+					curr->object, &t) && t <= *new_t) || (curr->type == CONE
+				&& is_intersect_cone(ray, curr->object, &t) && t <= *new_t)
+			|| (curr->type == LINE && is_intersect_line(ray, curr->object, &t)
+				&& t <= *new_t))
 		{
+			if (DEBUG_TOOLS && DEBUG_INTER && fabs(*new_t - t) < t / 20
+				&& *new_t < DBL_MAX)
+				return (debug_intersect());
 			*new_t = t;
 			result = curr;
 		}
@@ -90,6 +95,10 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 		raytrace.color = get_color_plane(raytrace.object->object, &raytrace);
 	else if (raytrace.object->type == CONE)
 		raytrace.color = get_color_cone(raytrace.object->object, &raytrace);
+	else if (raytrace.object->type == LINE)
+		return (vector_to_int(color_to_vector(((t_line *)raytrace.object)->color)));
+	else if (raytrace.object->type == INTER)
+		return (free(raytrace.object), INTER_COLOR);
 	recalculate_normal_vector(&raytrace);
 	return (phong_reflection(raytrace));
 }

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:08 by wkornato          #+#    #+#             */
-/*   Updated: 2025/01/01 22:27:23 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:09:59 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	split_and_assign_vector(char **line, int index, t_object_param type,
 	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2])});
 	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
-			- orientation_multitude > 0.001 || 1 - orientation_multitude
-			< -0.001))
+			- orientation_multitude > 0.001 || 1 - orientation_multitude <
+			-0.001))
 		err_free_arrays("Orientation vector has to have a length of 1", scene,
 			temp, line);
 	if (last->type == SPHERE)
@@ -59,6 +59,8 @@ static void	split_and_assign_vector(char **line, int index, t_object_param type,
 		assign_cylinder_values(last->object, temp, type);
 	else if (last->type == CONE)
 		assign_cone_values(last->object, temp, type);
+	else if (last->type == LINE)
+		assign_line_values(last->object, temp, type);
 	free_array(temp);
 }
 
@@ -73,6 +75,8 @@ static void	check_values(t_objects *object, t_object_type type, t_scene *scene,
 		check_cylinder_values((t_cylinder *)object->object, scene, line);
 	else if (type == CONE)
 		check_cone_values((t_cone *)object->object, scene, line);
+	else if (type == LINE)
+		check_line_values((t_line *)object->object, scene, line);
 	if (object->constants.ambient < 0 || object->constants.diffuse < 0
 		|| object->constants.specular < 0 || object->constants.shininess < 0
 		|| object->constants.ambient > 1 || object->constants.diffuse > 1
@@ -94,12 +98,15 @@ void	parse_new_object(t_scene *scene, char **line, size_t argc,
 		new->object = new_cylinder(scene, new, line, argc);
 	else if (new->type == CONE)
 		new->object = new_cone(scene, new, line, argc);
+	else if (new->type == LINE)
+		new->object = new_line(scene, new, line, argc);
 	split_and_assign_vector(line, 1, POSITION, scene);
 	if (new->type == CYLINDER || new->type == CONE)
 		split_and_assign_vector(line, 5, COLOR, scene);
 	else
 		split_and_assign_vector(line, 3, COLOR, scene);
-	if (new->type == PLANE || new->type == CYLINDER || new->type == CONE)
+	if (new->type == PLANE || new->type == CYLINDER || new->type == CONE
+		|| new->type == LINE)
 		split_and_assign_vector(line, 2, ORIENTATION, scene);
 	check_values(new, new->type, scene, line);
 }

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 19:54:00 by wkornato          #+#    #+#             */
-/*   Updated: 2024/12/31 16:41:48 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:06:19 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	check_line(char **instructions, t_scene *scene, int fd)
 		parse_new_object(scene, instructions, argc, CYLINDER);
 	else if (!ft_strcmp(instructions[0], "co"))
 		parse_new_object(scene, instructions, argc, CONE);
+	else if (!ft_strcmp(instructions[0], "li"))
+		parse_new_object(scene, instructions, argc, LINE);
 	else
 	{
 		free_array(instructions);

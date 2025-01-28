@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -O3 -D DEBUG_TOOLS=1
+CFLAGS = -Wall -Wextra -Werror -g -O3 -DDEBUG_TOOLS=0 -DDEBUG_INTER=0
 
 HEADERS = includes/mini_rt.h includes/phong_reflection.h
 INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft
@@ -13,10 +13,11 @@ LIBS = ${LIBFT} ${MINILIBX} -lm -lX11 -lXext
 NAME = miniRT
 
 S_DATA = check_scene.c errors.c free.c initialize.c parse.c
-S_DEBUG = debug.c debug2.c debug3.c
+S_DEBUG = debug.c debug2.c debug3.c debug4.c
 S_MATH = angles.c colors.c vectors.c vectors2.c vectors3.c
 S_MLX = mlx_hooks.c mlx_init.c mlx_misc.c textures.c
-S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c sphere.c misc.c
+S_OBJECTS = ambient.c camera.c cone.c cylinder.c divide.c light.c plane.c \
+		sphere.c misc.c line.c
 S_RAYTRACING = check_intersections.c constants.c find_t.c intersection_misc.c \
 		normal_vectors.c phong.c render.c uv_translate.c
 

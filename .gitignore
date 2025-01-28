@@ -47,6 +47,7 @@
 *.cmd
 .tmp_versions/
 modules.order
+valgrind.log
 Module.symvers
 Mkfile.old
 dkms.conf

@@ -6,7 +6,7 @@
 /*   By: wkornato <wkornato@student.42warsaw.pl>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 22:06:24 by ukireyeu          #+#    #+#             */
-/*   Updated: 2025/01/01 19:41:00 by wkornato         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:54:38 by wkornato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,15 @@
 # define DEFAULT_BACKGROUND_COLOR 0x000000
 
 # ifndef DEBUG_TOOLS
-#  define DEBUG_TOOLS 1
+#  define DEBUG_TOOLS 0
 # endif
+
+# ifndef DEBUG_INTER
+#  define DEBUG_INTER 0
+# endif
+
+# define INTER_COLOR 0xff0000
+# define INTER_WIDTH 10
 
 # include "float.h"
 # include "libft.h"
@@ -94,7 +101,9 @@ typedef enum e_object_type
 	CONE,
 	CAMERA,
 	LIGHT,
-	AMBIENT
+	AMBIENT,
+	INTER,
+	LINE
 }						t_object_type;
 
 typedef struct s_ray
@@ -168,6 +177,14 @@ typedef struct s_cone
 	float				height;
 	t_color				color;
 }						t_cone;
+
+typedef struct s_line
+{
+	t_vector			position;
+	t_vector			orientation;
+	t_color				color;
+	float				length;
+}						t_line;
 
 typedef struct s_scene
 {
@@ -246,6 +263,10 @@ void					print_ambient_parameters(t_ambient *ambient);
 void					print_object_parameters(t_objects *object);
 void					print_objects_parameters(t_scene *scene);
 
+//			DEBUG4.C
+
+t_objects				*debug_intersect(void);
+
 //		MATH
 //			in vectors.h
 
@@ -315,6 +336,15 @@ void					add_caps(t_scene *scene, char *type);
 void					parse_light(t_scene *scene, char **instructions,
 							size_t argc);
 
+//			LINE.C
+
+t_line					*new_line(t_scene *scene, t_objects *new, char **line,
+							size_t argc);
+void					assign_line_values(void *object, char **temp,
+							t_object_param type);
+void					check_line_values(t_line *o_line, t_scene *scene,
+							char **line);
+
 //			MISC.C
 
 t_objects				*get_last_object(t_objects *objects);
@@ -347,6 +377,8 @@ bool					is_intersect_plane(t_ray ray, t_plane *plane,
 bool					is_intersect_sphere(t_ray ray, t_sphere *sphere,
 							double *prev_t);
 bool					is_intersect_cone(t_ray ray, t_cone *cone,
+							double *prev_t);
+bool					is_intersect_line(t_ray ray, t_line *line,
 							double *prev_t);
 
 //			CONSTANTS.C
