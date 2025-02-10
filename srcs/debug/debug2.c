@@ -32,6 +32,16 @@ void	print_plane_parameters(t_plane *plane)
 	printf("diameter:\t%f\n", plane->diam);
 }
 
+void	print_line_parameters(t_line *line)
+{
+	printf("Line:\n");
+	print_color(line->color);
+	printf("position:\tX%f, Y%f, Z%f\n", line->position.x, line->position.y,
+		line->position.z);
+	printf("orientation:\tX%f, Y%f, Z%f\n", line->orientation.x,
+		line->orientation.y, line->orientation.z);
+}
+
 void	print_cylinder_parameters(t_cylinder *cylinder)
 {
 	printf("Cylinder:\n");

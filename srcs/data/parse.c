@@ -36,7 +36,7 @@ static void	split_and_assign_vector(char **line, int index, t_object_param type,
 		t_scene *scene)
 {
 	char		**temp;
-	float		orientation_multitude;
+	// float		orientation_multitude;
 	t_objects	*last;
 
 	last = get_last_object(scene->objects);
@@ -44,13 +44,13 @@ static void	split_and_assign_vector(char **line, int index, t_object_param type,
 	if (!temp || ft_arrlen(temp) != 3)
 		err_free_arrays("Incorrect amount of parameters to a value", scene,
 			temp, line);
-	orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
-			ft_atof(temp[1]), ft_atof(temp[2])});
-	if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
-			- orientation_multitude > 0.001 || 1 - orientation_multitude <
-			-0.001))
-		err_free_arrays("Orientation vector has to have a length of 1", scene,
-			temp, line);
+	// orientation_multitude = get_length_v((t_vector){ft_atof(temp[0]),
+	// 		ft_atof(temp[1]), ft_atof(temp[2])});
+	// if (type == ORIENTATION && (round(orientation_multitude) != 1 || 1
+	// 		- orientation_multitude > 0.001 || 1 - orientation_multitude <
+	// 		-0.001))
+	// 	err_free_arrays("Orientation vector has to have a length of 1", scene,
+	// 		temp, line);
 	if (last->type == SPHERE)
 		assign_sphere_values(last->object, temp, type);
 	else if (last->type == PLANE)

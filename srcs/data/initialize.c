@@ -70,4 +70,5 @@ void	init_scene(t_scene *scene)
 	scene->light = NULL;
 	scene->ambient = NULL;
 	scene->camera = NULL;
+	scene->selected = NULL;
 }

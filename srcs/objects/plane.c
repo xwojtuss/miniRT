@@ -28,8 +28,11 @@ void	assign_plane_values(void *object, char **temp, t_object_param type)
 		assign_vector(&((t_plane *)object)->position, ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2]));
 	else if (type == ORIENTATION)
+	{
 		assign_vector(&((t_plane *)object)->orientation, ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2]));
+		((t_plane *)object)->orientation = normalize_v(((t_plane *)object)->orientation);
+	}
 	else if (type == COLOR)
 		assign_color(&((t_plane *)object)->color, ft_atoi(temp[0]),
 			ft_atoi(temp[1]), ft_atoi(temp[2]));

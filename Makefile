@@ -1,9 +1,9 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g -O3 -DDEBUG_TOOLS=0 -DDEBUG_INTER=0
+CFLAGS = -Wall -Wextra -Werror -g -O3 -DDEBUG_TOOLS=1 -DDEBUG_INTER=0
 
 HEADERS = includes/mini_rt.h includes/phong_reflection.h
-INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft
+INCLUDES = -Iincludes -Ilibs/mlx_linux -Ilibs/libft -Ilibs/stb
 LIBFT = libs/libft/libft.a
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
 LIBFT_REPO = https://github.com/xwojtuss/Libft.git

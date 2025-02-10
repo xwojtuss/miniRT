@@ -16,10 +16,10 @@ static void	check_camera_values(t_camera *camera, t_scene *scene, char **line)
 {
 	if (camera->fov < 0 || camera->fov > 180)
 		err_free_array("Invalid field of view for camera", scene, line);
-	if (camera->orientation.x < -1 || camera->orientation.x > 1
-		|| camera->orientation.y < -1 || camera->orientation.y > 1
-		|| camera->orientation.z < -1 || camera->orientation.z > 1)
-		err_free_array("Invalid orientation for camera", scene, line);
+	// if (camera->orientation.x < -1 || camera->orientation.x > 1
+	// 	|| camera->orientation.y < -1 || camera->orientation.y > 1
+	// 	|| camera->orientation.z < -1 || camera->orientation.z > 1)
+	// 	err_free_array("Invalid orientation for camera", scene, line);
 }
 
 static void	split_and_assign_vector_camera(char **line, int index,
@@ -43,8 +43,11 @@ static void	split_and_assign_vector_camera(char **line, int index,
 		assign_vector(&scene->camera->position, ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2]));
 	else if (type == ORIENTATION)
+	{
 		assign_vector(&scene->camera->orientation, ft_atof(temp[0]),
 			ft_atof(temp[1]), ft_atof(temp[2]));
+		scene->camera->orientation = normalize_v(scene->camera->orientation);
+	}
 	free_array(temp);
 }
 

@@ -96,7 +96,7 @@ static int	trace_ray(t_ray ray, t_scene *scene)
 	else if (raytrace.object->type == CONE)
 		raytrace.color = get_color_cone(raytrace.object->object, &raytrace);
 	else if (raytrace.object->type == LINE)
-		return (vector_to_int(color_to_vector(((t_line *)raytrace.object)->color)));
+		return (vector_to_int(color_to_vector(((t_line *)raytrace.object->object)->color)));
 	else if (raytrace.object->type == INTER)
 		return (free(raytrace.object), INTER_COLOR);
 	recalculate_normal_vector(&raytrace);

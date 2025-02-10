@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mini_rt.h>
+#include "mini_rt.h"
 
 void	print_color(t_color color)
 {
@@ -51,6 +51,8 @@ void	print_object_parameters(t_objects *object)
 		print_cylinder_parameters(object->object);
 	else if (object->type == CONE)
 		print_cone_parameters(object->object);
+	else if (object->type == LINE)
+		print_line_parameters(object->object);
 }
 
 void	print_objects_parameters(t_scene *scene)

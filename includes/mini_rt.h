@@ -26,8 +26,8 @@
 # define KEY_CLOSE_WINDOW 17
 # define KEY_ESC 65307
 
-# define WIN_HEIGHT_DEFAULT 600
-# define WIN_WIDTH_DEFAULT 900
+# define WIN_HEIGHT_DEFAULT 1080
+# define WIN_WIDTH_DEFAULT 1920
 
 # define FLOAT_PITCH_LIMIT 0.98
 
@@ -197,6 +197,7 @@ typedef struct s_scene
 	int					image_width;
 	int					image_height;
 	char				*file;
+	t_objects			*selected;
 	t_vector			viewport_grid_vector_x;
 	t_vector			viewport_grid_vector_y;
 	t_vector			viewport_top_left;
@@ -254,6 +255,7 @@ void					print_plane_parameters(t_plane *plane);
 void					print_cylinder_parameters(t_cylinder *cylinder);
 void					print_cone_parameters(t_cone *cone);
 void					print_camera_parameters(t_camera *camera);
+void					print_line_parameters(t_line *line);
 
 //			DEBUG3.C
 
