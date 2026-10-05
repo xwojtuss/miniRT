@@ -78,4 +78,3 @@ You can pass different scenes to the program, the directory 'scenes' has some ex
 ## Authors
 
 * **Wojtek Kornatowski** - [xwojtuss](https://github.com/xwojtuss)
-* **Uladzimir Kireyeu** - [neulad](https://github.com/neulad)
