@@ -66,5 +66,5 @@ void	initialize_mlx(t_scene *scene)
 	mlx_hook(scene->win, DestroyNotify, NoEventMask, close_win_handler, scene);
 	mlx_hook(scene->win, KeyPress, KeyPressMask, key_hook, scene);
 	if (DEBUG_TOOLS)
-		mlx_mouse_hook(scene->win, mouse_click_handler, scene);
+		mlx_mouse_hook(scene->win, (int (*)(int, int, int, void *))mouse_click_handler, scene);
 }
